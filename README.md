@@ -1,5 +1,11 @@
 # Utilización de tarjetas de crédito
 
+## Archivo completo
+```
+Archivo y enlace al documento de colab.
+```
+[Enlace colab: ](CreditCards.ipynb)
+
 ## Uso de tarjetas de credito segun su sexo
 ```
 Generar un gráfico del uso de las tarjetas de crédito según el genero y un documento en excel.
