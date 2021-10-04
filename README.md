@@ -81,11 +81,22 @@ modelEqual.fit(centi, centi, epochs=50, verbose=0)
 
 - Una vez terminamos este paso, el menu unicamente ira pidiendo los datos, las pocisiones 0 se aprovecharon para colocar las etiquetas, y la primer posicion en vista de su uso nulo fue utilizada para el calculo de meses acumulados, de esta manera no hay espacios desperdiciados y no afectará, puesto que esta conversion es la unica que no pide datos más halla de los meses, así que se pueden manejar sus parametros de una manera que el usuario no se confunda.
 
+- Para finalizar, el valor se calculara pidiendo la posición del array que contiene el modelo necesario, y se llamara a la propiuedad predict, a la cual le ingresaremos la cantidad que el ususario desee.
 
+- Para los meses es similar, solo que en este caso no se necesita hacer uso del array, pero puesto que ya se asigno lo utilizamos, y llamamos a predict con el numero de meses.
 
 ## Algunos ejemplos de los conversores
 > Acontinuación se mostraran algunos de los ejemplos realizados.
 
-*Conversor con Tensorflow* | *Conversor de Google*
------------- | -------------
-![Uso de las tarjetas de credito por sexo](Credit_Card_For_Gender.png) | [Credit_Card_For_Gender.xlsx](Credit_Card_For_Gender.xlsx)
+ *Tipo de Conversor* | *Conversor con Tensorflow* | *Conversor de Google*
+-|-|-
+Longitud, Metors a Yardas|![150 metros son 162.6355 yardas](MeterYard.png) | ![150 metros son 164.042 yardas](GoogleMeterYard.png)
+Masa, Gramos a Stones|![15700.0 Gramos son 2.4723 Stones](GramStone.png) | ![15700.0 Gramos son 2.4723268 Stones](GoogleGramStone.png)
+Almacenamiento, Gigabyte a Megabyte|![15700.0 Gramos son 2.4723 Stones](MbKb.png) | ![15700.0 Gramos son 2.4723268 Stones](GoogleMbKb.png)
+Tiempo, Horas a Semanas|![15700.0 Gramos son 2.4723 Stones](HoraSemana.png) | ![15700.0 Gramos son 2.4723268 Stones](GoogleHoraSemana.png)
+Area, Hectareas a Pies Cuadrados|![15700.0 Gramos son 2.4723 Stones](HectareaKilometroCua.png) | ![15700.0 Gramos son 2.4723268 Stones](GoogleHectareaKilometroCua.png)
+Meses Acumulados | ![8 meses acumulados son 39.9839](Meses.png) | ![8 meses acumulados son 36](Meses.jpeg)
+
+## Datos finales
+
+- Algunas veces la AI tiene errores, especialmente al usarla por primera vez, en caso de sentir que erra mucho seleccionar epochs=500 en cualquier entrenamiento, luego de eso se puede presionar ctr+d, lo que seleccionara al siguiente pratón de caracteres identicos a este, y repetir hasta seleccionar todas las epocas, una vez echo esto presionar la flecha derecha, y den adelante trabajar como si fuese una sola linea, cambiando el dato (sin presionar click, solo con el teclado), para modificar multiples líneas, agregar tantas epocas como se desee.
