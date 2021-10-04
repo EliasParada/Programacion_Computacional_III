@@ -7,8 +7,9 @@ William Alexander Amaya García|USIS032120
 José Daniel Mejía Jovel|USIS010420
 Elías Mauricio Parada Lozano|USIS030320
 
-## Archivo completo
+## Archivo completo y dataser
 #### Archivo de colab: [AI_Conversors.ipynb](AI_Conversors.ipynb)
+#### Dataset para entrenar: [entrenamiento.csv](entrenamiento.csv)
 
 ## Instrucciones
 > Realizar 5 tipos de conversores distintos (longitud, masa, almacenamiento, tiempo y area) y una AI que calcule n meses acumulados
