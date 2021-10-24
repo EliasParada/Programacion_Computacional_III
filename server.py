@@ -31,12 +31,6 @@ class basicServer(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
         self.wfile.write(message.encode())
-    
-    def init(self):
-        self.send_response(200)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.end_headers()
-        self.wfile.write('Iniciar'.encode())
 
 #Subir el dataset
 dataset = pd.read_csv("dataset.csv", sep=";")
@@ -55,7 +49,7 @@ model.compile(optimizer=tf.keras.optimizers.Adam(1), loss='mean_squared_error')
 #Entrenar
 train = model.fit(cel, fahren, epochs=500, verbose=0)
 
-#Predecir
+#Predicciones de prueba
 print('Datos de prueba:')
 print('22 C° son 71.6 F°')
 print('45 C° son 113 F°')

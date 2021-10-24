@@ -6,61 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convertir Celcius a Fahrenheits</title>
     <style>
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button  {
-            -webkit-appearance: none;
-        }
         input[type=number] {
             -moz-appearance:textfield;
             text-align: right;
-            border: 1px solid gray;
-            float: left;
-            width: 200px;
+            border: 1px solid #EAF2F8;
+            background-color: #D6EAF8;
+            margin: 5px auto;
+            width: 300px;
             height: 30px;
-            font-size: x-large;
+            font-size: 26px;
+            border-radius: 20px;
+            transition: all .5s;
         }
-        body, html {
-            padding: 0;
-            margin: 0;
-            width: 100%;
-            height: 100%;
+        input[type=number]:active {
+            background-color: #AED6F1;
+        }
+        input[type=submit] {
+            margin: 5px auto;
+            text-align: center;
+            width: 200px;
+            height: 34px;
+            font-size: 20px;
+            background-color: transparent;
+            border: 1px solid #EAF2F8;
+            color: white;
+            border-radius: 20px;
+            transition: all .5s;
+        }
+        input[type=submit]:hover {
+            background-color: #5DADE2;
+        }
+        input[type=submit]:active {
+            background-color: #2E86C1;
+        }
+        h1 {
+            color: white;
         }
         .father {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: rgb(231 237 255);
+            color: white;
+            width: 800px;
+            height: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #D6EAF8;
             font-family: sans-serif;
-            display: flex;
-            align-content: stretch;
-            justify-content: space-evenly;
-            flex-direction: column;
-            align-items: center;
+            border-radius: 20px;
         }
         .input {
-            padding: 20px;
-            background-color: rgb(0 25 255 / 15%);
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            transition: all .5s;
-            font-size: smaller;
             width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #2E86C1;
+            transition: all .5s;
             border-radius: 20px;
         }
         .output {
+            margin: 50px auto;
             transition: all .5s;
-            background-color: rgb(0 25 255 / 15%);
-            font-size: smaller;
+            background-color: #2E86C1;
+            font-size: 15px;
             width: 400px;
             padding: 20px;
             text-align: center;
             border-radius: 20px;
         }
         .active {
-            background-color: rgb(0 25 255 / 20%);
+            background-color: #21618C;
             width: 600px;
-            font-size: x-large;
+            font-size: 26px;
         }
     </style>
 </head>
@@ -68,9 +82,8 @@
     <div class="father">
         <form action="POST" class="input active" id="input">
             <h2>Ingresa la cantidad en celcius</h2>
-            <input type="number" placeholder="Ejemplo: 120.50">
-            <!-- <p>C°</p> -->
-            <input type="submit" value="Calcular">
+            <input type="number" placeholder="Ejemplo: 120.50"><br>
+            <input type="submit" value="Convertir">
         </form>
         
         <div class="output" id="output">
@@ -88,7 +101,7 @@
                 $('#output').attr("class", "output");
             }
             inputs[0].onsubmit = e => {
-                console.log(inputs[0].value, this);
+                console.log(inputs[0].value);
                 calc(inputs[0].value);
                 $('#input').attr("class", "input");
                 $('#output').attr("class", "output active");
