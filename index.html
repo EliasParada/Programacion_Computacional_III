@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertir Celcius a Fahrenheits</title>
+    <style>
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button  {
+            -webkit-appearance: none;
+        }
+        input[type=number] {
+            -moz-appearance:textfield;
+            text-align: right;
+            border: 1px solid gray;
+            float: left;
+            width: 200px;
+            height: 30px;
+            font-size: x-large;
+        }
+        body, html {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .father {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(231 237 255);
+            font-family: sans-serif;
+            display: flex;
+            align-content: stretch;
+            justify-content: space-evenly;
+            flex-direction: column;
+            align-items: center;
+        }
+        .input {
+            padding: 20px;
+            background-color: rgb(0 25 255 / 15%);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            transition: all .5s;
+            font-size: smaller;
+            width: 400px;
+            border-radius: 20px;
+        }
+        .output {
+            transition: all .5s;
+            background-color: rgb(0 25 255 / 15%);
+            font-size: smaller;
+            width: 400px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 20px;
+        }
+        .active {
+            background-color: rgb(0 25 255 / 20%);
+            width: 600px;
+            font-size: x-large;
+        }
+    </style>
+</head>
+<body>
+    <div class="father">
+        <form action="POST" class="input active" id="input">
+            <h2>Ingresa la cantidad en celcius</h2>
+            <input type="number" placeholder="Ejemplo: 120.50">
+            <!-- <p>C°</p> -->
+            <input type="submit" value="Calcular">
+        </form>
+        
+        <div class="output" id="output">
+            <span id="result">Convierte grados celcius a fahrenheits </span>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(e => {
+            let inputs = $('input');
+    
+            inputs[0].onclick = e => {
+                $('#input').attr("class", "input active");
+                $('#output').attr("class", "output");
+            }
+            inputs[0].onsubmit = e => {
+                console.log(inputs[0].value, this);
+                calc(inputs[0].value);
+                $('#input').attr("class", "input");
+                $('#output').attr("class", "output active");
+            };
+            inputs[1].onclick = e => {
+                e.preventDefault();
+                console.log(inputs[0].value);
+                $('#input').attr("class", "input");
+                $('#output').attr("class", "output active");
+                calc(inputs[0].value);
+            };
+            let calc = val => {
+                $.post("http://localhost:3004", val, response => {
+                    $('#result').text(response);
+                });
+            }
+        })
+    </script>
+</body>
+</html>
