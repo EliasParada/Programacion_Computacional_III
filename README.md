@@ -124,6 +124,3 @@ $.post("http://localhost:3004", val, response => {
 });
 ```
 - Y luego de esto nuestra página debería funcionar con nuestro servidor.
-
-## *Ejemplos*
-
