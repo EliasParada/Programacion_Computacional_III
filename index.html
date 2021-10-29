@@ -7,7 +7,7 @@
     <title>Document</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gradient-to-r from-white to-blue-50">
     <!-- <div id="container" class="decoration-clone bg-gradient-to-b from-blue-400 to-blue-600 text-white p-10 ...">  </div>class="container mx-auto px-5">
         <form action="GET" class="bg-blue-300 p-10 w-2\/6 space-y-3 text-black ...">
             <input type="text" name="code" id="txtCode" placeholder="USIS030320" class="block">
@@ -19,30 +19,31 @@
     </div> -->
 
     <div id="container"
-    class="min-h-screen">
+    class="grid grid-row-3 justify-items-center gap-4">
         <div
-        class="p-5 container ring-4 ring-blue-200 rounded bg-blue-400 text-white font-bold w-96 mt-10 mb-4 mx-auto">
+        class="p-2 container ring ring-blue-600 ring-offset-4 rounded bg-gradient-to-r from-blue-400 to-blue-600 text-white text-4xl text-center font-bold w-4/5 mt-10 mb-4">
             <h1>Registrar Alumnos</h1>
         </div>
         <form action="index.html" method="post"
-        class="grid gap-4 grid-cols-2 grid-row-2 w-max bg-blue-100 px-20 py-10 rounded-lg mx-auto">
+        class="grid gap-4 sm:grid-cols-2 sm:grid-row-2 w-4/6 bg-blue-100 p-5 rounded-lg">
             <input type="text" name="code" id="txtCode" placeholder="Code: USIS030320" 
-            class="rounded-lg focus:ring-4">
+            class="rounded-lg focus:ring-4 focus:ring-blue-300">
             <input type="text" name="name" id="txtName" placeholder="Name: Juan Carlos Martinez Guerra" 
-            class="rounded-lg focus:ring-4">
+            class="rounded-lg focus:ring-4 focus:ring-blue-300">
             <input type="tel" name="tel" id="txtTel" placeholder="Tel: 6256-8941"
-            class="rounded-lg focus:ring-4"
+            class="rounded-lg focus:ring-4 focus:ring-blue-300"
             pattern="[0-9]{4}[ -][0-9]{4}" required target="_blank">
 
             <input type="submit" value="send" id="btnSend" 
             class="bg-blue-500 hover:bg-blue-400 text-white font-bold px-4 rounded-lg ring-2 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-75 focus-within:bg-blue-700">
         </form>
 
-        <div id="status">
-                        <div class="p-10 w-64 rounded-lg mx-auto bg-green-200 text-green-700">
+        <div id="status"
+        class="grid grid-row-2 gap-4 w-4/6 text-center">
+            <div class="p-3 w-full rounded-lg bg-gradient-to-r from-green-200 to-green-300 text-green-700">
                 <h2>Alumno Registrado</h2>
             </div>
-            <div class="p-10 w-64 rounded-lg mx-auto bg-red-200 text-red-700">
+            <div class="p-3 w-full rounded-lg bg-gradient-to-r from-red-200 to-red-300 text-red-700">
                 <h2>Alumno No Registrado</h2>
             </div>
         </div>
@@ -62,7 +63,7 @@
             // });
             inputs[3].onclick = e => {
                 e.preventDefault();
-                console.log(e);
+                console.log(e.target);
             }
 
             
