@@ -21,21 +21,31 @@
     <div id="container"
     class="min-h-screen">
         <div
-        class="container ring-4 ring-blue-200 rounded bg-blue-400 text-white w-96 mt-10 mb-4 mx-auto">
+        class="p-5 container ring-4 ring-blue-200 rounded bg-blue-400 text-white font-bold w-96 mt-10 mb-4 mx-auto">
             <h1>Registrar Alumnos</h1>
         </div>
         <form action="index.html" method="post"
-        class="grid gap-4 grid-cols-2 grid-row-2 w-max bg-blue-100 px-40 py-10 rounded-lg mx-auto">
-            <input type="text" name="code" id="txtCode" placeholder="USIS030320" 
-            class="rounded-lg">
-            <input type="text" name="name" id="txtName" placeholder="Juan Carlos Martinez Guerra" 
-            class="rounded-lg">
-            <input type="text" name="ajio" id="txtAjio" placeholder="Juan Carlos Martinez Guerra" 
-            class="rounded-lg">
+        class="grid gap-4 grid-cols-2 grid-row-2 w-max bg-blue-100 px-20 py-10 rounded-lg mx-auto">
+            <input type="text" name="code" id="txtCode" placeholder="Code: USIS030320" 
+            class="rounded-lg focus:ring-4">
+            <input type="text" name="name" id="txtName" placeholder="Name: Juan Carlos Martinez Guerra" 
+            class="rounded-lg focus:ring-4">
+            <input type="tel" name="tel" id="txtTel" placeholder="Tel: 6256-8941"
+            class="rounded-lg focus:ring-4"
+            pattern="[0-9]{4}[ -][0-9]{4}" required target="_blank">
 
             <input type="submit" value="send" id="btnSend" 
             class="bg-blue-500 hover:bg-blue-400 text-white font-bold px-4 rounded-lg ring-2 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-75 focus-within:bg-blue-700">
         </form>
+
+        <div id="status">
+                        <div class="p-10 w-64 rounded-lg mx-auto bg-green-200 text-green-700">
+                <h2>Alumno Registrado</h2>
+            </div>
+            <div class="p-10 w-64 rounded-lg mx-auto bg-red-200 text-red-700">
+                <h2>Alumno No Registrado</h2>
+            </div>
+        </div>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -52,7 +62,7 @@
             // });
             inputs[3].onclick = e => {
                 e.preventDefault();
-                console.log('Click');
+                console.log(e);
             }
 
             
