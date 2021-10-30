@@ -24,15 +24,17 @@
         class="p-2 container ring ring-blue-600 ring-offset-4 rounded bg-gradient-to-r from-blue-400 to-blue-600 text-white text-4xl text-center font-bold w-4/5 mt-10 mb-4">
             <h1>Registrar Alumnos</h1>
         </div>
-        <form action="index.html" method="post"
+        <form action="index.html" method="post" id="frmAlumn"
         class="grid gap-4 sm:grid-cols-2 sm:grid-row-2 w-4/6 bg-blue-100 p-5 rounded-lg">
             <input type="text" name="code" id="txtCode" placeholder="Code: USIS030320" 
-            class="rounded-lg focus:ring-4 focus:ring-blue-300">
+            class="rounded-lg focus:ring-4 focus:ring-blue-300"
+            pattern="(^[US|SM]{2})([IS|LI|LA]{2})[0-9]{6}" required>
             <input type="text" name="name" id="txtName" placeholder="Name: Juan Carlos Martinez Guerra" 
-            class="rounded-lg focus:ring-4 focus:ring-blue-300">
+            class="rounded-lg focus:ring-4 focus:ring-blue-300"
+            pattern="(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+(([\s][A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+)*$" required>
             <input type="tel" name="tel" id="txtTel" placeholder="Tel: 6256-8941"
             class="rounded-lg focus:ring-4 focus:ring-blue-300"
-            pattern="[0-9]{4}[ -][0-9]{4}" required target="_blank">
+            pattern="[0-9]{4}[ |-][0-9]{4}" required>
 
             <input type="submit" value="send" id="btnSend" 
             class="bg-blue-500 hover:bg-blue-400 text-white font-bold px-4 rounded-lg ring-2 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-75 focus-within:bg-blue-700">
@@ -54,19 +56,26 @@
         $(document).ready(e => {
             let inputs = $('input');
 
-            inputs.onfocus = e => {
-                e.target.parentElement.classList.add('bg-blue-200');
-            }
-            // inputs.on('focus', e => {
-            //     console.log(e);
-            //     $(e.target).addClass('bg-blue-500');
-            // });
-            inputs[3].onclick = e => {
+            $('#frmAlumn').submit(e => {
                 e.preventDefault();
-                console.log(e.target);
-            }
+                let code = $('#txtCode').val(),
+                    name = $('#txtName').val(),
+                    tel = $('#txtTel').val(),
+                    data = {code, name, tel};
 
-            
+                console.log(data);
+                
+                $.post('http://localhost:3004', JSON.stringify(data), (res, status) => {
+                    console.log(res, status);
+                    if(res.status == 'ok'){
+                        $('#status .bg-green-300').show();
+                        $('#status .bg-red-300').hide();
+                    }else{
+                        $('#status .bg-green-300').hide();
+                        $('#status .bg-red-300').show();
+                    }
+                }, 'json');
+            });            
         });
     </script>
 </body>
