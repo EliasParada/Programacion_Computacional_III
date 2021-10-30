@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Crear una conexion con una base de datos
 import mysql.connector
 import ast
@@ -62,6 +63,18 @@ servidor = HTTPServer(('localhost', 3004), MyHandler)
 #Ejecutar el servidor
 servidor.serve_forever()
 
+=======
+# #Conectar mysql con python
+# import pymysql
+
+# #Conectar con la base de datos
+# conn = pymysql.connect(host='localhost',
+#                        user='root',
+#                        password='',
+#                        db='sistema',
+#                        charset='utf8mb4',
+#                        cursorclass=pymysql.cursors.DictCursor)
+>>>>>>> e391193630727af32d0b8447d03ca2de8bf4dfc4
 
 # #Crear un cursor
 # cursor = conn.cursor()
@@ -72,6 +85,7 @@ servidor.serve_forever()
 #     cursor.execute("SELECT id FROM usuarios WHERE username = '{}'".format(username))
 #     return cursor.fetchone()
 
+<<<<<<< HEAD
 # user = input('Ingrese el nombre de usuario: ')
 # print(get_user_id(user))
 
@@ -111,3 +125,6 @@ servidor.serve_forever()
 
 # #Cerrar la conexion
 # conn.close()
+=======
+# print(get_user_id('admin'))
+>>>>>>> e391193630727af32d0b8447d03ca2de8bf4dfc4
