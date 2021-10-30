@@ -31,11 +31,7 @@
             pattern="(^[US|SM]{2})([IS|LI|LA]{2})[0-9]{6}" required>
             <input type="text" name="name" id="txtName" placeholder="Name: Juan Carlos Martinez Guerra" 
             class="rounded-lg focus:ring-4 focus:ring-blue-300"
-<<<<<<< HEAD
             pattern="(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+(([\s][A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+)*$" required>
-=======
-            pattern="[A-z]{3,15}" required>
->>>>>>> e391193630727af32d0b8447d03ca2de8bf4dfc4
             <input type="tel" name="tel" id="txtTel" placeholder="Tel: 6256-8941"
             class="rounded-lg focus:ring-4 focus:ring-blue-300"
             pattern="[0-9]{4}[ |-][0-9]{4}" required>
@@ -60,35 +56,12 @@
         $(document).ready(e => {
             let inputs = $('input');
 
-<<<<<<< HEAD
             $('#frmAlumn').submit(e => {
                 e.preventDefault();
                 let code = $('#txtCode').val(),
                     name = $('#txtName').val(),
                     tel = $('#txtTel').val(),
                     data = {code, name, tel};
-=======
-            inputs.onfocus = e => {
-                e.target.parentElement.classList.add('bg-blue-200');
-            }
-            // inputs.on('focus', e => {
-            //     console.log(e);
-            //     $(e.target).addClass('bg-blue-500');
-            inputs[3].onclick = e => {
-                e.preventDefault();
-
-                let code = inputs[0].value,
-                    alumn = inputs[1].value,
-                    tel = inputs[2].value,
-                    data = {code, alumn, tel};
-
-                console.log(data);
-
-                $.post("http://localhost:3004", JSON.stringify(datos), (response, status) => {
-                    
-                }, "json");
-            }
->>>>>>> e391193630727af32d0b8447d03ca2de8bf4dfc4
 
                 console.log(data);
                 
