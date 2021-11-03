@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font-Flow</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @font-face{font-family:Inter var;font-weight:100 900;font-display:swap;font-style:normal;font-named-instance:"Regular";src:url(/_next/static/media/Inter-roman-latin.var.8ea4e689450e2f0c3f45a590d73601ce.woff2) format("woff2")}@font-face{font-family:Inter var;font-weight:100 900;font-display:swap;font-style:italic;font-named-instance:"Italic";src:url(/_next/static/media/Inter-italic-latin.var.e1716d2a673d0faa8f1372b4bd6de8ab.woff2) format("woff2")}@font-face{font-family:Source Sans Pro;font-style:normal;font-weight:400;font-display:swap;src:url(/_next/static/media/SourceSansPro-Regular.7a9975d8c02d6933c47df31af5854fb2.otf) format("opentype")}@font-face{font-family:Ubuntu Mono;font-weight:700;font-style:normal;src:url(/_next/static/media/Ubuntu-Mono-bold.c7e922d16dc4870715e291be072a6706.woff2) format("woff2")}@font-face{font-family:Flow;font-weight:400;font-style:normal;src:url(flow-circular.853ff76f08786ae44ca0f167cac8bbe5.woff) format("woff")}
+        .font-flow {
+            font-family: Flow;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .bg-stripes-white {
+            --stripes-color: hsla(0,0%,100%,0.4);
+        }
+        .bg-stripes {
+            background-image: linear-gradient(45deg,var(--stripes-color) 12.5%,transparent 12.5%,transparent 50%,var(--stripes-color) 50%,var(--stripes-color) 62.5%,transparent 62.5%,transparent 100%);
+            background-size: 6px 6px;
+        }
+    </style>
+</head>
+<body class="bg-purple-300 bg-stripes bg-stripes-white">
+    
+    <div class="relative overflow-hidden mb-8"><div class="rounded-t-xl text-white overflow-hidden bg-gradient-to-r from-green-300 to-green-400 p-10">
+        <!-- <img class="float-right mt-2 mr-0 mb-4 ml-10 h-32" src="/img/placeholder-emerald.svg"> -->
+        <p class="text-emerald-500 font-flow text-justify font-medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis et lorem sit amet vehicula. Etiam vel nibh nec nisi euismod mollis ultrices condimentum velit. Proin velit libero, interdum ac rhoncus sit amet, pellentesque ac turpis. Quisque ac luctus turpis, vel efficitur ante. Cras convallis risus vel vehicula dapibus. Donec eget neque fringilla, faucibus mi quis, porttitor magna. Cras pellentesque leo est, et luctus neque rutrum eu. Aliquam consequat velit sed sem posuere, vitae sollicitudin mi consequat. Mauris eget ipsum sed dui rutrum fringilla. Donec varius vehicula magna sit amet auctor. Ut congue vehicula lectus in blandit. Vivamus suscipit eleifend turpis, nec sodales sem vulputate a. Curabitur pulvinar libero viverra, efficitur odio eu, finibus justo. Etiam eu vehicula felis.</p>
+      </div><div class="overflow-hidden rounded-b-xl bg-emerald-500"><pre class="scrollbar-none overflow-x-auto p-6 text-sm leading-snug language-html text-white bg-black bg-opacity-75"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="code-highlight bg-code-highlight">float-right</span> ...<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>path/to/image.jpg<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis et lorem sit amet vehicula. Etiam vel nibh nec nisi euismod mollis ultrices condimentum velit. Proin velit libero, interdum ac rhoncus sit amet, pellentesque ac turpis. Quisque ac luctus turpis, vel efficitur ante. Cras convallis risus vel vehicula dapibus. Donec eget neque fringilla, faucibus mi quis, porttitor magna. Cras pellentesque leo est, et luctus neque rutrum eu. Aliquam consequat velit sed sem posuere, vitae sollicitudin mi consequat. Mauris eget ipsum sed dui rutrum fringilla. Donec varius vehicula magna sit amet auctor. Ut congue vehicula lectus in blandit. Vivamus suscipit eleifend turpis, nec sodales sem vulputate a. Curabitur pulvinar libero viverra, efficitur odio eu, finibus justo. Etiam eu vehicula felis.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span></code></pre></div></div>
+
+</body>
+</html>
