@@ -1,12 +1,8 @@
-#Crear una conexion con una base de datos
 import mysql.connector
-# import ast
 import json
 
 from urllib import parse
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-
-#Crear una conexion con la base de datos
 
 class crud:
     def __init__(self):
@@ -31,7 +27,6 @@ class crud:
 
 crud = crud()
 
-#Crear una clase para manejar las peticiones
 class servidorBasico(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
