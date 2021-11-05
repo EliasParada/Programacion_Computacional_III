@@ -54,6 +54,10 @@
                 <h2>Alumno Registrado</h2>
             </div>
         </div>
+
+        <div id="prueba">
+
+        </div>
     </div>
 
     
@@ -62,8 +66,20 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(e => {
-            $.post('http://localhost:3004/get', JSON.stringify({}), data => {
-                console.log(data);
+            $.post('http://localhost:3004/get', JSON.stringify({}), (data, status) => {
+                let obj = JSON.parse(data);
+                console.log(obj.status);
+                console.log(obj.message);
+                
+                $.each(obj.data, (i, v) => {
+                    $('#prueba').append(`<p>${v.title}</p>`);
+                    //Agregarle style a los elementos
+                    $('#prueba p').css({
+                        'font-size': '20px',
+                        'color': 'red'
+                    });
+                    
+                });
             });
 
             let inputs = $('input');

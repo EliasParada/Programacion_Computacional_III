@@ -89,6 +89,7 @@ class mongoCRUD():
             # print('\033[4;1;37;42m Libros \033[0;m')
             for book in self.books.find():
                 books[book['id']] = book
+                books[book['id']]['_id'] = str(book['_id']) 
                 # print(f"\033[3;4;30;47m {book['id']}|{book['title']} \033[0;m")
             return {'status': 'OK', 'message': 'Libros', 'data': books}
         except pymongo.errors.ServerSelectionTimeoutError as timeError:
