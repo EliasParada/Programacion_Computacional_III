@@ -62,6 +62,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(e => {
+            $.post('http://localhost:3004/get', JSON.stringify({}), data => {
+                console.log(data);
+            });
+
             let inputs = $('input');
             $('#frmAlumn').submit(e => {
                 e.preventDefault();
@@ -70,7 +74,7 @@
                     tel = inputs[2].value,
                     data = {code, name, tel};
 
-                $.post('http://localhost:3000/insert', JSON.stringify(data), (response, status) => {
+                $.post('http://localhost:3004/insert', JSON.stringify(data), (response, status) => {
                     $('#msg').removeClass('hidden');
                     if(response.status == true) {
                         inputs.val('');

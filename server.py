@@ -1,152 +1,159 @@
-import mysql.connector
+#Crear un servidor que conecte a mongoDB
+#y que permita insertar, eliminar y actualizar
+#datos en la base de datos
+from types import prepare_class
+import pymongo
 import json
+import math
 
 from urllib import parse
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-class crud:
+from pymongo.database import SystemJS
+
+mongo_time_out = '1000'
+
+mongo_uri = 'mongodb://127.0.0.1:27017/'
+
+#crear una clase que permita conectarse a mongoDB
+class mongoCRUD():
     def __init__(self):
-        self.conn = mysql.connector.connect(host='localhost', port='3307', user='root',password='', database='bd_academica')
-        if self.conn.is_connected():
-            print('¡Conexión exitosa!')
-        else:
-            print('No se ha podido conectar a la base de datos')
-        pass
-
-    def insertar(self, code, name, tel):
         try:
-            cursor = self.conn.cursor()
-            sql = "INSERT INTO alumnos (CodAlm, NomAlm, TelAlm) VALUES (%s, %s, %s)"
-            val = (code, name, tel)
-            cursor.execute(sql, val)
-            self.conn.commit()
-            return {'status': True, 'msg': 'Se ha insertado correctamente'}
-        except Exception as e:
-            print(e)
-            return {'status': False, 'msg': str(e)}
+            self.connection = pymongo.MongoClient(mongo_uri, connectTimeoutMS=int(mongo_time_out))
+            self.library = self.connection['library']
+            self.books = self.library['books']
+            # print('\033[4;37;44m Libros \033[0;m')
+            # for book in self.books.find():
+            #     print(f"\033[3;4;30;47m {book['id']}|{book['title']} \033[0;m")
+            print('\033[4;1;37;42m Conexion exitosa \033[0;m')
+            self.add_books({})
+            self.get_books()
+            self.update_books(None, {})
+            self.delete_books({})
+        except pymongo.errors.ServerSelectionTimeoutError as timeError:
+            print(f'\033[4;1;37;41m Demasiado tiempo de espera: {timeError} \033[0;m')
+        except pymongo.errors.ConnectionFailure as connError:
+            print(f'\033[4;1;37;41m Error de conexion: {connError} \033[0;m')
 
-crud = crud()
+    def add_books(self, book):
+        try:
+            if book == {}:
+                print('\033[4;1;37;41m Datos vacios \033[0;m')
+                return {'status': 'ERROR', 'message': 'Datos vacios'}
+            else:
+                self.books.insert_one(book)
+                print('\033[4;1;37;42m Libro agregado \033[0;m')
+                return {'status': 'OK', 'message': 'Libro agregado'}
+        except pymongo.errors.ServerSelectionTimeoutError as timeError:
+            print(f'\033[4;1;37;41m Demasiado tiempo de espera: {timeError} \033[0;m')
+            return {'status': 'ERROR', 'message': 'Demasiado tiempo de espera'}
+        except pymongo.errors.ConnectionFailure as connError:
+            print(f'\033[4;1;37;41m Error de conexion: {connError} \033[0;m')
+            return {'status': 'ERROR', 'message': 'Error de conexion'}
+        
+    def delete_books(self, id):
+        try:
+            if id == {}:
+                print('\033[4;1;37;41m Id vacio \033[0;m')
+                return {'status': 'ERROR', 'message': 'Id vacio'}
+            else:
+                self.books.delete_one({'id': id})
+                print('\033[4;1;37;42m Libro eliminado \033[0;m')
+                return {'status': 'OK', 'message': 'Libro eliminado'}
+        except pymongo.errors.ServerSelectionTimeoutError as timeError:
+            print(f'\033[4;1;37;41m Demasiado tiempo de espera: {timeError} \033[0;m')
+            return {'status': 'ERROR', 'message': 'Demasiado tiempo de espera'}
+        except pymongo.errors.ConnectionFailure as connError:
+            print(f'\033[4;1;37;41m Error de conexion: {connError} \033[0;m')
+            return {'status': 'ERROR', 'message': 'Error de conexion'}
 
-class servidorBasico(SimpleHTTPRequestHandler):
+    def update_books(self, id, book):
+        try:
+            if id == None:
+                print('\033[4;1;37;41m Id vacio \033[0;m')
+                return {'status': 'ERROR', 'message': 'Id vacio'}
+            else:
+                self.books.update_one({'id': id}, {'$set': book})
+                print('\033[4;1;37;42m Libro actualizado \033[0;m')
+                return {'status': 'OK', 'message': 'Libro actualizado'}
+        except pymongo.errors.ServerSelectionTimeoutError as timeError:
+            print(f'\033[4;1;37;41m Demasiado tiempo de espera: {timeError} \033[0;m')
+            return {'status': 'ERROR', 'message': 'Demasiado tiempo de espera'}
+        except pymongo.errors.ConnectionFailure as connError:
+            print(f'\033[4;1;37;41m Error de conexion: {connError} \033[0;m')
+            return {'status': 'ERROR', 'message': 'Error de conexion'}
+
+    def get_books(self):
+        try:
+            books = {}
+            # print('\033[4;1;37;42m Libros \033[0;m')
+            for book in self.books.find():
+                books[book['id']] = book
+                # print(f"\033[3;4;30;47m {book['id']}|{book['title']} \033[0;m")
+            return {'status': 'OK', 'message': 'Libros', 'data': books}
+        except pymongo.errors.ServerSelectionTimeoutError as timeError:
+            print(f'\033[4;1;37;41m Demasiado tiempo de espera: {timeError} \033[0;m')
+            return {'status': 'ERROR', 'message': 'Demasiado tiempo de espera'}
+        except pymongo.errors.ConnectionFailure as connError:
+            print(f'\033[4;1;37;41m Error de conexion: {connError} \033[0;m')
+            return {'status': 'ERROR', 'message': 'Error de conexion'}
+    
+mongo = mongoCRUD()
+# mongo.test()
+# mongo.add_books({'id': 'B0003', 'title': 'El señor de los anillos', 'argument': 'sinopsis', 'tags':'some', 'author': 'J.R.R. Tolkien', 'lan':'enUS', 'date': '1954'})
+# mongo.delete_books('B0003')
+# mongo.update_books('B0003', {'title': 'El señor de los anillos 2', 'argument': 'sinopsis', 'tags':'some', 'author': 'J.R.R. Tolkien', 'lan':'enUS', 'date': '1954'})
+class localServer(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
             self.path = '/index.html'
             return SimpleHTTPRequestHandler.do_GET(self)
-
+    
     def do_POST(self):
-        if self.path == '/insert':
-            #Recibir los datos
-            content_length = int(self.headers['Content-Length'])
-            data = self.rfile.read(content_length)
-            data = data.decode('utf-8')
-            data = parse.unquote(data)
-            data = json.loads(data)
-            print(data)
-            resp = crud.insertar(data['code'], data['name'], data['tel'])
+        content_length = int(self.headers['Content-Length'])
+        body = self.rfile.read(content_length)
+        body = parse.unquote(body.decode('utf-8'))
+        print(body)
+        body = json.loads(body)
+        print(self.path)
+
+        if self.path == '/add':
+            response = mongo.add_books(body)
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(json.dumps(resp).encode('utf-8'))
+            self.wfile.write(json.dumps(response).encode('utf-8'))
 
-print('Initialized server in 3000 server')
-server = HTTPServer(('localhost', 3000), servidorBasico)
-server.serve_forever()
+        elif self.path == '/delete':
+            response = mongo.delete_books(body)
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(response).encode('utf-8'))
 
+        elif self.path == '/update':
+            response = mongo.update_books(body)
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(response).encode('utf-8'))
 
-# #Crear una clase para manejar las peticiones
-# class MyHandler(SimpleHTTPRequestHandler):
-#     #Crear el metodo GET
-#     def do_GET(self):
-#         #Recibir la peticion
-#         self.send_response(200)
-#         self.send_header('Content-type', 'text/html')
-#         self.end_headers()
-#         self.wfile.write(bytes("<html><head><title>Servidor Local 3004</title></head>", "utf-8"))
-#         self.wfile.write(bytes("<body><p>Servidor en el puerto 3004</p></body>", "utf-8"))
-#         self.wfile.write(bytes("<img src='https://static.wixstatic.com/media/580deb_093dff4dd68d43bcb88a2b02e25d2a84~mv2.gif'></html>", "utf-8"))
+        elif self.path == '/get':
+            response = mongo.get_books()
+            print(response)
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(response).encode('utf-8'))
         
-#     #Crear el metodo POST
-#     def do_POST(self):
-#         #Obtener el tamano del cuerpo de la peticion
-#         length = int(self.headers['Content-Length'])
-#         #Obtener el cuerpo de la peticion
-#         body = self.rfile.read(length).decode('utf-8')
-#         print(type(body), body)
-#         #Convertir el cuerpo de la peticion a un diccionario
-#         body = ast.literal_eval(body)
-#         print(body)
-#         #Obtener el valor de los parametros código, nombres y telefono
-#         code = body['code']
-#         name = body['name']
-#         tel = body['tel']
-        
-#         #Crear el cursor
-#         cursor = conn.cursor()
-#         #Crear la consulta para agregar a un alumno
-#         print('Code is {}, name is {} and tel is {}'.format(code, name, tel))
-#         cursor.execute("INSERT INTO alumnos (code, name, tel) VALUES ('{}', '{}', '{}')".format(code, name, tel))
-#         #Guardar los cambios
-#         conn.commit()
-#         #Cerrar el cursor
-#         cursor.close()
-#         #Enviar la respuesta
-#         self.send_response(200)
-#         self.send_header('Access-Control-Allow-Origin', '*')
-#         self.end_headers()
-#         #enviar la respuesta
-#         self.wfile.write('Send'.encode('utf-8'))
+        elif self.path == '/found':
+            response = mongo.get_books(body)
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(response).encode('utf-8'))
 
-# #inicializar el servidor
-# print('Inicializando el servidor...')
-# servidor = HTTPServer(('localhost', 3004), MyHandler)
-# #Ejecutar el servidor
-# servidor.serve_forever()
+        else:
+            self.send_response(404)
+            self.end_headers()
+            self.wfile.write(bytes('Not found', 'utf-8'))
 
-
-# #Crear un cursor
-# cursor = conn.cursor()
-
-# #Crear una funcion para obtener el id de un usuario
-# def get_user_id(username):
-#     #Obtener el id del usuario
-#     cursor.execute("SELECT id FROM usuarios WHERE username = '{}'".format(username))
-#     return cursor.fetchone()
-
-# user = input('Ingrese el nombre de usuario: ')
-# print(get_user_id(user))
-
-# #crear una funcion para agregar un usuario
-# def add_user(id, username):
-#     #Agregar un usuario
-#     cursor.execute("INSERT INTO usuarios (id, username) VALUES ('{}', '{}')".format(id, username))
-#     conn.commit()
-#     return cursor.lastrowid
-
-# new_id = input('Ingrese el id: ')
-# new_user = input('Ingrese el nombre de usuario: ')
-# add_user(new_id, new_user)
-
-# #Crear una funcion para obtener la tabla de usuarios
-# def get_all_users():
-#     #Obtener todos los usuarios
-#     cursor.execute("SELECT * FROM usuarios")
-#     return cursor.fetchall()
-
-
-# for row in get_all_users():
-#     print(row)
-
-# #Crear una funcion para eliminar un usuario
-# def delete_user(id):
-#     #Eliminar un usuario
-#     cursor.execute("DELETE FROM usuarios WHERE id = '{}'".format(id))
-#     conn.commit()
-#     return cursor.rowcount
-
-# allow_delete = input('¿Desea eliminar el usuario? (y/n): ')
-# if allow_delete == 'y':
-#     user_id = input('Ingrese el id del usuario: ')
-#     delete_user(user_id)
-#     print('Usuario eliminado')
-
-# #Cerrar la conexion
-# conn.close()
+#Iniciar el servidor
+print('\033[4;1;37;42m Iniciando servidor \033[0;m')
+httpd = HTTPServer(('localhost', 3004), localServer)
+httpd.serve_forever()
