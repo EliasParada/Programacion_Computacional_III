@@ -32,8 +32,8 @@
         class="p-2 container ring ring-blue-600 ring-offset-4 rounded bg-gradient-to-r from-blue-400 to-blue-600 text-white text-4xl text-center font-bold w-4/5 mt-10 shadow-xl">
             <h1>Registrar Alumnos</h1>
         </div>
-        <form action="index.html" method="post" id="frmAlumn"
-        class="grid gap-4 sm:grid-cols-2 sm:grid-row-2 w-4/6 bg-blue-100 p-5 rounded-lg shadow-xl">
+        <form action="index.html" method="post" id="frmAlumn" data-="new" data-idalm="0"
+        class="grid gap-4 sm:grid-cols-2 sm:grid-row-3 w-4/6 bg-blue-100 p-5 rounded-lg shadow-xl">
             <input type="text" name="code" id="txtCode" placeholder="Code: USIS030320" 
             class="rounded-lg focus:ring-4 focus:ring-blue-300 shadow-inner"
             pattern="(^[US|SM]{2})([IS|LI|LA]{2})[0-9]{6}" required>
@@ -45,7 +45,9 @@
             pattern="[0-9]{4}[ |-][0-9]{4}" required>
 
             <input type="submit" value="send" id="btnSend" 
-            class="bg-blue-500 hover:bg-blue-400 text-white font-bold px-4 rounded-lg ring-2 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-75 focus-within:bg-blue-700 shadow-inner">
+            class="row-start-3 bg-blue-500 hover:bg-blue-400 text-white font-bold px-4 rounded-lg ring-2 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-75 focus-within:bg-blue-700 shadow-inner">
+            <input type="reset" value="Reset" id="btnReset"
+            class="row-start-3 col-start-2 bg-blue-500 hover:bg-blue-400 text-white font-bold px-4 rounded-lg ring-2 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-75 focus-within:bg-blue-700 shadow-inner">
         </form>
 
         <div
@@ -91,36 +93,58 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
+        function showAlumns(data) {
+            $('#frmAlumn')
+                .data("accion", "update")
+                .data('idalm', data.id)
+            
+            $('#txtCode').val(data.code);
+            $('#txtName').val(data.name);
+            $('#txtTel').val(data.tel);
+        }
+
+        function clearForm() {
+            $('#frmAlumn')
+                .data("accion", "new")
+                .data('idalm', 0)
+            $('·frmAlumn input[type=text]').val('');
+        }
+
+
+        function getAlumns(){
+            $.get("http://localhost:3000/consult", (data, status) =>{
+                $("#tblSearch tbody tr").remove();
+
+                if (data.length > 0) {
+                    data.forEach(element => {
+                        $("#tblSearch tbody").append(`
+                            <tr onclick="showAlum${JSON.stringify(element)}">
+                                <td>${element.code}</td>
+                                <td>${element.name}</td>
+                                <td>${element.tel}</td>
+                                <td>
+                                    <button class="btn btn-danger" onclick="deleteAlumn('${JSON.stringify(element)}')">Delete</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                } else {
+                    $("#tblSearch tbody").append(`
+                        <tr>
+                            <td colspan="4">No hay alumnos registrados</td>
+                        </tr>
+                    `);
+                }	
+                $("#tblSearch tbody").html(data);
+            }, "json");
+        }
         $(document).ready(e => {
             getAlumns();
 
-            function getAlumns(){
-                $.get("http://localhost:3000/consult", (data, status) =>{
-                    $("#tblSearch tbody tr").remove();
-
-                    if (data.length > 0) {
-                        data.forEach(element => {
-                            $("#tblSearch tbody").append(`
-                                <tr onclick="ShowAlum${JSON.stringify(element)}">
-                                    <td>${element.code}</td>
-                                    <td>${element.name}</td>
-                                    <td>${element.tel}</td>
-                                    <td>
-                                        <button class="btn btn-danger" onclick="deleteAlumn('${JSON.stringify(element)}')">Delete</button>
-                                    </td>
-                                </tr>
-                            `);
-                        });
-                    } else {
-                        $("#tblSearch tbody").append(`
-                            <tr>
-                                <td colspan="4">No hay alumnos registrados</td>
-                            </tr>
-                        `);
-                    }	
-                    $("#tblSearch tbody").html(data);
-                });
-            }
+            //Resetear formulario
+            $("#frmAlumn").on("reset", e => {
+                clearForm();
+            });
 
             let inputs = $('input');
             $('#frmAlumn').submit(e => {
