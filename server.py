@@ -25,6 +25,17 @@ class crud:
             print(e)
             return {'status': False, 'msg': str(e)}
 
+    def consultar(self):
+        try:
+            cursor = self.conn.cursor(dictionary=True)
+            sql = "SELECT * FROM alumnos"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return {'status': True, 'msg': result}
+        except Exception as e:
+            print(e)
+            return {'status': False, 'msg': str(e)}
+
 crud = crud()
 
 class servidorBasico(SimpleHTTPRequestHandler):
@@ -32,6 +43,12 @@ class servidorBasico(SimpleHTTPRequestHandler):
         if self.path == '/':
             self.path = '/index.html'
             return SimpleHTTPRequestHandler.do_GET(self)
+        
+        if self.path == '/consult':
+            resp = crud.consultar()
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(resp).encode('utf-8'))
 
     def do_POST(self):
         if self.path == '/insert':
