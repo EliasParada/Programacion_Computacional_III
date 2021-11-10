@@ -1,0 +1,22 @@
+SELECT * FROM ux_usuarios
+
+
+SELECT * FROM bx_biblioteca
+
+
+SELECT * FROM lx_libros
+
+
+SELECT dex_indice.dexCod, lx_libros.lxTitle,bx_biblioteca.bxDepart, bx_biblioteca.bxMuni, dex_indice.dexExistence from dex_indice
+inner JOIN lx_libros on dex_indice.lxCod = lx_libros.lxCod
+inner JOIN bx_biblioteca on dex_indice.bxCod = bx_biblioteca.bxCod;
+
+
+
+
+SELECT rx_reservas.rxCod, rx_reservas.rxDate, rx_reservas.uxDui, ux_usuarios.uxFullName, rx_reservas.dexCod,dex_indice.lxCod, lx_libros.lxTitle, dex_indice.bxCod,bx_biblioteca.bxDepart, bx_biblioteca.bxMuni, rx_reservas.rxReturn, DATEDIFF(rx_reservas.rxReturn,rx_reservas.rxDate) as dias
+from rx_reservas
+inner JOIN ux_usuarios on rx_reservas.uxDui = ux_usuarios.uxDUI
+inner join dex_indice on rx_reservas.dexCod = dex_indice.dexCod
+inner JOIN lx_libros on dex_indice.lxCod = lx_libros.lxCod
+inner JOIN bx_biblioteca on bx_biblioteca.bxCod = dex_indice.bxCod
