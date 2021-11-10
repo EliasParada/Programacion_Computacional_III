@@ -158,3 +158,5 @@ class localServer(SimpleHTTPRequestHandler):
 print('\033[4;1;37;42m Iniciando servidor \033[0;m')
 httpd = HTTPServer(('localhost', 3004), localServer)
 httpd.serve_forever()
+
+
