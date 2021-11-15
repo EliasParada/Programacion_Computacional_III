@@ -5,90 +5,112 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <div>
-        <div id="tab1">
-            <div>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="admin.html" class="brand-logo">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="adminusers.html">Usuarios</a></li>
+                <li><a href="adminemployes.html">Empleados</a></li>
+                <li><a href="admin.html"></a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <ul class="tabs">
+            <li class="tab col s3"><a class="active" href="#tab1">Productos</a></li>
+            <li class="tab col s3"><a href="#tab2">Categorias</a></li>
+            <li class="tab col s3"><a href="#tab3">Proveedores</a></li>
+            <li class="tab col s3"><a href="#tab4">Usuarios</a></li>
+            <li class="tab col s3"><a href="#tab5">Permisos</a></li>
+        </ul>
+        <div id="tab1" class="col s12">
+            <div class="row">
                 <!-- SECCION PARA LOS PRODUCTOS -->
-                <div>
-                    <div>
-                        <div>
-                            <span id="tblTitle">Agregar un nuevo producto</span>
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title" id="tblTitle">Agregar un nuevo producto</span>
                             <form id="frmProduct" data-action="create" data-id="0">
-                                <div>
-                                    <div>
-                                        <div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <div class="input-field">
                                             <input type="text" name="txtPrdName" id="txtPrdName" required>
                                             <label for="txtPrdName">Nombre</label>
                                         </div>
-                                    <div>
-                                        <div>
-                                            <div>
+                                    <div class="row">
+                                        <div class="input-field">
+                                            <div class="switch">
                                                 <label id="lblStatus">
                                                     <input type="checkbox" name="chkStatus" id="chkStatus">
-                                                    <span></span>
+                                                    <span class="lever"></span>
                                                     Archivo/Camara
                                                 </label>
                                             </div>
                                         </div>
-                                        <div id="vidContainer">
-                                            <div id="btnTakePhoto">
+                                        <div class="input-field" id="vidContainer">
+                                            <div class="btn" id="btnTakePhoto">
                                                 <span>
-                                                    <i>Agregar foto</i>
+                                                    <i class="material-icons">add_a_photo</i>
                                                 </span>
                                             </div>
                                             <br>
-                                            <video id="vidProduct" style="margin-top: 0.5rem;"></video>
+                                            <video id="vidProduct" class="responsive-video col s12" style="margin-top: 0.5rem;"></video>
                                         </div>
-                                        <div id="imgContainer">
-                                            <div>
+                                        <div class="file-field input-field" id="imgContainer">
+                                            <div class="btn">
+                                                <span>
+                                                    <i class="material-icons">perm_media</i>
+                                                </span>
                                                 <input type="file" name="imgProduct" id="imgProduct">
                                             </div>
-                                            <div>
-                                                <input type="text" placeholder="Seleccione una imagen">
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Seleccione una imagen">
                                             </div>
                                         </div>
                                     </div>
-                                        <div>
+                                        <div class="input-field">
                                             <select name="slcPrdProvider" id="slcPrdProvider" required>
                                                 <option value="" disabled selected>Seleccione una marca</option>
                                             </select>
                                             <label for="slcPrdProvider">Proveedores</label>
                                         </div>
-                                        <div>
+                                        <div class="input-field">
                                             <input type="date" name="txtPrdCreateDate" id="txtPrdCreateDate" required>
                                             <label for="txtPrdCreateDate">Fecha de fabricacion</label>
                                         </div>
-                                        <div>
+                                        <div class="input-field">
                                             <input type="date" name="txtPrdExpiration" id="txtPrdExpiration" required>
                                             <label for="txtPrdExpiration">Fecha de vencimiento</label>
                                         </div>
-                                        <div>
+                                        <div class="input-field">
                                             <select name="slcPrdCategory" id="slcPrdCategory" required>
                                                 <option value="" disabled selected>Seleccione una categoría</option>
                                             </select>
                                             <label for="slcPrdCategory">Categorias</label>
                                         </div>
-                                        <div>
+                                        <div class="input-field">
                                             <input type="number" name="txtPrdPrice" id="txtPrdPrice" required>
                                             <label for="txtPrdPrice">Precio</label>
                                         </div>
                                         
                                     </div>
-                                    <div>
-                                        <div>
-                                            <p id="namePrdPreview"></p>
+                                    <div class="col s6">
+                                        <div class="input-field">
+                                            <p class="center-align" id="namePrdPreview"></p>
                                             <img src="" alt="" id="imgPrdPreview" class="responsive">
                                             <canvas id="canvas" class="none" hidden></canvas>
                                             <canvas id="canvas2" class="none" hidden></canvas>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div>
-                                        <button type="submit" name="btnAction">
-                                            <i>Enviar</i>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <button class="btn waves-effect waves-light" type="submit" name="btnAction">
+                                            <i class="material-icons">send</i>
                                         </button>
                                     </div>
                                 </div>
@@ -97,15 +119,15 @@
                     </div>
                 </div>
                 <!-- Tabla Productos -->
-                <div>
-                    <div>
-                        <div>
-                            <span>Productos</span>
-                            <table >
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Productos</span>
+                            <table class="responsive-table highlight">
                                 <thead>
                                     <tr>
                                         <th colspan="9">
-                                            <div>
+                                            <div class="input-field">
                                                 <input type="text" id="txtSearch">
                                                 <label for="txtSearch">Buscar</label>
                                             </div>
@@ -124,6 +146,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tblProducts">
+                                    <!-- ... -->
                                 </tbody>
                             </table>
                         </div>
@@ -131,36 +154,38 @@
                 </div>
             </div>
         </div>
-        <div id="tab2">
-            <div>
-                <div>
-                    <div>
-                        <div>
-                            <span id="tblTitle">Agregar una nueva categoría</span>
+        <!-- SECCION PARA LAS CATEGORIAS -->
+        <div id="tab2" class="col s12">
+            <div class="row">
+                <!-- FORMULARIO PARA AGREGAR CATEGORIAS -->
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title" id="tblTitle">Agregar una nueva categoría</span>
                             <form id="frmCategory" data-action="create" data-id="0">
-                                <div>
-                                    <div>
-                                        <div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <div class="input-field">
                                             <input type="text" name="txtCatName" id="txtCatName" data-length="25" required>
                                             <label for="txtCatName">Nombre</label>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div>
-                                            <textarea name="txtCatDescription" id="txtCatDescription" data-length="50" required></textarea>
+                                    <div class="col s6">
+                                        <div class="input-field">
+                                            <textarea name="txtCatDescription" id="txtCatDescription" class="materialize-textarea" data-length="50" required></textarea>
                                             <label for="txtCatDescription">Descripción</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div>
-                                        <button type="submit" name="btnCatAction">
-                                            <i>send</i>
+                                <div class="row">
+                                    <div class="col">
+                                        <button class="btn waves-effect waves-light" type="submit" name="btnCatAction">
+                                            <i class="material-icons">send</i>
                                         </button>
                                     </div>
-                                    <div>
-                                        <button type="reset" name="btnCatReset" id="btnCatReset">
-                                            <i>description</i>
+                                    <div class="col">
+                                        <button class="btn waves-effect waves-light" type="reset" name="btnCatReset" id="btnCatReset">
+                                            <i class="material-icons">description</i>
                                         </button>
                                     </div>
                                 </div>
@@ -168,15 +193,16 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        <div>
-                            <span>Categorias</span>
-                            <table >
+                <!-- TABABLE DE CATEGORIAS -->
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Categorias</span>
+                            <table class="responsive-table highlight">
                                 <thead>
                                     <tr>
                                         <th colspan="3">
-                                            <div>
+                                            <div class="input-field">
                                                 <input type="text" id="txtSearch">
                                                 <label for="txtSearch">Buscar</label>
                                             </div>
@@ -189,6 +215,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tblCategories">
+                                    <!-- ... -->
                                 </tbody>
                             </table>
                         </div>
@@ -196,39 +223,41 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div>
-                <div>
-                    <div>
-                        <div>
-                            <span id="tblTitle">Agregar un nuevo proveedor</span>
+        <!-- SECCION PARA LOS PROVEEDORES -->
+        <div id="tab3" class="col s12">
+            <div class="row">
+                <!-- FORMULARIO PARA PROVEEDORES -->
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title" id="tblTitle">Agregar un nuevo proveedor</span>
                             <form id="frmProvider" data-action="create" data-id="0">
-                                <div>
-                                    <div>
-                                        <div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <div class="input-field">
                                             <input type="text" name="txtProvName" id="txtProvName" data-length="50" required>
                                             <label for="txtProvName">Nombre</label>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div>
+                                    <div class="col s6">
+                                        <div class="input-field">
                                             <input type="tel" name="txtProvPhone" id="txtProvPhone" data-length="10" required>
                                             <label for="txtProvPhone">Telefono</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div>
-                                        <div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <div class="input-field">
                                             <input type="email" name="txtProvEmail" id="txtProvEmail" data-length="100" required>
                                             <label for="txtProvEmail">Correo</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div>
-                                        <button type="submit" name="btnAction">
-                                            <i>Enviar</i>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <button class="btn waves-effect waves-light" type="submit" name="btnAction">
+                                            <i class="material-icons">send</i>
                                         </button>
                                     </div>
                                 </div>
@@ -236,15 +265,16 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        <div>
-                            <span>Proveedores</span>
-                            <table >
+                <!-- TABLA PARA PROVEEDORES -->
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Proveedores</span>
+                            <table class="responsive-table highlight">
                                 <thead>
                                     <tr>
                                         <th colspan="4">
-                                            <div>
+                                            <div class="input-field">
                                                 <input type="text" id="txtSearch">
                                                 <label for="txtSearch">Buscar</label>
                                             </div>
@@ -258,6 +288,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tblProviders">
+                                    <!-- ... -->
                                 </tbody>
                             </table>
                         </div>
@@ -265,53 +296,59 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div>
-                <div>
-                    <div>
-                        <div>
-                            <span id="tblTitle">Agregar un nuevo usuario</span>
+        <div id="tab4" class="col s12">
+            <div class="row">
+                <!-- FORMULARIO PARA USUARIOS -->
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title" id="tblTitle">Agregar un nuevo usuario</span>
                             <form id="frmProvider" data-action="create" data-id="0">
-                                <div>
-                                    <div>
-                                        <div>
+                                <div class="row">
+                                    <div class="col s4">
+                                        <div class="input-field">
                                             <input type="text" name="txtProvPhone" id="txtProvPhone" data-length="10" required>
                                             <label for="txtProvPhone">Nombre</label>
                                         </div>
                                     </div>
-                                    <div id="imgProfileContainer">
-                                        <div>
+                                    <div class="file-field input-field col s4" id="imgProfileContainer">
+                                        <div class="btn">
                                             <span>
-                                                <i>perm_media</i>
+                                                <i class="material-icons">perm_media</i>
                                             </span>
                                             <input type="file" name="imgProfile" id="imgProfile">
                                         </div>
-                                        <div >
+                                        <div class="file-path-wrapper">
                                             <input class="file-path validate" type="text" placeholder="Seleccione una imagen">
                                         </div>
                                     </div>
-                                    <div id="vidUserContainer">
-                                        <video id="vidUser"></video>
+                                    <div class="input-field" id="vidUserContainer">
+                                        <!-- <div class="btn" id="btnTakePhoto">
+                                            <span>
+                                                <i class="material-icons">add_a_photo</i>
+                                            </span>
+                                        </div> -->
+                                        <video id="vidUser" class="responsive-video col s4"></video>
                                     </div>
                                 </div>
-                                <div>
-                                    <div>
-                                        <div>
+                                <div class="row">
+                                    <div class="col s4">
+                                        <div class="input-field">
                                             <input type="text" name="txtProvName" id="txtProvName" data-length="50" required>
                                             <label for="txtProvName">DUI</label>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div>
+                                    <div class="col s6">
+                                        <div class="input-field">
                                             <input type="email" name="txtProvEmail" id="txtProvEmail" data-length="100" required>
                                             <label for="txtProvEmail">Correo</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div>
-                                        <button type="submit" name="btnAction">
-                                            <i>send</i>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <button class="btn waves-effect waves-light" type="submit" name="btnAction">
+                                            <i class="material-icons">send</i>
                                         </button>
                                     </div>
                                 </div>
@@ -319,15 +356,16 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        <div>
-                            <span>Proveedores</span>
-                            <table  id="tblProviders">
+                <!-- TABLA PARA USUARIOS -->
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Proveedores</span>
+                            <table class="responsive-table highlight" id="tblProviders">
                                 <thead>
                                     <tr>
                                         <th colspan="4">
-                                            <div>
+                                            <div class="input-field">
                                                 <input type="text" id="txtSearch">
                                                 <label for="txtSearch">Buscar</label>
                                             </div>
@@ -341,6 +379,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tblProviders">
+                                    <!-- ... -->
                                 </tbody>
                             </table>
                         </div>
@@ -348,39 +387,40 @@
                 </div>
             </div>
         </div>
-        <div>
-            <div>
-                <div>
-                    <div>
-                        <div>
-                            <span id="tblTitle">Agregar un nuevo proveedor</span>
+        <div id="tab5" class="col s12">
+            <div class="row">
+                <!-- FORMULARIO PARA PERMISOS -->
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title" id="tblTitle">Agregar un nuevo proveedor</span>
                             <form id="frmProvider" data-action="create" data-id="0">
-                                <div>
-                                    <div>
-                                        <div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <div class="input-field">
                                             <input type="text" name="txtProvName" id="txtProvName" data-length="50" required>
                                             <label for="txtProvName">Nombre</label>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div>
+                                    <div class="col s6">
+                                        <div class="input-field">
                                             <input type="tel" name="txtProvPhone" id="txtProvPhone" data-length="10" required>
                                             <label for="txtProvPhone">Telefono</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div>
-                                        <div>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <div class="input-field">
                                             <input type="email" name="txtProvEmail" id="txtProvEmail" data-length="100" required>
                                             <label for="txtProvEmail">Correo</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div>
-                                        <button type="submit" name="btnAction">
-                                            <i>Enviar</i>
+                                <div class="row">
+                                    <div class="col s6">
+                                        <button class="btn waves-effect waves-light" type="submit" name="btnAction">
+                                            <i class="material-icons">send</i>
                                         </button>
                                     </div>
                                 </div>
@@ -388,15 +428,16 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        <div>
-                            <span>Proveedores</span>
-                            <table  id="tblProviders">
+                <!-- TABLA PARA PERMISOS -->
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Proveedores</span>
+                            <table class="responsive-table highlight" id="tblProviders">
                                 <thead>
                                     <tr>
                                         <th colspan="4">
-                                            <div>
+                                            <div class="input-field">
                                                 <input type="text" id="txtSearch">
                                                 <label for="txtSearch">Buscar</label>
                                             </div>
@@ -410,6 +451,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tblProviders">
+                                    <!-- ... -->
                                 </tbody>
                             </table>
                         </div>
@@ -420,6 +462,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         function clearForms(form) {
             form.find('input:text, input:password, input:file, input[type=date], input[type=number], select, textarea').val('');
@@ -507,8 +550,8 @@
                                 <td>${element.cat_name}</td>
                                 <td>${element.cat_description}</td>
                                 <td>
-                                    <a href="#" onclick='deleteCategory(${JSON.stringify(element)})'>
-                                        <i>delete</i>
+                                    <a href="#" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteCategory(${JSON.stringify(element)})'>
+                                        <i class="material-icons">delete</i>
                                     </a>
                                 </td>
                             </tr>
@@ -529,8 +572,8 @@
                                 <td>${element.prov_phone}</td>
                                 <td>${element.prov_mail}</td>
                                 <td>
-                                    <a href="#" onclick='deleteProvider(${JSON.stringify(element)})'>
-                                        <i>delete</i>
+                                    <a href="#" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteProvider(${JSON.stringify(element)})'>
+                                        <i class="material-icons">delete</i>
                                     </a>
                                 </td>
                             </tr>
@@ -552,8 +595,8 @@
                                 <td>${element.prt_cost}</td>
                                 <td>${element.prt_photo}</td>
                                 <td>
-                                    <a href="#" onclick='deleteProduct(${JSON.stringify(element)})'>
-                                        <i>delete</i>
+                                    <a href="#" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteProduct(${JSON.stringify(element)})'>
+                                        <i class="material-icons">delete</i>
                                     </a>
                                 </td>
                             </tr>
@@ -685,6 +728,27 @@
 
                 console.log($('#imgPrdPreview').attr('src'));
                 adminPetition('http://localhost:3000/admin_products', data, 'POST', 'tableProducts');
+                // var dict=new FormData();
+                // dict.append("url",$('#imgPreview').attr('src'));
+                // dict.append("name",$('#name').val());
+                // console.log(dict);
+                //Enviar la imagen por metodo post al servidor
+                // let pixeles = [];
+                // for(i=0; i<28;i++){
+                //     for(j=0; j<28; j++){
+                //         let imgData = ctx.getImageData(i,j,1,1).data,
+                //             valor = (imgData[3]/255*100/100).toFixed(2);
+                //         pixeles.push(valor);
+                //     }
+                // }
+                
+                // pixeles = pixeles.join(",");
+                // JSON.stringify({
+                //     url: $('#preview').attr('src'), name: $('#name').val()
+                // })
+                // $.post('http://localhost:3000/', pixeles, (data) => {
+                //     console.log(data);
+                // });
             });
 
             // Ejecutar al enviar el formulario de categoria
