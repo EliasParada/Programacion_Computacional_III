@@ -260,15 +260,9 @@ class localServer(SimpleHTTPRequestHandler):
             matriz = np.fromstring(data, np.float32, sep=',')
             matriz = matriz.reshape(28,28)
             matriz = np.array(matriz)
-            matriz = matriz.reshape(1,28,28,1)
-            print(matriz.shape)
+            matriz = matriz.reshape(1,28,28)
+            print(matriz, matriz.shape)
 
-            plt.figure()
-            plt.imshow(matriz[0,...], cmap=plt.cm.binary)
-            plt.colorbar()
-            plt.grid(False)
-            plt.show()
-            
             prediccion = model.predict(matriz,batch_size=1)
             prediccion = str(np.argmax(prediccion))
             prediccion = tags[int(prediccion)]

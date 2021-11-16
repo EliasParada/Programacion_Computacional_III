@@ -61,7 +61,7 @@ print('Lost: ', test_loss)
 print('Accuracy on test dataset:', test_accuracy)
 
 # Export the model
-model.save('fsmodel.h5')
+# model.save('fast_store.h5')
 
 # Test the model
 for test_images, test_labels in test_dataset.take(1):

@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="col s6">
                                         <div class="input-field">
-                                            <p class="center-align" id="namePrdPreview"></p>
+                                            <p class="center-align" id="txtPrdPreview"></p>
                                             <img src="" alt="" id="imgPrdPreview" class="responsive">
                                             <canvas id="canvas" class="none"></canvas>
                                             <canvas id="canvas2" class="none" hidden></canvas>
@@ -711,26 +711,19 @@
                 let canvasProduct = $('#canvas')[0];
                 let ctxProduct = canvasProduct.getContext('2d');
 
-                var dict=new FormData();
-                dict.append("url",$('#imgPrdPreview').attr('src'));
-                dict.append("name",$('#txtPrdName').val());
-                // console.log(dict);
-                // Enviar la imagen por metodo post al servidor
                 let pixeles = [];
                 for(i=0; i<28;i++){
                     for(j=0; j<28; j++){
                         let imgData = ctxProduct.getImageData(i,j,1,1).data,
-                            valor = (imgData[3]/255*100/100).toFixed(2);
+                            valor = (imgData[2]/255*100/100).toFixed(2);
                         pixeles.push(valor);
                     }
                 }
                 
                 pixeles = pixeles.join(",");
-                // JSON.stringify({
-                //     url: $('#preview').attr('src'), name: $('#name').val()
-                // })
                 $.post('http://localhost:3000/testai', pixeles, (data) => {
                     console.log(data);
+                    $('#txtPrdPreview').text(data);
                 });
             });
 
