@@ -12,7 +12,10 @@ $(document).ready(function() {
     });
 
     function abrir_ventana(module, form) {
-        $(`#modal-${module}_${form}.html`).modal('show').dragable();
+        $(`#modal-${module}_${form}.html`).modal('show').dragable()
+        .click(function(e) {
+            $(this).css("z-index", zIndex++);
+        });
     }
     
     $('#mnxApp a').click(function() {
