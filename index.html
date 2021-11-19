@@ -26,158 +26,46 @@
     </style>
 </head>
 <body class="bg-gradient-to-r from-white to-blue-50">
-    <div id="container"
-    class="grid grid-row-3 justify-items-center gap-4">
-        <div
-        class="p-2 container ring ring-blue-600 ring-offset-4 rounded bg-gradient-to-r from-blue-400 to-blue-600 text-white text-4xl text-center font-bold w-4/5 mt-10 shadow-xl">
-            <h1>Registrar Alumnos</h1>
-        </div>
-        <form action="index.html" method="post" id="frmAlumn" data-="new" data-idalm="0"
-        class="grid gap-4 sm:grid-cols-2 sm:grid-row-3 w-4/6 bg-blue-100 p-5 rounded-lg shadow-xl">
-            <input type="text" name="code" id="txtCode" placeholder="Code: USIS030320" 
-            class="rounded-lg focus:ring-4 focus:ring-blue-300 shadow-inner"
-            pattern="(^[US|SM]{2})([IS|LI|LA]{2})[0-9]{6}" required>
-            <input type="text" name="name" id="txtName" placeholder="Name: Juan Carlos Martinez Guerra" 
-            class="rounded-lg focus:ring-4 focus:ring-blue-300 shadow-inner"
-            pattern="(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+(([\s][A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+)*$" required>
-            <input type="tel" name="tel" id="txtTel" placeholder="Tel: 6256-8941"
-            class="rounded-lg focus:ring-4 focus:ring-blue-300 shadow-inner"
-            pattern="[0-9]{4}[ |-][0-9]{4}" required>
-
-            <input type="submit" value="send" id="btnSend" 
-            class="row-start-3 bg-blue-500 hover:bg-blue-400 text-white font-bold px-4 rounded-lg ring-2 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-75 focus-within:bg-blue-700 shadow-inner">
-            <input type="reset" value="Reset" id="btnReset"
-            class="row-start-3 col-start-2 bg-blue-500 hover:bg-blue-400 text-white font-bold px-4 rounded-lg ring-2 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-75 focus-within:bg-blue-700 shadow-inner">
-        </form>
-
-        <div
-        class="w-4/6 text-center">
-            <div id="msg" class="hidden p-3 w-full rounded-lg transition-opacity duration-150">
-                <h2>Alumno Registrado</h2>
+    <!-- Container para el navbar -->
+    <div class="container mx-auto px-4">
+        <!-- Navbar -->
+        <nav class="flex items-center justify-between flex-wrap bg-white p-6">
+            <!-- Logo -->
+            <div class="flex items-center flex-shrink-0 text-blue-500 mr-6">
+                <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
+                <span class="font-semibold text-xl tracking-tight">Flow</span>
             </div>
-        </div>
+            <!-- Links -->
+            <div class="block lg:hidden">
+                <button class="flex items-center px-3 py-2 border rounded text-blue-500 border-blue-500 hover:text-gray-200 mobile-menu-button hover:border-white">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Alumnos</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                </button>
+            </div>
+            <!-- Links -->
+            <div id="mnxApp" class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white z-20 mobile-menu" id="nav-content">
+                <ul class="list-reset lg:flex justify-end flex-1 items-center">
+                    <li class="mr-3">
+                        <a data-formulario="alumno" href="#" class="inline-block py-2 px-4 text-blue-500 hover:text-gray-200 hover:border-white">Alumnos</a>
+                    </li>
+                    <li class="mr-3">
+                        <a data-formulario="docente" href="#" class="inline-block py-2 px-4 text-blue-500 hover:text-gray-200 hover:border-white">Docentes</a>
+                    </li>
+                    <li class="mr-3">
+                        <a data-formulario="alumno" href="#" class="inline-block py-2 px-4 text-blue-500 hover:text-gray-200 hover:border-white">Materias</a>
+                    </li>
+                    <li class="mr-3">
+                        <a data-formulario="docente" href="#" class="inline-block py-2 px-4 text-blue-500 hover:text-gray-200 hover:border-white">Notas</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
-
-    <!-- Crear un espacio para mostrar los alumnos -->
-    <div id="containerAlumns" class="grid grid-row-3 justify-items-center gap-4">
-        <div 
-        class="p-2 container ring ring-blue-600 ring-offset-4 rounded bg-gradient-to-r from-blue-400 to-blue-600 text-white text-4xl text-center font-bold w-4/5 mt-10 shadow-xl">
-            <h1>Alumnos Registrados</h1>
-        </div>
-        <div id="alumns" class="grid gap-4 sm:grid-row-2 w-4/6 bg-blue-100 p-5 rounded-lg shadow-xl">
-            <table class="table-fixed" id="tblSearch">
-                <thead>
-                    <tr>
-                        <th colspan="4">
-                            <input type="text" name="searchAlm" id="txtSearch" placeholder="Type here..."
-                            class="w-full rounded-lg ring-2">
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="w-1/4">Código</th>
-                        <th class="w-1/2">Nombre</th>
-                        <th class="w-1/4">Telefono</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-                
-        </div>
-    </div>
-
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap">
 
     
-    
-
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script>
-        function showAlumns(data) {
-            $('#frmAlumn')
-                .data("accion", "update")
-                .data('idalm', data.id)
-            
-            $('#txtCode').val(data.code);
-            $('#txtName').val(data.name);
-            $('#txtTel').val(data.tel);
-        }
-
-        function clearForm() {
-            $('#frmAlumn')
-                .data("accion", "new")
-                .data('idalm', 0)
-            $('·frmAlumn input[type=text]').val('');
-        }
-
-
-        function getAlumns(){
-            $.get("http://localhost:3000/consult", (data, status) =>{
-                $("#tblSearch tbody tr").remove();
-
-                if (data.length > 0) {
-                    data.forEach(element => {
-                        $("#tblSearch tbody").append(`
-                            <tr onclick="showAlum${JSON.stringify(element)}">
-                                <td>${element.code}</td>
-                                <td>${element.name}</td>
-                                <td>${element.tel}</td>
-                                <td>
-                                    <button class="btn btn-danger" onclick="deleteAlumn('${JSON.stringify(element)}')">Delete</button>
-                                </td>
-                            </tr>
-                        `);
-                    });
-                } else {
-                    $("#tblSearch tbody").append(`
-                        <tr>
-                            <td colspan="4">No hay alumnos registrados</td>
-                        </tr>
-                    `);
-                }	
-                $("#tblSearch tbody").html(data);
-            }, "json");
-        }
-        $(document).ready(e => {
-            getAlumns();
-
-            //Resetear formulario
-            $("#frmAlumn").on("reset", e => {
-                clearForm();
-            });
-
-            let inputs = $('input');
-            $('#frmAlumn').submit(e => {
-                e.preventDefault();
-                let code = inputs[0].value,
-                    name = inputs[1].value,
-                    tel = inputs[2].value,
-                    data = {code, name, tel};
-
-                $.post('http://localhost:3000/insert', JSON.stringify(data), (response, status) => {
-                    $('#msg').removeClass('hidden');
-                    if(response.status == true) {
-                        inputs.val('');
-                        $('#msg')
-                            .removeClass('bg-red-300 text-red-700 bg-stripes bg-stripes-white shadow-xl')
-                            .addClass('bg-green-300 text-green-700 bg-stripes bg-stripes-white shadow-xl')
-                            .text('Alumno Registrado');
-                        setTimeout(() => {
-                            $('#msg').addClass('hidden');
-                        }, 3000);
-                    }else{
-                        console.log(response.msg);
-                        $('#msg')
-                            .removeClass('bg-green-300 text-green-700 bg-stripes bg-stripes-white shadow-xl')
-                            .addClass('bg-red-300 text-red-700 bg-stripes bg-stripes-white shadow-xl')
-                            .text('Alumno No Registrado');
-                        setTimeout(() => {
-                            $('#msg').addClass('hidden');
-                        }, 3000);
-                    }
-                }, 'json');
-            });            
-        });
-    </script>
+    <script src="https://code.jquery.com/ui/1.13.0-rc.3/jquery-ui.js" integrity="sha256-tYLuvehjddL4JcVWw1wRMB0oPSz7fKEpdZrIWf3rWNA=" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
 </body>
 </html>

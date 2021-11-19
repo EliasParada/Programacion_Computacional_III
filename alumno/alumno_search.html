@@ -1,0 +1,76 @@
+<!-- Crear un espacio para mostrar los alumnos -->
+<div id="containerAlumns" class="grid grid-row-3 justify-items-center gap-4">
+    <div 
+    class="p-2 container ring ring-blue-600 ring-offset-4 rounded bg-gradient-to-r from-blue-400 to-blue-600 text-white text-4xl text-center font-bold w-4/5 mt-10 shadow-xl">
+        <h1>Alumnos Registrados</h1>
+    </div>
+    <div id="alumns" class="grid gap-4 sm:grid-row-2 w-4/6 bg-blue-100 p-5 rounded-lg shadow-xl">
+        <table class="table-fixed" id="tblSearch">
+            <thead>
+                <tr>
+                    <th colspan="4">
+                        <input type="text" name="searchAlm" id="txtSearch" placeholder="Type here..."
+                        class="w-full rounded-lg ring-2">
+                    </th>
+                </tr>
+                <tr>
+                    <th class="w-1/4">Código</th>
+                    <th class="w-1/2">Nombre</th>
+                    <th class="w-1/4">Telefono</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+            
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+
+    function getAlumns(){
+        $.get("http://localhost:3000/consult", (data, status) =>{
+            $("#tblSearch tbody tr").remove();
+
+            if (data.length > 0) {
+                data.forEach(element => {
+                    $("#tblSearch tbody").append(`
+                        <tr onclick="showAlum${JSON.stringify(element)}">
+                            <td>${element.code}</td>
+                            <td>${element.name}</td>
+                            <td>${element.tel}</td>
+                            <td>
+                                <button class="btn btn-danger" onclick="deleteAlumn('${JSON.stringify(element)}')">Delete</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            } else {
+                $("#tblSearch tbody").append(`
+                    <tr>
+                        <td colspan="4">No hay alumnos registrados</td>
+                    </tr>
+                `);
+            }	
+            $("#tblSearch tbody").html(data);
+        }, "json");
+    }
+    $(document).ready(e => {
+        getAlumns();
+
+        $('#txtSearch').keyup(e => {
+            let search = $('#txtSearch').val(),
+                $table = $('#tblSearch tbody tr'),
+                $tr = $table.filter(function() {
+                    return $(this).text().toLowerCase().indexOf(search.toLowerCase()) > -1;
+                });
+            $table.hide();
+            $tr.show();
+
+
+            });
+
+    });
+</script>

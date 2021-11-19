@@ -44,11 +44,14 @@ class servidorBasico(SimpleHTTPRequestHandler):
             self.path = '/index.html'
             return SimpleHTTPRequestHandler.do_GET(self)
         
-        if self.path == '/consult':
+        elif self.path == '/consult':
             resp = crud.consultar()
             self.send_response(200)
             self.end_headers()
             self.wfile.write(json.dumps(resp).encode('utf-8'))
+
+        else:
+            return SimpleHTTPRequestHandler.do_GET(self)
 
     def do_POST(self):
         if self.path == '/insert':
