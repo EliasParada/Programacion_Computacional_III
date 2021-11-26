@@ -1,0 +1,121 @@
+<div class="card text-white bg-dark mb-3" id="cardDocente">
+    <div class="card-header">
+        REGISTRO DE DOCENTES
+        
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" data-bs-target="#cardDocente" aria-label="Close"></button>
+    </div>
+    <div class="card-body">
+        <form id="frmDocentes" data-accion="nuevo" data-iddocente="0" class="row g-2">
+            <div class="col-auto">
+                <label for="txtCodigoDocente" class="visually-hidden">Codigo</label>
+                <input pattern="[0-9]{3}" required placeholder="Codigo" type="text" class="form-control" id="txtCodigoDocente">
+            </div>
+            <div class="col-auto">
+                <label for="txtNombreDocente" class="visually-hidden">Nombre</label>
+                <input pattern="[A-zÑñáéíóú ]{6,75}" type="text" class="form-control" id="txtNombreDocente" placeholder="Nombre">
+            </div>
+            <div class="col-auto">
+                <label for="txtTelefonoDocente" class="visually-hidden">Telefono</label>
+                <input pattern="[0-9]{4}[-| ][0-9]{4}" required type="text" class="form-control" id="txtTelefonoDocente" placeholder="Telefono">
+            </div>
+            <div class="col-auto">
+                <label for="txtTelefonoDocente" class="visually-hidden">Escalafon</label>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Dropdown
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropEscalafon">
+                          <!-- ... -->
+                        </ul>
+                      </li>
+                </ul>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-secondary mb-3">Guardar</button>
+                <button type="reset" class="btn btn-warning mb-3">Nuevo</button>
+                <button type="button" class="btn btn-success mb-3" id="btnBuscarDocente">Buscar</button>
+            </div>
+        </form>
+        <div class="row g-2">
+            <div id="msgDocentes" class="alert alert-success d-none" role="alert"></div>
+        </div>
+    </div>
+</div>
+  
+<script>
+    function cargarEscalafon(){
+        $.get("http://localhost:3000/consultar-escalafon",(respuesta, status)=>{
+            $("#cboEscalafonDocente option").remove();
+            let $escalafon = $("#cboEscalafonDocente"),
+                filas = '';
+            if(respuesta.resp.length>0){
+                respuesta.resp.forEach(escalafon => {
+                    filas += `
+                        <li><a class="dropdown-item" href="#" data-escalafon="${escalafon.idEscalafon}">Action</a>${escalafon.escalafon}</li>
+                    `;
+                });
+            }else{
+                filas = `<option value="">No hay Datos que mostrar</option>`;
+            }
+            $escalafon.append(filas);
+        }, "json");
+    }
+    function mostrarDocente(docente){
+        $("#frmDocentes")
+            .data("accion","modificar")
+            .data("iddocente",docente.idDocente);
+        $("#txtCodigoDocente").val(docente.codigo);
+        $("#txtNombreDocente").val(docente.nombre);
+        $("#txtTelefonoDocente").val(docente.telefono);
+        $("#cboEscalafonDocente").val(docente.idEscalafon);
+    }
+    function limpiarDatosDocente(){
+        $("#frmDocentes")
+            .data("accion","nuevo")
+            .data("iddocente",0);
+        $("#frmDocentes input[type=text]").val("");
+    }
+    $(document).ready(e=>{
+        cargarEscalafon();
+
+        $("#btnBuscarDocente").click(function(ev){
+            ev.preventDefault();
+            abrir_ventana("docente", "buscar");
+        });
+        $("#frmDocentes")
+            .on('reset', e=>{
+                limpiarDatosDocente();
+            })
+            .submit(e=>{
+            e.preventDefault();
+
+            let accion = $("#frmDocentes").data("accion"),
+                idDocente = $("#frmDocentes").data("iddocente"),
+                codigo = $("#txtCodigoDocente").val(),
+                nombre = $("#txtNombreDocente").val(),
+                telefono = $("#txtTelefonoDocente").val(),
+                idEscalafon = $("#cboEscalafonDocente").val(),
+                datos = {accion, idDocente, codigo, nombre, telefono, idEscalafon};
+            $.post("http://localhost:3000/docente",JSON.stringify(datos), (respuesta, status)=>{
+                $("#msgDocentes").removeClass("d-none").text(respuesta.resp);
+
+                if( respuesta.resp.indexOf("exito") >=0 ){
+                    limpiarDatosDocente();
+                    consultarDocentes();
+
+                    $("#msgDocentes")
+                        .removeClass("alert-danger")
+                        .addClass("alert-success");
+                } else {
+                    $("#msgDocentes")
+                        .removeClass("alert-success")
+                        .addClass("alert-danger");
+                }
+                setTimeout(()=>{
+                    $("#msgDocentes").addClass("d-none");
+                },5000);
+            }, "json");
+        });
+    });
+</script>
