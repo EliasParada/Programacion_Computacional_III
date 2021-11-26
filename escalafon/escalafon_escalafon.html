@@ -1,0 +1,77 @@
+<div class="card text-white bg-dark mb-3" id="cardDocente">
+    <div class="card-header">
+        REGISTRO DE ESCALAFONES
+        
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" data-bs-target="#cardDocente" aria-label="Close"></button>
+    </div>
+    <div class="card-body">
+        <form id="frmEscalafon" data-accion="nuevo" data-idescalafon="0" class="row g-2">
+            <div class="col-auto">
+                <label for="txtNombreEscalafon" class="visually-hidden">Nombre</label>
+                <input pattern="[A-zÑñáéíóú ]{6,75}" type="text" class="form-control" id="txtNombreEscalafon" placeholder="Nombre">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-secondary mb-3">Guardar</button>
+                <button type="reset" class="btn btn-warning mb-3">Nuevo</button>
+                <button type="button" class="btn btn-success mb-3" id="btnBuscarEscalafon">Buscar</button>
+            </div>
+        </form>
+        <div class="row g-2">
+            <div id="msgEscalafon" class="alert alert-success d-none" role="alert"></div>
+        </div>
+    </div>
+</div>
+  
+<script>
+    function mostrarDocente(escalafon) {
+        $("#frmEscalafon")
+            .data("accion","modificar")
+            .data("idescalafon",escalafn.idEscalafn);
+        $("#txtNombreDocente").val(escalafon.nombre);
+    }
+    function limpiarDatosEscalafon(){
+        $("#frmEscalafon")
+            .data("accion","nuevo")
+            .data("idescalafon",0);
+        $("#frmEscalafon input[type=text]").val("");
+    }
+    $(document).ready(e=>{
+        cargarEscalafon();
+
+        $("#btnBuscarDocente").click(function(ev){
+            ev.preventDefault();
+            abrir_ventana("docente", "buscar");
+        });
+        $("#frmEscalafon")
+            .on('reset', e=>{
+                limpiarDatosDocente();
+            })
+            .submit(e=>{
+            e.preventDefault();
+
+            let accion = $("#frmEscalafon").data("accion"),
+                idEscalafon = $("#frmEscalafon").data("idescalafon"),
+                nombre = $("#txtNombreEscalafon").val(),
+                datos = {accion, idEscalafon, nombre};
+            $.post("http://localhost:3000/escalafon",JSON.stringify(datos), (respuesta, status)=>{
+                $("#msgEscalafon").removeClass("d-none").text(respuesta.resp);
+
+                if( respuesta.resp.indexOf("exito") >=0 ){
+                    limpiarDatosEscalafon();
+                    consultarEscalafon();
+
+                    $("#msgEscalafon")
+                        .removeClass("alert-danger")
+                        .addClass("alert-success");
+                } else {
+                    $("#msgEscalafon")
+                        .removeClass("alert-success")
+                        .addClass("alert-danger");
+                }
+                setTimeout(()=>{
+                    $("#msgEscalafon").addClass("d-none");
+                },5000);
+            }, "json");
+        });
+    });
+</script>
