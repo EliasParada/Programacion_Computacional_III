@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Fast Store - Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -460,7 +460,6 @@
             </div>
         </div>
     </div>
-    <img src="https://www.collinsdictionary.com/images/full/shirt_378037390_1000.jpg" alt="" id="imgtest">
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -730,7 +729,7 @@
             // Ejecutar al enviar el formulario de producto
             $('#frmProduct').submit( (e) => {
                 e.preventDefault();
-                // canvas = $('#canvas')[0];
+                canvas = $('#canvas')[0];
                 ctx = canvas.getContext('2d');
 
                 let action = $('#frmProduct').data('action'),
@@ -746,7 +745,7 @@
                 console.log(data);
 
                 console.log($('#imgPrdPreview').attr('src'));
-                // adminPetition('http://localhost:3000/admin_products', data, 'POST', 'tableProducts');
+                adminPetition('http://localhost:3000/admin_products', data, 'POST', 'tableProducts');
                 
             });
 
