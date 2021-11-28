@@ -1,0 +1,360 @@
+<div class="container">
+    <div class="row">
+        <!-- FORMULARIO PARA LOS PRODUCTOS -->
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" id="tblTitle">Agregar un nuevo producto</span>
+                    <form id="frmProduct" data-action="create" data-id="0">
+                        <div class="row">
+                            <div class="col s6">
+                                <div class="input-field">
+                                    <input type="text" name="txtPrdName" id="txtPrdName" data-length="50" required>
+                                    <label for="txtPrdName">Nombre</label>
+                                </div>
+                            <div class="row">
+                                <div class="input-field">
+                                    <div class="switch">
+                                        <label id="lblStatus">
+                                            <input type="checkbox" name="chkStatus" id="chkStatus">
+                                            <span class="lever"></span>
+                                            Archivo/Camara
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="input-field" id="vidContainer">
+                                    <div class="btn" id="btnTakePhoto">
+                                        <span>
+                                            <i class="material-icons">add_a_photo</i>
+                                        </span>
+                                    </div>
+                                    <br>
+                                    <video id="vidProduct" class="responsive-video col s12" style="margin-top: 0.5rem;"></video>
+                                </div>
+                                <div class="file-field input-field" id="imgContainer">
+                                    <div class="btn">
+                                        <span>
+                                            <i class="material-icons">perm_media</i>
+                                        </span>
+                                        <input type="file" name="imgProduct" id="imgProduct">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Seleccione una imagen">
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="input-field">
+                                    <select name="slcPrdProvider" id="slcPrdProvider" required>
+                                        <option value="" disabled selected>Seleccione una marca</option>
+                                    </select>
+                                    <label for="slcPrdProvider">Proveedores</label>
+                                </div>
+                                <div class="input-field">
+                                    <input type="date" name="txtPrdCreateDate" id="txtPrdCreateDate" required>
+                                    <label for="txtPrdCreateDate">Fecha de fabricacion</label>
+                                </div>
+                                <div class="input-field">
+                                    <input type="date" name="txtPrdExpiration" id="txtPrdExpiration" required>
+                                    <label for="txtPrdExpiration">Fecha de vencimiento</label>
+                                </div>
+                                <div class="input-field">
+                                    <select name="slcPrdCategory" id="slcPrdCategory" required>
+                                        <option value="" disabled selected>Seleccione una categoría</option>
+                                    </select>
+                                    <label for="slcPrdCategory">Categorias</label>
+                                </div>
+                                <div class="input-field">
+                                    <input type="number" name="txtPrdPrice" id="txtPrdPrice" required>
+                                    <label for="txtPrdPrice">Precio</label>
+                                </div>
+                                
+                            </div>
+                            <div class="col s6">
+                                <div class="input-field">
+                                    <p class="center-align" id="txtPrdPreview"></p>
+                                    <img src="" alt="" id="imgPrdPreview" class="responsive">
+                                    <canvas id="canvas" class="none"></canvas>
+                                    <canvas id="canvas2" class="none" hidden></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="submit" name="btnAction">
+                                    <i class="material-icons">send</i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="reset" name="btnCatReset" id="btnCatReset">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- TABLE PARA LOS PRODUCTOS -->
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Productos</span>
+                    <table class="responsive-table highlight" id="tblProducts">
+                        <thead>
+                            <tr>
+                                <th colspan="9">
+                                    <div class="input-field">
+                                        <input type="text" id="txtSearch">
+                                        <label for="txtSearch">Buscar</label>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="center-align">ID</th>
+                                <th class="center-align">Nombre</th>
+                                <th class="center-align">Proveedor</th>
+                                <th class="center-align">Fecha de fabricacion</th>
+                                <th class="center-align">Fecha de vencimiento</th>
+                                <th class="center-align">Categoria</th>
+                                <th class="center-align">Precio</th>
+                                <th class="center-align">Imagen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ... -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showProducts(products) {
+        $('#tblProducts tbody').html('');
+        products.forEach(product => {
+            // La imagen debe ser pequeña
+            $('#tblProducts tbody').append(`
+                <tr onclick='updateProduct(${JSON.stringify(product)})'>
+                    <td>${product.prt_id}</td>
+                    <td>${product.prt_name}</td>
+                    <td>${product.prov_name }</td>
+                    <td>${product.prt_createdate}</td>
+                    <td>${product.prt_expirationdate}</td>
+                    <td>${product.cat_name}</td>
+                    <td>${product.prt_cost}</td>
+                    <td>
+                        <img src="${product.prt_photo}.jpg" alt="${product.prt_name}" class="responsive-img">
+                    </td>
+                    <td>
+                        <a href="#tblProducts" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteProduct(${JSON.stringify(product)})'>
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+            `);
+        });
+    }
+
+    function showSltCategories(categories) {
+        categories.forEach(category => {
+            $('#slcPrdCategory').append(`
+                <option value="${category.cat_id}">${category.cat_name}</option>
+            `);
+        });
+        $('#slcPrdCategory').formSelect();
+    }
+
+    function deleteProduct(product) {
+        if (confirm(`¿Esta seguro de eliminar el producto ${product.prt_name}?`)) {
+            let data = {
+                action: 'delete',
+                id: product.prt_id
+            };
+            console.log(data);
+            adminPetition('http://localhost:3000/admin_products', data, 'POST', 'reloadProducts');
+        }
+    }
+
+    function showSltProviders(providers) {
+        providers.forEach(provider => {
+            $('#slcPrdProvider').append(`
+                <option value="${provider.prov_id}">${provider.prov_name}</option>
+            `);
+        });
+        $('#slcPrdProvider').formSelect();
+    }
+
+    function updateProduct(data) {
+        $('#txtPrdName').val(data.prt_name);
+        $('#slcPrdProvider').val(data.prov_id);
+        $('#slcPrdCategory').val(data.cat_id);
+        let date = data.prt_createdate.split('/');
+        let jsDate = date[2] + '-' + date[1] + '-' + date[0];
+        $('#txtPrdCreateDate').val(jsDate);
+        date = data.prt_expirationdate.split('/');
+        jsDate = date[2] + '-' + date[1] + '-' + date[0];
+        $('#txtPrdExpiration').val(jsDate);
+        $('#txtPrdPrice').val(data.prt_cost);
+        $('#frmProduct').attr('data-action', 'update');
+        $('#frmProduct').attr('data-id', data.prt_id);
+        $('select').formSelect();
+    }
+
+    function takePhoto() {
+        canvas = document.getElementById('canvas');
+        let canvas2 = document.getElementById('canvas2');
+        canvas2.width = video.width;
+        canvas2.height = video.height;
+        let ctx2 = canvas2.getContext('2d');
+        ctx2.drawImage(video, 0, 0, video.width, video.height);
+        video.pause();
+        setTimeout(e => {
+            video.play();
+        }, 1000);
+        // Imagen de prueba
+        
+        canvas.width = 28;
+        canvas.height = 28;
+        ctx = canvas.getContext("2d");
+        //Negativo
+        ctx.globalCompositeOperation = 'difference';
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        //Escala de grises
+        ctx.filter = 'grayscale(100%)';
+        cxt.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        let data = canvas.toDataURL('image/png');
+        document.getElementById("imgPrdPreview").src = data;
+        //Insertar en la imagen
+        let data2 = canvas2.toDataURL('image/png');
+        let img = document.getElementById("imgPrdPreview");
+        img.src = data2;
+    }
+
+    function turnOnCamera() {
+        canvas = document.getElementById('canvas');
+        cxt = canvas.getContext('2d');
+        video = document.getElementById('vidProduct');
+        video.width = 400;
+        video.height = 400;
+
+        if (!navigator.getUserMedia) {
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+        }
+        if (!window.URL) {
+            window.URL = window.URL;
+        }
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({video: true,audio: false
+            }, function (stream) {
+                try {
+                    localstream = stream;
+                    video.srcObject = stream;
+                    video.play();
+                } catch (err) {
+                    console.log(err);
+                    video.srcObject = null;
+                }
+            }, function (error) {
+                console.warn('¡Algo ha salido mal!', error); 
+            });
+        } else {
+            console.error('¡Ha ocurrido un error!');
+            return
+        }
+    }
+
+    function turnOffCamera() {
+        video.pause();
+        video.srcObject = null;
+        localstream.getTracks()[0].stop();
+    }
+
+    $(document).ready(async function(){
+        let localstream, canvas, video, cxt;
+        $('select').formSelect();
+        $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
+        $('input#txtPrdName, input#txtCatName, #txtProvName, #txtProvPhone, #txtProvEmail').characterCounter();
+        $('#vidContainer').hide();
+
+        adminPetition('http://localhost:3000/show_categories', {}, 'GET', 'selectCategories');
+        adminPetition('http://localhost:3000/show_providers', {}, 'GET', 'selectProviders');
+        adminPetition('http://localhost:3000/show_products', {}, 'GET', 'tableProducts');
+
+        $('#btnTakePhoto').click((e) => {
+            e.preventDefault();
+            takePhoto();
+
+            let canvasProduct = $('#canvas')[0];
+            let ctxProduct = canvasProduct.getContext('2d');
+
+            let pixeles = [];
+            for(i=0; i<28;i++){
+                for(j=0; j<28; j++){
+                    let imgData = ctxProduct.getImageData(i,j,1,1).data,
+                        valor = (imgData[2]/255*100/100).toFixed(2);
+                    pixeles.push(valor);
+                }
+            }
+            
+            pixeles = pixeles.join(",");
+            $.post('http://localhost:3000/testai', pixeles, (data) => {
+                console.log(data);
+                $('#txtPrdPreview').text(data);
+            });
+        });
+        
+        $("#chkStatus").change(e => {
+            $("#imgProduct").toggleClass("none");
+            $("#vidProduct").toggleClass("none");
+            if ($("#chkStatus").is(":checked")) {
+                turnOnCamera();
+                $('#vidContainer').show();
+                $('#imgContainer').hide();
+                $("#imgProduct").attr("disabled", true);
+            } else {
+                turnOffCamera();
+                $('#imgContainer').show();
+                $('#vidContainer').hide();
+                $("#imgProduct").attr("disabled", false);
+            }
+        });
+    
+        $('#frmProduct').submit( (e) => {
+            e.preventDefault();
+            canvas = $('#canvas')[0];
+            ctx = canvas.getContext('2d');
+
+            let action = $('#frmProduct').data('action'),
+                id = $('#frmProduct').data('id'),
+                name = $('#txtPrdName').val(),
+                prov = $('#slcPrdProvider').val(),
+                cat = $('#slcPrdCategory').val(),
+                createdate = $('#txtPrdCreateDate').val(),
+                expirationdate = $('#txtPrdExpiration').val(),
+                cost = $('#txtPrdPrice').val(),
+                photo = $('#imgPrdPreview').attr('src'),
+                data = {action, id, name, prov, cat, createdate, expirationdate, cost, photo:'/img/products/product'};
+            console.log(data);
+
+            console.log($('#imgPrdPreview').attr('src'));
+            adminPetition('http://localhost:3000/admin_products', data, 'POST', 'reloadProducts', $('#frmProduct'));
+        })
+        .on('reset', (e) => {
+            clearForms($('#frmProduct'));
+        });
+    
+        $("#txtSearch").keyup(function(e){
+            let valor = $(this).val(),
+                $tblProducts = $("#tblProducts tbody tr");
+            $tblProducts.show();
+            let $fila = $tblProducts.filter(function(index){
+                return $(this).find("td:not(:last)").text().toLowerCase().indexOf(valor.toLowerCase())==-1;
+            });
+            $fila.hide();
+        });
+    });
+</script>
