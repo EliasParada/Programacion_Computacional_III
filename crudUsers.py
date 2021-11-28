@@ -24,7 +24,7 @@ class crud:
 
     def search_to(self, match, id):
         try:
-            sql = "SELECT ux_users.ux_id, ux_users.ux_dui, ux_users.ux_name, ux_users.ux_nick, ux_users.ux_phone, ux_users.ux_mail, ux_users.ux_pass, ux_users.ux_DBirth, ux_users.ux_urlphoto, ux_users.pms_ux FROM ux_users INNER JOIN pms_permissions ON ux_users.pms_ux = pms_permissions.pms_id WHERE ux_users.ux_id LIKE %s OR ux_users.ux_dui LIKE %s ux_users.ux_name LIKE %s OR ux_users.ux_nick LIKE %s OR ux_users.ux_phone LIKE %s OR ux_users.ux_mail LIKE %s OR ux_users.ux_pass LIKE %s OR ux_users.ux_DBirth LIKE %s LIMIT %s, %s"
+            sql = "SELECT ux_users.ux_id, ux_users.ux_dui, ux_users.ux_name, ux_users.ux_nick, ux_users.ux_phone, ux_users.ux_mail, ux_users.ux_pass, ux_users.ux_DBirth, ux_users.ux_urlphoto, ux_users.pms_ux, pms_permissions.pms_type FROM ux_users INNER JOIN pms_permissions ON ux_users.pms_ux = pms_permissions.pms_id WHERE ux_users.ux_id LIKE %s OR ux_users.ux_dui LIKE %s ux_users.ux_name LIKE %s OR ux_users.ux_nick LIKE %s OR ux_users.ux_phone LIKE %s OR ux_users.ux_mail LIKE %s OR ux_users.ux_pass LIKE %s OR ux_users.ux_DBirth LIKE %s LIMIT %s, %s"
             max_id = id-20
             if max_id < 0:
                 max_id = 0
@@ -34,9 +34,9 @@ class crud:
             msg = e.args[1]
             return False, {'status':'error', 'msg':'Error al ejecutar la acción', 'code': [code, msg]}
 
-    def show_limits(self, id):
+    def show_limit(self, id):
         try:
-            sql = "SELECT ux_users.ux_id, ux_users.ux_dui, ux_users.ux_name, ux_users.ux_nick, ux_users.ux_phone, ux_users.ux_mail, ux_users.ux_pass, ux_users.ux_DBirth, ux_users.ux_urlphoto, ux_users.pms_ux FROM ux_users INNER JOIN pms_permissions ON ux_users.pms_ux = pms_permissions.pms_id LIMIT %s, %s"
+            sql = "SELECT ux_users.ux_id, ux_users.ux_dui, ux_users.ux_name, ux_users.ux_nick, ux_users.ux_phone, ux_users.ux_mail, ux_users.ux_pass, ux_users.ux_DBirth, ux_users.ux_urlphoto, ux_users.pms_ux, pms_permissions.pms_type FROM ux_users INNER JOIN pms_permissions ON ux_users.pms_ux = pms_permissions.pms_id LIMIT %s, %s"
             max_id = id-20
             if max_id < 0:
                 max_id = 0

@@ -17,13 +17,13 @@ import crudCategories
 import crudCarts
 import crudFeatures
 
-product = crudProducts.crud()
-user = crudUsers.crud()
-provider = crudProviders.crud()
-bill = crudBills.crud()
-category = crudCategories.crud()
-cart = crudCarts.crud()
-feature = crudFeatures.crud()
+crudProducts = crudProducts.crud()
+crudUsers = crudUsers.crud()
+crudProviders = crudProviders.crud()
+crudBills = crudBills.crud()
+crudCategories = crudCategories.crud()
+crudCarts = crudCarts.crud()
+crudFeatures = crudFeatures.crud()
 
 # CARGAR EL MODELO
 model = tf.keras.models.load_model('fsmodel.h5')
@@ -32,17 +32,14 @@ model = tf.keras.models.load_model('fsmodel.h5')
 tags = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
 #LISTA DE EXTENCIONES DE ARCHIVOS PERMITIDOS
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'js', 'html'])
 #######CREAMOS UNA CLASE QUE MANEJARA EL SERVIDOR HTTP#######
 class localServer(SimpleHTTPRequestHandler):
     def do_GET(self):
+        print(self.path.split('.')[-1])
         #######MANEJAR EL ACCESO PARA LOS PATH ACCESIBLES POR EL USUARIO#######
         if self.path == '/':
             self.path = '/index.html'
-            return SimpleHTTPRequestHandler.do_GET(self)
-        # Si el path es una imagen
-        elif self.path.split('.')[-1] in ALLOWED_EXTENSIONS:
-            print(self.path)
             return SimpleHTTPRequestHandler.do_GET(self)
         elif self.path == '/index.html':
             self.path = '/index.html'
@@ -62,27 +59,43 @@ class localServer(SimpleHTTPRequestHandler):
             return SimpleHTTPRequestHandler.do_GET(self)
         #######MANEJAR LAS PETICIONES DEL INICIO EN LAS PAGINAS#######
         elif self.path == '/show_products':
-            response = crud.admin_products({'action':'read'})
+            response = crudProducts.show_limits(0)
             print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
             self.send_response(200)
             self.end_headers()
-            # Convertir prt_createdate y prt_expirationdate a formato fecha
             for product in response[0]:
                 product['prt_createdate'] = product['prt_createdate'].strftime('%d/%m/%Y')
                 product['prt_expirationdate'] = product['prt_expirationdate'].strftime('%d/%m/%Y')
             self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
         elif self.path == '/show_categories':
-            response = crud.admin_category({'action':'read'})
+            response = crudCategories.search_limit(0)
             print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
             self.send_response(200)
             self.end_headers()
             self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
         elif self.path == '/show_providers':
-            response = crud.admin_provider({'action':'read'})
+            response = crudProviders.search_limit(0)
             print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
             self.send_response(200)
             self.end_headers()
             self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
+        elif self.path == '/show_users':
+            response = crudUsers.show_limit(0)
+            print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
+            for date in response[0]:
+                date['ux_DBirth'] = date['ux_DBirth'].strftime('%d/%m/%Y')
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
+        elif self.path == '/show_features':
+            response = crudFeatures.search_limit(0)
+            print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
+        # Si el path es una de las extensiones permitidas
+        elif self.path.split('.')[-1] in ALLOWED_EXTENSIONS:
+            return SimpleHTTPRequestHandler.do_GET(self)
         else:
             self.path = '/404.html'
             return SimpleHTTPRequestHandler.do_GET(self)
@@ -96,29 +109,37 @@ class localServer(SimpleHTTPRequestHandler):
 
         if self.path == '/admin_category':
             data = json.loads(data)
-            response = crud.admin_category(data)
+            response = crudCategories.admin_categories(data)
             print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
             self.send_response(200)
             self.end_headers()
             self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
 
-        if self.path == '/admin_provider':
+        elif self.path == '/admin_provider':
             data = json.loads(data)
-            response = crud.admin_provider(data)
+            response = crudProviders.admin_provider(data)
             print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
             self.send_response(200)
             self.end_headers()
             self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
 
-        if self.path == '/admin_products':
+        elif self.path == '/admin_products':
             data = json.loads(data)
-            response = crud.admin_products(data)
+            response = crudProducts.admin_products(data)
             print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
             self.send_response(200)
             self.end_headers()
             self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
 
-        if self.path == '/testai':
+        elif self.path == '/admin_users':
+            data = json.loads(data)
+            response = crudUsers.admin_users(data)
+            print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
+
+        elif self.path == '/testai':
             print(data)
             matriz = np.fromstring(data, np.float32, sep=',')
             matriz = matriz.reshape(28,28)
@@ -131,11 +152,11 @@ class localServer(SimpleHTTPRequestHandler):
             prediccion = tags[int(prediccion)]
             print(prediccion)
 
-            plt.figure()
-            plt.imshow(matriz[0])
-            plt.colorbar()
-            plt.grid(False)
-            plt.show()
+            # plt.figure()
+            # plt.imshow(matriz[0])
+            # plt.colorbar()
+            # plt.grid(False)
+            # plt.show()
 
             self.send_response(200)
             self.send_header("Access-Control-Allow-Origin","*")

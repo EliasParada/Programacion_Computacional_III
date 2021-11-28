@@ -46,7 +46,11 @@ class conection:
         elif table == 'providers':
             sql = "SELECT MAX(prov_id) AS id FROM prov_proveedor"
         elif table == 'features':
-            sql = "SELECT MAX(feat_id) AS id FROM feat_caracteristica"
+            sql = "SELECT MAX(pms_id) AS id FROM pms_permissions"
+        elif table == 'bill':
+            sql = "SELECT MAX(fac_id) AS id FROM fac_factura"
+        elif table == 'carts':
+            sql = "SELECT MAX(car_id) AS id FROM car_carrito"
         result = self.sql_get(sql, None)
         print(f'\033[4;1;37;42m Generando ID para: {table} \033[0;m', result[0][0]['id'])
         if result[1]['status'] == 'ok':

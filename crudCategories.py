@@ -24,14 +24,14 @@ class crud:
 
     def search_to(self, match, id):
         sql = "SELECT cat_categoria.cat_id, cat_name, cat_categoria.cat_description FROM cat_categoria WHERE cat_name LIKE %s OR cat_categoria.cat_description LIKE %s LIMIT %s, %s"
-        max_id = id-20
+        max_id = 20 - id
         if max_id < 0:
             max_id = 0
         return conn.sql_get(sql, (match, match, id, max_id))
 
     def search_limit(self, id):
         sql = "SELECT cat_categoria.cat_id, cat_name, cat_categoria.cat_description FROM cat_categoria LIMIT %s, %s"
-        max_id = id-20
+        max_id = 20 - id
         if max_id < 0:
             max_id = 0
         return conn.sql_get(sql, (id, max_id))
