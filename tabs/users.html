@@ -25,18 +25,18 @@
                             <div class="input-field col s5 m2">
                                 <div class="switch">
                                     <label id="lblStatus">
-                                        <input type="checkbox" name="chkStatus" id="chkStatus">
+                                        <input type="checkbox" name="chkStatusUser" id="chkStatusUser">
                                         <span class="lever"></span>
                                         Archivo/Camara
                                     </label>
                                 </div>
                             </div>
-                            <div class="file-field input-field col s7 m4" id="imgFileContainer">
+                            <div class="file-field input-field col s7 m4" id="imgFileContainerUser">
                                 <div class="btn">
                                     <span>
                                         <i class="material-icons">perm_media</i>
                                     </span>
-                                    <input type="file" name="imgFile" id="imgFile">
+                                    <input type="file" name="imgFileUser" id="imgFileUser">
                                 </div>
                                 <div class="file-path-wrapper">
                                     <input class="file-path validate" type="text" placeholder="Seleccione una imagen">
@@ -44,12 +44,12 @@
                             </div>
                             <div class="col s7 m4"  id="vidUserContainer">
                                 <div class="input-field center-align">
-                                    <div class="btn" id="btnTakePhoto">
+                                    <div class="btn" id="btnTakePhotoUser">
                                         <span>
                                             <i class="material-icons">add_a_photo</i>
                                         </span>
                                     </div>
-                                    <div class="btn" id="btnRetakePhoto">
+                                    <div class="btn" id="btnRetakePhotoUser">
                                         <span>
                                             <i class="material-icons">refresh</i>
                                         </span>
@@ -82,8 +82,8 @@
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="email" name="txtProvEmail" id="txtProvEmail" data-length="100" required>
-                                    <label for="txtProvEmail">Correo</label>
+                                    <input type="email" name="txtEmailUser" id="txtEmailUser" data-length="100" required>
+                                    <label for="txtEmailUser">Correo</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
@@ -94,8 +94,8 @@
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="password" name="txtPassUser2" id="txtPassUser2" data-length="10" required>
-                                    <label for="txtPassUser2">Repetir contraseña</label>
+                                    <input type="password" name="txtRePassUser" id="txtRePassUser" data-length="10" required>
+                                    <label for="txtRePassUser">Repetir contraseña</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
@@ -138,7 +138,7 @@
                 <table class="responsive-table highlight" id="tblUsers">
                     <thead>
                         <tr>
-                            <th colspan="4">
+                            <th colspan="11">
                                 <div class="input-field">
                                     <input type="text" id="txtSearch">
                                     <label for="txtSearch">Buscar</label>
@@ -186,7 +186,7 @@
                     <td>${user.ux_DBirth}</td>
                     <td>
                         <div class="chip">
-                            ${user.ux_features}
+                            ${user.pms_type}
                         </div>
                     <td>
                         <a href="#tblUsers" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteUser(${JSON.stringify(user)})'>
@@ -198,10 +198,10 @@
         });
     }
 
-    function showSltPermisses(features) {
+    function showSltFeatures(features) {
         features.forEach(feature => {
             $('#slcFeatures').append(`
-                <option value="${feature.pms_ux}">${feature.pms_type}</option>
+                <option value="${feature.pms_id}">${feature.pms_type}</option>
             `);
         });
         $('#slcFeatures').formSelect();
@@ -223,9 +223,9 @@
         $('#txtNameUser').val(user.ux_name);
         $('#txtNickUser').val(user.ux_nick);
         $('#txtPhoneUser').val(user.ux_phone);
-        $('#txtProvEmail').val(user.ux_mail);
+        $('#txtEmailUser').val(user.ux_mail);
         $('#txtPassUser').val(user.ux_pass);
-        $('#txtPassUser2').val(user.ux_pass);
+        $('#txtRePassUser').val(user.ux_pass);
         let date = user.ux_DBirth.split('/');
         $('#txtBirthUser').val(`${date[2]}-${date[1]}-${date[0]}`);
         $('#slcFeatures').val(user.ux_features);
@@ -308,7 +308,7 @@
         let localstream, canvas, video, cxt;
         $('select').formSelect();
         $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
-        $('input#txtPrdName, input#txtCatName, #txtProvName, #txtProvPhone, #txtProvEmail').characterCounter();
+        $('input#txtPrdName, input#txtCatName, #txtProvName, #txtProvPhone, #txtEmailUser').characterCounter();
         $('#vidStream').hide();
         $('#vidUserContainer').hide();
 
@@ -316,10 +316,10 @@
         adminPetition('http://localhost:3000/show_users', {}, 'GET', 'tableUsers');
 
         
-        $('btnRetakePhoto').click((e) => {
+        $('btnRetakePhotoUser').click((e) => {
         });
 
-        $('#btnTakePhoto').click((e) => {
+        $('#btnTakePhotoUser').click((e) => {
             e.preventDefault();
             takePhoto();
 
@@ -338,25 +338,21 @@
             }
             
             pixeles = pixeles.join(",");
-            $.post('http://localhost:3000/testai', pixeles, (data) => {
-                console.log(data);
-                $('#txtUserPreview').text(data);
-            });
         });
         
-        $("#chkStatus").change(e => {
-            if ($("#chkStatus").is(":checked")) {
+        $("#chkStatusUser").change(e => {
+            if ($("#chkStatusUser").is(":checked")) {
                 turnOnCamera();
                 $('#vidUserContainer').show();
-                $('#imgFileContainer').hide();
-                $("#imgFile").attr("disabled", true);
+                $('#imgFileContainerUser').hide();
+                $("#imgFileUser").attr("disabled", true);
                 $('#imgVista').hide();
                 $('#vidStream').show();
             } else {
                 turnOffCamera();
-                $('#imgFileContainer').show();
+                $('#imgFileContainerUser').show();
                 $('#vidUserContainer').hide();
-                $("#imgFile").attr("disabled", false);
+                $("#imgFileUser").attr("disabled", false);
                 $('#imgVista').show();
                 $('#vidStream').hide();
             }
@@ -369,18 +365,19 @@
 
             let action = $('#frmUsers').data('action'),
                 id = $('#frmUsers').data('id'),
-                name = $('#txtPrdName').val(),
-                prov = $('#slcPrdProvider').val(),
-                cat = $('#slcPrdCategory').val(),
-                createdate = $('#txtPrdCreateDate').val(),
-                expirationdate = $('#txtPrdExpiration').val(),
-                cost = $('#txtPrdPrice').val(),
-                photo = $('#imgUserPreview').attr('src'),
-                data = {action, id, name, prov, cat, createdate, expirationdate, cost, photo:'/img/products/product'};
+                dui = $('#txtDuiUser').val(),
+                name = $('#txtNameUser').val(),
+                nick = $('#txtNickUser').val(),
+                phone = $('#txtPhoneUser').val(),
+                mail = $('#txtEmailUser').val(),
+                pass = $('#txtPassUser').val(),
+                dbirth = $('#txtBirthUser').val(),
+                permiss = $('#slcFeatures').val(),
+                data = {action, id, dui, name, nick, phone, mail, pass, dbirth, foto:'foto', permiss};
             console.log(data);
 
             console.log($('#imgUserPreview').attr('src'));
-            adminPetition('http://localhost:3000/admin_users', data, 'POST', 'reloadProducts', $('#frmUsers'));
+            adminPetition('http://localhost:3000/admin_users', data, 'POST', 'reloadUsers', $('#frmUsers'));
         })
         .on('reset', (e) => {
             clearForms($('#frmUsers'));

@@ -1,0 +1,125 @@
+<div class="container">
+    <div class="row">
+        <!-- FORMULARIO PARA AGREGAR PERMISOS -->
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" id="tblTitle">Agregar un nuevo permiso</span>
+                    <form id="frmFeature" data-action="create" data-id="0">
+                        <div class="row">
+                            <div class="col s6">
+                                <div class="input-field">
+                                    <input type="text" name="txtFeatName" id="txtFeatName" data-length="25" required>
+                                    <label for="txtFeatName">Nombre</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="submit">
+                                    <i class="material-icons">send</i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="reset">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- TABABLE DE PERMISOS -->
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Permisos</span>
+                    <table class="responsive-table highlight" id="tblFeatures">
+                        <thead>
+                            <tr>
+                                <th colspan="2">
+                                    <div class="input-field">
+                                        <input type="text" id="txtSearch">
+                                        <label for="txtSearch">Buscar</label>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Permisos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ... -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showFeatures(features) {
+        console.log(features);
+        $('#tblFeatures tbody').html('');
+        features.forEach(feature => {
+            $('#tblFeatures tbody').append(`
+                <tr onclick='updateFeature(${JSON.stringify(feature)})'>
+                    <td>${feature.pms_type}</td>
+                    <td>
+                        <a href="#tblFeatures" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteFeature(${JSON.stringify(feature)})'>
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+            `);
+        });
+    }
+
+    function deleteFeature(feature) {
+        if (confirm(`¿Esta seguro de eliminar la categoría ${feature.pms_type}?`)) {
+            let data = {
+                action: 'delete',
+                id: feature.pms_id
+            };
+            console.log(data);
+            adminPetition('http://localhost:3000/admin_features', data, 'POST', 'reloadFeatures');
+        }
+    }
+
+    function updateFeature(feature) {
+        $('#txtFeatName').val(feature.pms_type);
+        $('#frmFeature').data('action', 'update');
+        $('#frmFeature').data('id', feature.pms_id);
+    }
+
+    $(document).ready(function(){
+        $('input#txtFeatName').characterCounter();
+
+        adminPetition('http://localhost:3000/show_features', {}, 'GET', 'tableFeatures');
+
+        $('#frmFeature').submit( (e) => {
+            e.preventDefault();
+            let action = $('#frmFeature').data('action'),
+                id = $('#frmFeature').data('id'),
+                name = $('#txtFeatName').val(),
+                description = $('#txtCatDescription').val(),
+                data = {action, id, name};
+            console.log(data);
+            adminPetition('http://localhost:3000/admin_features', data, 'POST', 'reloadFeatures', $('#frmFeature'));
+        })
+        .on('reset', (e) => {
+            clearForms($('#frmFeature'));
+        });
+    
+        $("#txtSearch").keyup(function(e){
+            let valor = $(this).val(),
+                $tblFearures = $("#tblFeatures tbody tr");
+            $tblFearures.show();
+            let $fila = $tblFearures.filter(function(index){
+                return $(this).find("td:not(:last)").text().toLowerCase().indexOf(valor.toLowerCase())==-1;
+            });
+            $fila.hide();
+        });
+    });
+</script>
