@@ -1,0 +1,135 @@
+<div class="container">
+    <div class="row">
+        <!-- FORMULARIO PARA AGREGAR CATEGORIAS -->
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" id="tblTitle">Agregar una nueva categoría</span>
+                    <form id="frmCategory" data-action="create" data-id="0">
+                        <div class="row">
+                            <div class="col s6">
+                                <div class="input-field">
+                                    <input type="text" name="txtCatName" id="txtCatName" data-length="25" required>
+                                    <label for="txtCatName">Nombre</label>
+                                </div>
+                            </div>
+                            <div class="col s6">
+                                <div class="input-field">
+                                    <textarea name="txtCatDescription" id="txtCatDescription" class="materialize-textarea" data-length="50" required></textarea>
+                                    <label for="txtCatDescription">Descripción</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="submit" name="btnCatAction">
+                                    <i class="material-icons">send</i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="reset" name="btnCatReset" id="btnCatReset">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- TABABLE DE CATEGORIAS -->
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Categorias</span>
+                    <table class="responsive-table highlight" id="tblCategories">
+                        <thead>
+                            <tr>
+                                <th colspan="3">
+                                    <div class="input-field">
+                                        <input type="text" id="txtSearch">
+                                        <label for="txtSearch">Buscar</label>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- ... -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showCategories(categories) {
+        $('#tblCategories tbody').html('');
+        categories.forEach(category => {
+            $('#tblCategories tbody').append(`
+                <tr onclick='updateCategory(${JSON.stringify(category)})'>
+                    <td>${category.cat_id}</td>
+                    <td>${category.cat_name}</td>
+                    <td>${category.cat_description}</td>
+                    <td>
+                        <a href="#tblCategories" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteCategory(${JSON.stringify(category)})'>
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+            `);
+        });
+    }
+
+    function deleteCategory(category) {
+        if (confirm(`¿Esta seguro de eliminar la categoría ${category.cat_id}?`)) {
+            let data = {
+                action: 'delete',
+                id: category.cat_id
+            };
+            console.log(data);
+            adminPetition('http://localhost:3000/admin_category', data, 'POST', 'reloadCategories');
+        }
+    }
+
+    function updateCategory(data) {
+        $('#txtCatName').val(data.cat_name);
+        $('#txtCatDescription').val(data.cat_description);
+        $('#frmCategory').data('action', 'update');
+        $('#frmCategory').data('id', data.cat_id);
+    }
+
+    $(document).ready(function(){
+        $('textarea#txtCatDescription, input#txtCatName').characterCounter();
+
+        adminPetition('http://localhost:3000/show_categories', {}, 'GET', 'tableCategories');
+
+        $('#frmCategory').submit( (e) => {
+            e.preventDefault();
+            let action = $('#frmCategory').data('action'),
+                id = $('#frmCategory').data('id'),
+                name = $('#txtCatName').val(),
+                description = $('#txtCatDescription').val(),
+                data = {action, id, name, description};
+            console.log(data);
+            adminPetition('http://localhost:3000/admin_category', data, 'POST', 'reloadCategories', $('#frmCategory'));
+        })
+        .on('reset', (e) => {
+            clearForms($('#frmCategory'));
+        });
+    
+        $("#txtSearch").keyup(function(e){
+            let valor = $(this).val(),
+                $tblProducts = $("#tblCategories tbody tr");
+            $tblProducts.show();
+            let $fila = $tblProducts.filter(function(index){
+                return $(this).find("td:not(:last)").text().toLowerCase().indexOf(valor.toLowerCase())==-1;
+            });
+            $fila.hide();
+        });
+    });
+</script>

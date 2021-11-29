@@ -1,0 +1,396 @@
+<div class="container">
+    <div class="row">
+        <!-- FORMULARIO PARA USUARIOS -->
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" id="tblTitle">Agregar un nuevo usuario</span>
+                    <form id="frmUsers" data-action="create" data-id="0">
+                        <!-- Previsualizar -->
+                        <div class="col s12 m4">
+                            <div class="col s12 center-align" id="vidStream">
+                                <video id="vidUser" class="responsive-video"></video>
+                            </div>
+                            <div class="col s12 m12 center-align" id="imgVista">
+                                <div class="input-field">
+                                    <p class="center-align" id="txtUserPreview"></p>
+                                    <img src="" alt="" id="imgUserPreview" class="responsive" width="200" height="200">
+                                    <canvas id="canvas" class="none" hidden></canvas>
+                                    <canvas id="canvas2" class="none" hidden></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Datos -->
+                        <div class="col s12 m8">
+                            <div class="input-field col s5 m2">
+                                <div class="switch">
+                                    <label id="lblStatus">
+                                        <input type="checkbox" name="chkStatusUser" id="chkStatusUser">
+                                        <span class="lever"></span>
+                                        Archivo/Camara
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="file-field input-field col s7 m4" id="imgFileContainerUser">
+                                <div class="btn">
+                                    <span>
+                                        <i class="material-icons">perm_media</i>
+                                    </span>
+                                    <input type="file" name="imgFileUser" id="imgFileUser">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Seleccione una imagen">
+                                </div>
+                            </div>
+                            <div class="col s7 m4"  id="vidUserContainer">
+                                <div class="input-field center-align">
+                                    <div class="btn" id="btnTakePhotoUser">
+                                        <span>
+                                            <i class="material-icons">add_a_photo</i>
+                                        </span>
+                                    </div>
+                                    <div class="btn" id="btnRetakePhotoUser">
+                                        <span>
+                                            <i class="material-icons">refresh</i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="text" name="txtDuiUser" id="txtDuiUser" data-length="10" required>
+                                    <label for="txtDuiUser">DUI</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="text" name="txtNameUser" id="txtNameUser" data-length="175" required>
+                                    <label for="txtNameUser">Nombre</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="text" name="txtNickUser" id="txtNickUser" data-length="10" required>
+                                    <label for="txtNickUser">Nickname</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="tel" name="txtPhoneUser" id="txtPhoneUser" data-length="10" required>
+                                    <label for="txtPhoneUser">Telefono</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="email" name="txtEmailUser" id="txtEmailUser" data-length="100" required>
+                                    <label for="txtEmailUser">Correo</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="password" name="txtPassUser" id="txtPassUser" data-length="10" required>
+                                    <label for="txtPassUser">Contraseña</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="password" name="txtRePassUser" id="txtRePassUser" data-length="10" required>
+                                    <label for="txtRePassUser">Repetir contraseña</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="date" name="txtBirthUser" id="txtBirthUser" required>
+                                    <label for="txtBirthUser">Fecha de nacimiento</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <select name="slcFeatures" id="slcFeatures" required>
+                                        <option value="" disabled selected>Seleccione los permisos</option>
+                                    </select>
+                                    <label for="slcFeatures">Permisos</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="submit" name="btnAction">
+                                    <i class="material-icons">send</i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="reset" name="btnReset" id="btnCatReset">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TABLA PARA USUARIOS -->
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Usuarios</span>
+                <table class="responsive-table highlight" id="tblUsers">
+                    <thead>
+                        <tr>
+                            <th colspan="11">
+                                <div class="input-field">
+                                    <input type="text" id="txtSearch">
+                                    <label for="txtSearch">Buscar</label>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Foto</th>
+                            <th>DUI</th>
+                            <th>Nombre</th>
+                            <th>Nickname</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th>Contraseña</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Permisos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ... -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showUsers(users) {
+        $('#tblUsers tbody').html('');
+        users.forEach(user => {
+            // El tipo de peremiso debe verse en un marco
+            $('#tblUsers tbody').append(`
+                <tr onclick='updateUser(${JSON.stringify(user)})'>
+                    <td>${user.ux_id}</td>
+                    <td>
+                        <img src="${user.ux_urlphoto}.jpg" alt="${user.ux_nick}" class="responsive-img">
+                    </td>
+                    <td>${user.ux_dui}</td>
+                    <td>${user.ux_name }</td>
+                    <td>${user.ux_nick}</td>
+                    <td>${user.ux_phone}</td>
+                    <td>${user.ux_mail}</td>
+                    <td>${user.ux_pass}</td>
+                    <td>${user.ux_DBirth}</td>
+                    <td>
+                        <div class="chip">
+                            ${user.pms_type}
+                        </div>
+                    <td>
+                        <a href="#tblUsers" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteUser(${JSON.stringify(user)})'>
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+            `);
+        });
+    }
+
+    function showSltFeatures(features) {
+        features.forEach(feature => {
+            $('#slcFeatures').append(`
+                <option value="${feature.pms_id}">${feature.pms_type}</option>
+            `);
+        });
+        $('#slcFeatures').formSelect();
+    }
+
+    function deleteUser(user) {
+        if (confirm(`¿Esta seguro de eliminar al usuario ${user.ux_name}?`)) {
+            let data = {
+                action: 'delete',
+                id: user.ux_id
+            };
+            console.log(data);
+            adminPetition('http://localhost:3000/admin_users', data, 'POST', 'reloadUsers');
+        }
+    }
+
+    function updateUser(user) {
+        $('#txtIdUser').val(user.ux_id);
+        $('#txtNameUser').val(user.ux_name);
+        $('#txtNickUser').val(user.ux_nick);
+        $('#txtPhoneUser').val(user.ux_phone);
+        $('#txtEmailUser').val(user.ux_mail);
+        $('#txtPassUser').val(user.ux_pass);
+        $('#txtRePassUser').val(user.ux_pass);
+        let date = user.ux_DBirth.split('/');
+        $('#txtBirthUser').val(`${date[2]}-${date[1]}-${date[0]}`);
+        $('#slcFeatures').val(user.ux_features);
+        $('#slcFeatures').formSelect();
+    }
+
+    function takePhoto() {
+        canvas = document.getElementById('canvas');
+        let canvas2 = document.getElementById('canvas2');
+        canvas2.width = video.width;
+        canvas2.height = video.height;
+        let ctx2 = canvas2.getContext('2d');
+        ctx2.drawImage(video, 0, 0, video.width, video.height);
+        video.pause();
+        setTimeout(e => {
+            video.play();
+        }, 1000);
+        // Imagen de prueba
+        
+        canvas.width = 28;
+        canvas.height = 28;
+        ctx = canvas.getContext("2d");
+        //Negativo
+        ctx.globalCompositeOperation = 'difference';
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        //Escala de grises
+        ctx.filter = 'grayscale(100%)';
+        cxt.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        let data = canvas.toDataURL('image/png');
+        document.getElementById("imgUserPreview").src = data;
+        //Insertar en la imagen
+        let data2 = canvas2.toDataURL('image/png');
+        let img = document.getElementById("imgUserPreview");
+        img.src = data2;
+    }
+
+    function turnOnCamera() {
+        canvas = document.getElementById('canvas');
+        cxt = canvas.getContext('2d');
+        video = document.getElementById('vidUser');
+        video.width = 400;
+        video.height = 400;
+
+        if (!navigator.getUserMedia) {
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+        }
+        if (!window.URL) {
+            window.URL = window.URL;
+        }
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({video: true,audio: false
+            }, function (stream) {
+                try {
+                    localstream = stream;
+                    video.srcObject = stream;
+                    video.play();
+                } catch (err) {
+                    console.log(err);
+                    video.srcObject = null;
+                }
+            }, function (error) {
+                console.warn('¡Algo ha salido mal!', error); 
+            });
+        } else {
+            console.error('¡Ha ocurrido un error!');
+            return
+        }
+    }
+
+    function turnOffCamera() {
+        video.pause();
+        video.srcObject = null;
+        localstream.getTracks()[0].stop();
+    }
+
+    $(document).ready(async function(){
+        let localstream, canvas, video, cxt;
+        $('select').formSelect();
+        $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
+        $('input#txtPrdName, input#txtCatName, #txtProvName, #txtProvPhone, #txtEmailUser').characterCounter();
+        $('#vidStream').hide();
+        $('#vidUserContainer').hide();
+
+        adminPetition('http://localhost:3000/show_features', {}, 'GET', 'selectFeatures');
+        adminPetition('http://localhost:3000/show_users', {}, 'GET', 'tableUsers');
+
+        
+        $('btnRetakePhotoUser').click((e) => {
+        });
+
+        $('#btnTakePhotoUser').click((e) => {
+            e.preventDefault();
+            takePhoto();
+
+            let canvasProduct = $('#canvas')[0];
+            let ctxProduct = canvasProduct.getContext('2d');
+            $('#imgVista').show();
+            $('#vidStream').hide();
+
+            let pixeles = [];
+            for(i=0; i<28;i++){
+                for(j=0; j<28; j++){
+                    let imgData = ctxProduct.getImageData(i,j,1,1).data,
+                        valor = (imgData[2]/255*100/100).toFixed(2);
+                    pixeles.push(valor);
+                }
+            }
+            
+            pixeles = pixeles.join(",");
+        });
+        
+        $("#chkStatusUser").change(e => {
+            if ($("#chkStatusUser").is(":checked")) {
+                turnOnCamera();
+                $('#vidUserContainer').show();
+                $('#imgFileContainerUser').hide();
+                $("#imgFileUser").attr("disabled", true);
+                $('#imgVista').hide();
+                $('#vidStream').show();
+            } else {
+                turnOffCamera();
+                $('#imgFileContainerUser').show();
+                $('#vidUserContainer').hide();
+                $("#imgFileUser").attr("disabled", false);
+                $('#imgVista').show();
+                $('#vidStream').hide();
+            }
+        });
+    
+        $('#frmUsers').submit( (e) => {
+            e.preventDefault();
+            canvas = $('#canvas')[0];
+            ctx = canvas.getContext('2d');
+
+            let action = $('#frmUsers').data('action'),
+                id = $('#frmUsers').data('id'),
+                dui = $('#txtDuiUser').val(),
+                name = $('#txtNameUser').val(),
+                nick = $('#txtNickUser').val(),
+                phone = $('#txtPhoneUser').val(),
+                mail = $('#txtEmailUser').val(),
+                pass = $('#txtPassUser').val(),
+                dbirth = $('#txtBirthUser').val(),
+                permiss = $('#slcFeatures').val(),
+                data = {action, id, dui, name, nick, phone, mail, pass, dbirth, foto:'foto', permiss};
+            console.log(data);
+
+            console.log($('#imgUserPreview').attr('src'));
+            adminPetition('http://localhost:3000/admin_users', data, 'POST', 'reloadUsers', $('#frmUsers'));
+        })
+        .on('reset', (e) => {
+            clearForms($('#frmUsers'));
+        });
+    
+        $("#txtSearch").keyup(function(e){
+            let valor = $(this).val(),
+                $tblUsers = $("#tblUsers tbody tr");
+            $tblUsers.show();
+            let $fila = $tblUsers.filter(function(index){
+                return $(this).find("td:not(:last)").text().toLowerCase().indexOf(valor.toLowerCase())==-1;
+            });
+            $fila.hide();
+        });
+    });
+</script>
