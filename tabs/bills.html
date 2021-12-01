@@ -1,0 +1,222 @@
+<div class="container">
+    <div class="row">
+        <!-- FORMULARIO PARA PROVEEDORES -->
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" id="tblTitle">Agregar una nueva factura</span>
+                    <form id="frmBill" data-action="create" data-id="0">
+                        <div class="row">
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <select name="cmbBillUser" id="cmbBillUser" required>
+                                        <option value="" disabled selected>Seleccione al usuario</option>
+                                    </select>
+                                    <label for="cmbBillUser">Proveedor</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <select name="cmbBillProduct" id="cmbBillProduct" required multiple>
+                                        <!-- ... -->
+                                    </select>
+                                    <label for="cmbBillProduct">Producto</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="tel" name="txtDateBill" id="txtDateBill" required>
+                                    <label for="txtDateBill">Fecha</label>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="input-field">
+                                    <input type="number" name="txtPriceBill" id="txtPriceBill" step="0.01" required>
+                                    <label for="txtTotalPriceBill">Precio</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="submit" name="btnAction">
+                                    <i class="material-icons">send</i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button class="btn waves-effect waves-light" type="reset" name="btnCatReset" id="btnCatReset">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TABLA PARA PROVEEDORES -->
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Facturas</span>
+                <table class="responsive-table highlight" id="tblBills">
+                    <thead>
+                        <tr>
+                            <th colspan="4">
+                                <div class="input-field">
+                                    <input type="text" id="txtSearch">
+                                    <label for="txtSearch">Buscar</label>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Fecha de Factura</th>
+                            <th>Productos Comprados</th>
+                            <th>Precio Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Juan Perez</td>
+                            <td>01/01/2020</td>
+                            <td>
+                                <li class="chip" style="display: block; width: max-content; padding-right: 0;">Producto 1 <span class="chip" style="background-color: rgb(240, 240, 240);">25</span><span class="chip" style="background-color: rgb(240, 240, 240); margin-right: 0;">$50</span></li>
+                                <li class="chip" style="display: block; width: max-content; padding-right: 0;">Producto 2 <span class="chip" style="background-color: rgb(240, 240, 240);">25</span><span class="chip" style="background-color: rgb(240, 240, 240); margin-right: 0;">$25</span></li>
+                                <li class="chip" style="display: block; width: max-content; padding-right: 0;">Producto 3 <span class="chip" style="background-color: rgb(240, 240, 240);">25</span><span class="chip" style="background-color: rgb(240, 240, 240); margin-right: 0;">$25</span></li>
+                            </td>
+                            <td>$100</td>
+                        <!-- ... -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showBills(bills) {
+        $('#tblBills tbody').html('');
+        bills.forEach(bill => {
+            $('#tblBills tbody').append(`
+                <tr onclick='updateBill(${JSON.stringify(bill)})'>
+                    <td>${bill.prov_id}</td>
+                    <td>${bill.prov_name}</td>
+                    <td>${bill.prov_phone}</td>
+                    <td>${bill.prov_mail}</td>
+                    <td>
+                        <a href="#tblBills" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteBill(${JSON.stringify(bill)})'>
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+            `);
+        });
+    }
+
+    function updateBill(bill) {
+        $('#txtBillName').val(bill.prov_name);
+        $('#txtBillPhone').val(bill.prov_phone);
+        $('#txtBillEmail').val(bill.prov_mail);
+        $('#frmBill').attr('data-action', 'update');
+        $('#frmBill').attr('data-id', bill.prov_id);    
+    }
+
+    function deleteBill(bill) {
+        if (confirm(`¿Esta seguro de eliminar al proveedor ${bill.prov_id}?`)) {
+            let data = {
+                action: 'delete',
+                id: bill.prov_id
+            };
+            console.log(data);
+            adminPetition('http://localhost:3000/admin_bill', data, 'POST', 'reloadBill');
+        }
+    }
+
+    function addProductBill(product) {
+        let cmbProduct = '<select name="cmbBillProduct" id="cmbBillProduct" required >',
+            txtPrice = '';
+        
+        product.forEach(product => {
+            cmbProduct += `
+                <option value="${product.prt_id}">${product.prt_nombre}</option>
+            `;
+        });
+        cmbProduct += '</select>';
+        txtPrice = `
+            <div class="input-field">
+                <input type="text" name="txtPriceProductBill" data-length="100" required>
+                <label for="txtPriceProductBill">Precio</label>
+            </div>
+        `;
+        $('#txtProductPriceBill').append(cmbProduct);
+        $('select').formSelect();
+        $('#txtProductPriceBill').append(txtPrice);
+    };
+
+    function showSltUsers(users) {
+        console.log(users);
+        $('#cmbBillUser').html('');
+        users.forEach(user => {
+            $('#cmbBillUser').append(`
+                <option value="${user.ux_id}">${user.ux_dui} | ${user.ux_name}</option>
+            `);
+        });
+        $('#cmbBillUser').formSelect();
+    }
+
+    function showSltProducts(products) {
+        $('#cmbBillProduct').html('');
+        products.forEach(product => {
+            $('#cmbBillProduct').append(`
+                <option value="${product.prt_id}">${product.prt_name} $${product.prt_cost}</option>
+            `);
+        });
+        $('select').formSelect();
+    }
+
+    $(document).ready(function(){
+        $('select').formSelect();
+        $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
+        $('#txtDateBill').datepicker({
+            format: 'dd/mm/yyyy',
+            i18n: {
+                months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                weekdays: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                weekdaysAbbrev: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                cancel: 'Cancelar',
+                clear: 'Limpiar',
+                done: 'Listo'
+            }
+        });
+
+        adminPetition('http://localhost:3000/show_products', {}, 'GET', 'selectProducts');
+        adminPetition('http://localhost:3000/show_users', {}, 'GET', 'selectUsers');
+        adminPetition('http://localhost:3000/show_bills', {}, 'GET', 'tableBills');
+
+        $('#frmBill').submit( (e) => {
+            e.preventDefault();
+            let action = $('#frmBill').data('action'),
+                id = $('#frmBill').data('id'),
+                name = $('#txtBillName').val(),
+                phone = $('#txtBillPhone').val(),
+                mail = $('#txtBillEmail').val(),
+                data = {action, id, name, phone, mail};
+            console.log(data);
+            adminPetition('http://localhost:3000/admin_bill', data, 'POST', 'reloadBills', $('#frmBill'));
+        })
+        .on('reset', (e) => {
+            clearForms($('#frmBill'));
+        });
+    
+        $("#txtSearch").keyup(function(e){
+            let valor = $(this).val(),
+                $tblProducts = $("#tblBills tbody tr");
+            $tblProducts.show();
+            let $fila = $tblProducts.filter(function(index){
+                return $(this).find("td:not(:last)").text().toLowerCase().indexOf(valor.toLowerCase())==-1;
+            });
+            $fila.hide();
+        });
+    });
+</script>

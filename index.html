@@ -4,98 +4,60 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nombre Super</title>
+    <title>Fast Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <nav class="blue accent-2">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo"><i class="large material-icons">home</i>Nombre Super</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="carrito.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i></a></li>
+            <a href="#" class="brand-logo hide-on-med-and-down">Fast Store</a>
+            <a href="#" class="brand-logo hide-on-large-only">Fast Store</a>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="index.html"><i class="material-icons">home</i></a></li>
+                
+                <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i></a></li>
+                <li><a href="#" data-target="dropdown1" class="dropdown-trigger"><i class="material-icons">account_circle</i></a></li>
+                <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i></a></li>
+                <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i></a></li>
+                <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i></a></li>
             </ul>
         </div>
     </nav>
-    <!-- Contenerdor principal -->
-    <div class="container">
-        <div class="container">
-            <div class="row">
-                <div class="col s12 m12 l12">
-                    <div class="card">
-                        <h4 class="card-title">Alimentos Frescos</h4>
-                        <div id="fresh">
-                            <!-- ... -->
-                        </div>
-                    </div>
-                </div>
+    <ul id="slide-out" class="sidenav">
+        <li><a href="index.html"><i class="material-icons">home</i>Inicio</a></li>
+            
+        <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i> Carrito</a></li>
+        <li><a href="#" data-target="dropdown1" class="dropdown-trigger"><i class="material-icons">account_circle</i>Mi cuenta</a></li>
+        <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i> Iniciar sesión</a></li>
+        <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i> Registrarse</a></li>
+        <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i> Administrar</a></li>
+    </ul>
+    
+    <div class="">
+        <div class="row">
+            <div class="col s12">
+                <h1 class="center-align">Productos</h1>
             </div>
-            <div class="row">
-                <div class="col s12 m12 l12">
-                    <div class="card">
-                        <h4 class="card-title">Aseo</h4>
-                        <div id="cleanliness">
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row" id="fresh">
                                 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m12 l12">
-                    <div class="card">
-                        <h4 class="card-title">Alimentos Congelados</h4>
-                        <div id="foods">
-                                
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m12 l12">
-                    <div class="card">
-                        <h4 class="card-title">Bebidas</h4>
-                        <div id="drinks">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m12 l12">
-                    <div class="card">
-                        <h4 class="card-title">Bebidas</h4>
-                        <div id="drinks">
-                                
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m12 l12">
-                    <div class="card">
-                        <h4 class="card-title">Hogar</h4>
-                        <div id="home">
-                                
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12 m12 l12">
-                    <div class="card">
-                        <h4 class="card-title">Cuidado personal</h4>
-                        <div id="personal">
-                                
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-                            
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         function filter(data, key) {
             return data.filter(function(item) {
@@ -121,19 +83,29 @@
                 let products = '';
                 data[0].forEach(product => {
                     products = products + `
+                        <div class="col s12 m6 l3">
+                            <div class="card" style="min-height: 260px; max-height: 260px; overflow: hidden; overflow-y: scroll;">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator materialboxed" src="${product.prt_photo}.jpg" heigth="200">
+                                </div>
+                                <div class="card-content">
+                                    <span class="card-title activator grey-text text-darken-4">${product.prt_name}<i class="material-icons right">more_vert</i></span>
+                                    <p><a href="#">This is a link</a></p>
+                                </div>
+                                <div class="card-reveal">
+                                    <span class="card-title grey-text text-darken-4">${product.prt_name}<i class="material-icons right">close</i></span>
+                                    <p>${product.cat_name}</p>
 
-                        <div class="col s12 m4">
-                            <div class="card">
-                                <div class="card-image">
-                                <img src="${product.prt_photo}.jpg" width="150" height="140">
-                                <span class="card-title black-text">${product.prt_name}</span>
-                                <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">shopp</i></a>
-                                </div>
-                                <div class="card-content" style="max-height: 80px; min-height: 80px;">
-                                <p>${product.cat_name}</p>
+                                    <input type="number" name="quantity" id="quantity" value="1" min="1" max="30">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action" title="Comprar">
+                                        <i class="material-icons right">shopp</i>
+                                    </button>
+                                    <button class="btn waves-effect waves-light" type="submit" name="action" title="Enviar al Carrito">
+                                        <i class="material-icons right">shopping_cart</i>
+                                    </button>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                     `;
                 });
                 $('#fresh').html(products);
@@ -141,61 +113,9 @@
         }
         $(document).ready(function(){
             showProducts();
+            $('.tooltipped').tooltip();
+            $('.sidenav').sidenav();
         });
     </script>
-    <!-- <?php foreach($products as $product) { ?>
-                                <div class="col-md-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <img src="<?php echo $product->image; ?>" alt="" width="100%">
-                                            <h5 class="card-title"><?php echo $product->name; ?></h5>
-                                            <p class="card-text"><?php echo $product->description; ?></p>
-                                            <p class="card-text"><?php echo $product->price; ?></p>
-                                            <a href="<?php echo $product->url; ?>" class="btn btn-primary">Buy</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?> 
-                        <div class="card">
-                            <img class="card-img-top" src="https://picsum.photos/300/200" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Product title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>  
-                    
-                    <div class="row">
-    <div class="col s12 m6">
-      <div class="card">
-        <div class="card-image">
-          <img src="images/sample-1.jpg">
-          <span class="card-title">Card Title</span>
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-        </div>
-        <div class="card-content">
-          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-<div class="card">
-                                    <div class="card-image waves-effect waves-block waves-light">
-                                      <img class="activator" src="images/office.jpg">
-                                    </div>
-                                    <div class="card-content">
-                                      <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                                      <p><a href="#">This is a link</a></p>
-                                    </div>
-                                    <div class="card-reveal">
-                                      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                                      <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                                    </div>
-                                </div>-->
-
-    
-
 </body>
 </html>
