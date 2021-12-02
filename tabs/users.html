@@ -23,9 +23,10 @@
                             <div class="input-field col s6 m4 l2">
                                 <div class="switch">
                                     <label id="lblStatus">
+                                        File
                                         <input type="checkbox" name="chkStatusUser" id="chkStatusUser">
                                         <span class="lever tooltipped" data-position="top" data-tooltip="Switch between the camera and a file"></span>
-                                        Archivo/Camara
+                                        Cam
                                     </label>
                                 </div>
                             </div>
@@ -47,11 +48,11 @@
                                             <i class="material-icons">add_a_photo</i>
                                         </span>
                                     </div>
-                                    <button type="button" class="btn tooltipped" data-position="top" data-tooltip="Take other photo" id="btnRetakePhotoUser">
+                                    <div class="btn tooltipped" data-position="top" data-tooltip="Take other photo" id="btnRetakePhotoUser">
                                         <span>
                                             <i class="material-icons">refresh</i>
                                         </span>
-                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col s12 m6">
@@ -133,16 +134,42 @@
         <div class="card">
             <div class="card-content w-11/12"  style="overflow: hidden; overflow-x: scroll;">
                 <span class="card-title">Usuarios</span>
+                <!-- Search -->
+                <div class="col s12 m8 l9">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" name="txtSearch" id="txtSearch">
+                        <label for="txtSearch">Buscar</label>
+                    </div>
+                </div>
+                <!-- Pagination centrado -->
+                <div class="col s12 m4 l3 center-align">
+                    <ul class="pagination">
+                        <li class="disabled">
+                            <a href="#!"><i class="material-icons">chevron_left</i></a>
+                        </li>
+                        <li class="active">
+                            <a href="#!">1</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!">2</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!">3</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!">4</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!">5</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!"><i class="material-icons">chevron_right</i></a>
+                        </li>
+                    </ul>
+                </div>
                 <table class="responsive-table highlight" id="tblUsers">
                     <thead>
-                        <tr>
-                            <th colspan="11">
-                                <div class="input-field">
-                                    <input type="text" id="txtSearch">
-                                    <label for="txtSearch">Buscar</label>
-                                </div>
-                            </th>
-                        </tr>
                         <tr>
                             <th>ID</th>
                             <th>Foto</th>
@@ -325,7 +352,7 @@
         $('#vidStream').hide();
         $('#vidUserContainer').hide();
         $('#txtBirthUser').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy-mm-dd',
             i18n: {
                 months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
@@ -334,7 +361,7 @@
                 weekdaysAbbrev: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S'],
                 cancel: 'Cancelar',
                 clear: 'Limpiar',
-                done: 'Listo'
+                done: 'Listo',
             }
         });
 
@@ -444,6 +471,8 @@
                 return $(this).find("td:not(:last)").text().toLowerCase().indexOf(valor.toLowerCase())==-1;
             });
             $fila.hide();
+
+            lastId = $("#tblUsers tbody tr:visible td")[0].innerHTML;
         });
     });
 </script>

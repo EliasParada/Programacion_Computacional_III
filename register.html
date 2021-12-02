@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrate Ya!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="card-panel row">
+        <div class="col s12 m6 l6">
+            <div class="">
+                <div class="row">
+                    <div class="col s12 m12 l12">
+                        <div class="card-panel blue-grey lighten-4 text-darken-2">
+                            <span class="center-align">
+                                <h4>Fast Store</h4>
+                                <p>Encuentra lo que necesitas</p>
+                            </span>
+                        </div>
+                        <div class="card-panel blue-grey lighten-5 text-darken-4">
+                            <div class="carousel carousel-slider center" data-indicators="true">
+                                <div class="carousel-item" href="#one!">
+                                    <h2>Frutas</h2>
+                                    <p>
+                                        <img src="img/media/fruits.jpeg" alt="Frutas" class="responsive-img">
+                                    </p>
+                                </div>
+                                <div class="carousel-item" href="#two!">
+                                    <h2>Helados</h2>
+                                    <p>
+                                        <img src="img/media/ice-creams.jpg" alt="Helados" class="responsive-img">
+                                    </p>
+                                </div>
+                                <div class="carousel-item" href="#three!">
+                                    <h2>Para El Hogar</h2>
+                                    <p>
+                                        <img src="img/media/home.jpg" alt="Para El Hogar" class="responsive-img">
+                                    </p>
+                                </div>
+                                <div class="carousel-item" href="#four!">
+                                    <h2>Cereales</h2>
+                                    <p>
+                                        <img src="img/media/cereals.jpg" alt="Cereales" class="responsive-img">
+                                    </p>
+                                </div>
+                                <div class="carousel-item" href="#five!">
+                                    <h2>Vegetales</h2>
+                                    <p>
+                                        <img src="img/media/vegetables.jpg" alt="Vegetales" class="responsive-img">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-image">
+                    <img src="img/media/login.png">
+                    <span class="card-title">Iniciar Sesión</span>
+                </div>
+                <div class="card-content">
+                    <form>
+                        <div class="row">
+                            <div class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="txtDUI" type="text" required placeholder="DUI"
+                                    pattern="[0-9]{8}-[0-9]{1}" title="Ingrese su DUI" maxlength="10">
+                                <label for="txtDUI">DUI</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="txtName" type="text" class="validate" required>
+                                <label for="txtName">Nombre</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="txtNick" type="text" class="validate" required>
+                                <label for="txtNick">Nombre de Usuario</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">phone</i>
+                                <input id="txtTel" type="tel" class="validate" required>
+                                <label for="txtTel">Telefono</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">email</i>
+                                <input id="txtMail" type="email" class="validate" required>
+                                <label for="txtMail">Correo</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">lock</i>
+                                <input id="txtPass" type="password" class="validate" required>
+                                <label for="txtPass">Contraseña</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">lock</i>
+                                <input id="txtRepass" type="password" class="validate" required>
+                                <label for="txtRepass">Confirmar Contraseña</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12">
+                                <i class="material-icons prefix">date_range</i>
+                                <input id="txtDate" type="tel" class="validate datepicker" required>
+                                <label for="txtDate">Fecha de Nacimiento</label>
+                            </div>
+                            <div class="input-field col s12 m12 l12">
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Registrar
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        const duiRegExp = /(^\d{8})-(\d$)/;
+
+        function isDUI(dui) {
+            if (!duiRegExp.test(dui)) return false;
+
+            let sum = 0;
+            const [digits, verifier] = dui.split('-');
+            for (let i = 0; i < digits.length; i++) {
+                sum += Number(digits[i]) * (digits.length + 1 - i);
+            }
+
+            return Number(verifier) === (10 - (sum % 10)) % 10 && sum > 0;
+        }
+        $(document).ready(function() {
+            $('.carousel').carousel();
+            $('.datepicker').datepicker();
+            $('#txtDate').datepicker({
+                format: 'yyyy-mm-dd',
+                i18n: {
+                    months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    weekdays: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                    weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    weekdaysAbbrev: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                    cancel: 'Cancelar',
+                    clear: 'Limpiar',
+                    done: 'Listo',
+                }
+            });
+
+            $('.carousel.carousel-slider').carousel({
+                fullWidth: true,
+                indicators: true
+            });
+
+            // Dui validation
+            $('#txtDUI').on('keyup', function() {
+                console.log(isDUI($(this).val()));
+                if (isDUI($(this).val())) {
+                    $(this).removeClass('invalid');
+                    $(this).addClass('valid');
+                } else {
+                    $(this).removeClass('valid');
+                    $(this).addClass('invalid');
+                }
+                // if (duiRegex.test(dui)) {
+                //     $('#txtDUI').removeClass('invalid');
+                //     $('#txtDUI').addClass('valid');
+                // } else {
+                //     $('#txtDUI').removeClass('valid');
+                //     $('#txtDUI').addClass('invalid');
+                // }
+                // if (dui.length > 8 && dui.match(/^\d{9}$/)) {
+                //     $('#txtDUI').val(dui.substring(0, 8) + '-' + dui.substring(8, 9));
+                //     $('#txtDUI').removeClass('invalid');
+                //     $('#txtDUI').addClass('valid');
+                // }
+            });
+
+            setInterval(function() {
+                $('.carousel').carousel('next');
+            }, 6000);
+
+        });
+    </script>
+</body>
+</html>

@@ -155,6 +155,14 @@ class localServer(SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
 
+        elif self.path == '/search_users':
+            data = json.loads(data)
+            response = crudUsers.search_users(data['search'], data['init'],data['limit'])
+            print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
+
         elif self.path == '/admin_features':
             data = json.loads(data)
             response = crudFeatures.admin_permissions(data)
@@ -187,20 +195,8 @@ class localServer(SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(prediccion.encode())
 
-        #conseguir la imagen
-        #Generar nombre
-        # url = body['url'].split('=')
-        # print(url)
-        # name = body['name']
-        # print(name)
-        #guardar la imagen
-        # urllib.request.urlretrieve(url, image_name)
-        #redireccionar
         # self.send_response(301)
         # # self.send_header('Location', '/')
-        # self.send_response(200)
-        # self.end_headers()
-        # self.wfile.write(b'Hello, world!')
 
 # Iniciar el servidor
 print("\033[1;37;42m Iniciando el servidor \033[0;m")
