@@ -50,11 +50,11 @@
                                     <label for="slcPrdProvider">Proveedores</label>
                                 </div>
                                 <div class="input-field">
-                                    <input type="date" name="txtPrdCreateDate" id="txtPrdCreateDate" required>
+                                    <input type="tel" name="txtPrdCreateDate" id="txtPrdCreateDate" required>
                                     <label for="txtPrdCreateDate">Fecha de fabricacion</label>
                                 </div>
                                 <div class="input-field">
-                                    <input type="date" name="txtPrdExpiration" id="txtPrdExpiration" required>
+                                    <input type="tel" name="txtPrdExpiration" id="txtPrdExpiration" required>
                                     <label for="txtPrdExpiration">Fecha de vencimiento</label>
                                 </div>
                                 <div class="input-field">
@@ -64,7 +64,7 @@
                                     <label for="slcPrdCategory">Categorias</label>
                                 </div>
                                 <div class="input-field">
-                                    <input type="number" name="txtPrdPrice" id="txtPrdPrice" required>
+                                    <input type="number" name="txtPrdPrice" id="txtPrdPrice" step="0.01" required>
                                     <label for="txtPrdPrice">Precio</label>
                                 </div>
                                 
@@ -144,7 +144,7 @@
                     <td>${product.cat_name}</td>
                     <td>${product.prt_cost}</td>
                     <td>
-                        <img src="${product.prt_photo}.jpg" alt="${product.prt_name}" class="responsive-img">
+                        <img src="${product.prt_photo}.jpg" alt="${product.prt_name}" class="responsive-img" width="200" height="200">
                     </td>
                     <td>
                         <a href="#tblProducts" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteProduct(${JSON.stringify(product)})'>
@@ -279,6 +279,32 @@
         $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
         $('input#txtPrdName, input#txtCatName, #txtProvName, #txtProvPhone, #txtProvEmail').characterCounter();
         $('#vidContainer').hide();
+        $('#txtPrdCreateDate').datepicker({
+            format: 'yyyy-mm-dd',
+            i18n: {
+                months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                weekdays: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                weekdaysAbbrev: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                cancel: 'Cancelar',
+                clear: 'Limpiar',
+                done: 'Listo'
+            }
+        });
+        $('#txtPrdExpiration').datepicker({
+            format: 'yyyy-mm-dd',
+            i18n: {
+                months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                weekdays: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                weekdaysAbbrev: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                cancel: 'Cancelar',
+                clear: 'Limpiar',
+                done: 'Listo'
+            }
+        });
 
         adminPetition('http://localhost:3000/show_categories', {}, 'GET', 'selectCategories');
         adminPetition('http://localhost:3000/show_providers', {}, 'GET', 'selectProviders');
@@ -294,7 +320,7 @@
             let pixeles = [];
             for(i=0; i<28;i++){
                 for(j=0; j<28; j++){
-                    let imgData = ctxProduct.getImageData(i,j,1,1).data,
+                    let imgData = ctxProduct.getImageData(j,i,1,1).data,
                         valor = (imgData[2]/255*100/100).toFixed(2);
                     pixeles.push(valor);
                 }
