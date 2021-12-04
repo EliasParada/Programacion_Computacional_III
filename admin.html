@@ -7,18 +7,36 @@
     <title>Fast Store - Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .toast-mobile {
+            width: 400px;
+            max-width: 450px;
+        }
+    </style>
 </head>
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="admin.html" class="brand-logo">Logo</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="adminusers.html">Usuarios</a></li>
-                <li><a href="adminemployes.html">Empleados</a></li>
-                <li><a href="admin.html"></a></li>
+            <a href="#" class="brand-logo hide-on-med-and-down">Fast Store</a>
+            <a href="#" class="brand-logo hide-on-large-only">Fast Store</a>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="index.html"><i class="material-icons">home</i></a></li>
+                <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i></a></li>
+                <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i></a></li>
+                <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i></a></li>
+                <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i></a></li>
             </ul>
         </div>
     </nav>
+    <ul id="slide-out" class="sidenav">
+        <li><a href="index.html"><i class="material-icons">home</i>Inicio</a></li>
+            
+        <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i> Carrito</a></li>
+        <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i> Iniciar sesión</a></li>
+        <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i> Registrarse</a></li>
+        <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i> Administrar</a></li>
+    </ul>
         <ul class="tabs" id="tabs">
             <li class="tab col s3"><a class="active" href="#tabPrd" data-tab="tabPrd" data-module="products">Productos</a></li>
             <li class="tab col s3"><a href="#tabCat" data-tab="tabCat" data-module="categories">Categorias</a></li>
@@ -27,7 +45,7 @@
             <li class="tab col s3"><a href="#tabFeature" data-tab="tabFeature" data-module="features">Permisos</a></li>
             <li class="tab col s3"><a href="#tabBill" data-tab="tabBill" data-module="bills">Facturas</a></li>
         </ul>
-        <div id="tabPrd" class="col s12">
+        <div id="tabPrd" class="col s12 text-9xl">
             <!-- ... -->
         </div>
         <!-- SECCION PARA LAS CATEGORIAS -->

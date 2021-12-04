@@ -1,12 +1,11 @@
 <div class="container">
     <div class="row">
         <!-- FORMULARIO PARA USUARIOS -->
-        <div class="col s12">
+        <div class="col s12 m12 l12">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title" id="tblTitle">Agregar un nuevo usuario</span>
                     <form id="frmUsers" data-action="create" data-id="0">
-                        <!-- Previsualizar -->
                         <div class="col s12 m4">
                             <div class="col s12 center-align" id="vidStream">
                                 <video id="vidUser" class="responsive-video"></video>
@@ -14,25 +13,24 @@
                             <div class="col s12 m12 center-align" id="imgVista">
                                 <div class="input-field">
                                     <p class="center-align" id="txtUserPreview"></p>
-                                    <img src="" alt="" id="imgUserPreview" class="responsive" width="200" height="200">
+                                    <img src="" alt="" id="imgUserPreview" class="responsive materialbox" width="200" height="200">
                                     <canvas id="canvas" class="none" hidden></canvas>
-                                    <canvas id="canvas2" class="none" hidden></canvas>
                                 </div>
                             </div>
                         </div>
-                        <!-- Datos -->
                         <div class="col s12 m8">
-                            <div class="input-field col s5 m2">
+                            <div class="input-field col s6 m4 l2">
                                 <div class="switch">
                                     <label id="lblStatus">
+                                        File
                                         <input type="checkbox" name="chkStatusUser" id="chkStatusUser">
-                                        <span class="lever"></span>
-                                        Archivo/Camara
+                                        <span class="lever tooltipped" data-position="top" data-tooltip="Switch between the camera and a file"></span>
+                                        Cam
                                     </label>
                                 </div>
                             </div>
                             <div class="file-field input-field col s7 m4" id="imgFileContainerUser">
-                                <div class="btn">
+                                <div class="btn tooltipped" data-position="top" data-tooltip="Upload a file">
                                     <span>
                                         <i class="material-icons">perm_media</i>
                                     </span>
@@ -44,12 +42,12 @@
                             </div>
                             <div class="col s7 m4"  id="vidUserContainer">
                                 <div class="input-field center-align">
-                                    <div class="btn" id="btnTakePhotoUser">
+                                    <div class="btn tooltipped" data-position="top" data-tooltip="Take a photo" id="btnTakePhotoUser">
                                         <span>
                                             <i class="material-icons">add_a_photo</i>
                                         </span>
                                     </div>
-                                    <div class="btn" id="btnRetakePhotoUser">
+                                    <div class="btn tooltipped" data-position="top" data-tooltip="Take other photo" id="btnRetakePhotoUser">
                                         <span>
                                             <i class="material-icons">refresh</i>
                                         </span>
@@ -58,56 +56,56 @@
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="text" name="txtDuiUser" id="txtDuiUser" data-length="10" required>
+                                    <input type="text" name="txtDuiUser" id="txtDuiUser" required>
                                     <label for="txtDuiUser">DUI</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="text" name="txtNameUser" id="txtNameUser" data-length="175" required>
+                                    <input type="text" name="txtNameUser" id="txtNameUser" required>
                                     <label for="txtNameUser">Nombre</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="text" name="txtNickUser" id="txtNickUser" data-length="10" required>
+                                    <input type="text" name="txtNickUser" id="txtNickUser" required>
                                     <label for="txtNickUser">Nickname</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="tel" name="txtPhoneUser" id="txtPhoneUser" data-length="10" required>
+                                    <input type="tel" name="txtPhoneUser" id="txtPhoneUser" required>
                                     <label for="txtPhoneUser">Telefono</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="email" name="txtEmailUser" id="txtEmailUser" data-length="100" required>
+                                    <input type="email" name="txtEmailUser" id="txtEmailUser" required>
                                     <label for="txtEmailUser">Correo</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="password" name="txtPassUser" id="txtPassUser" data-length="10" required>
+                                    <input type="password" name="txtPassUser" id="txtPassUser" required>
                                     <label for="txtPassUser">Contraseña</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="password" name="txtRePassUser" id="txtRePassUser" data-length="10" required>
-                                    <label for="txtRePassUser">Repetir contraseña</label>
+                                    <input type="password" name="txtRepassUser" id="txtRepassUser" required>
+                                    <label for="txtRepassUser">Repetir contraseña</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
-                                    <input type="date" name="txtBirthUser" id="txtBirthUser" required>
+                                    <input type="tel" name="txtBirthUser" id="txtBirthUser" required>
                                     <label for="txtBirthUser">Fecha de nacimiento</label>
                                 </div>
                             </div>
                             <div class="col s12 m6">
                                 <div class="input-field">
                                     <select name="slcFeatures" id="slcFeatures" required>
-                                        <option value="" disabled selected>Seleccione los permisos</option>
+                                        <option value="" selected>Seleccione los permisos</option>
                                     </select>
                                     <label for="slcFeatures">Permisos</label>
                                 </div>
@@ -133,18 +131,42 @@
     <!-- TABLA PARA USUARIOS -->
     <div class="col s12">
         <div class="card">
-            <div class="card-content">
+            <div class="card-content w-11/12"  style="overflow: hidden; overflow-x: scroll;">
                 <span class="card-title">Usuarios</span>
+                <div class="col s12 m8 l9">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" name="txtSearch" id="txtSearch">
+                        <label for="txtSearch">Buscar</label>
+                    </div>
+                </div>
+                <div class="col s12 m4 l3 center-align">
+                    <ul class="pagination">
+                        <li class="disabled">
+                            <a href="#!"><i class="material-icons">chevron_left</i></a>
+                        </li>
+                        <li class="active">
+                            <a href="#!">1</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!">2</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!">3</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!">4</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!">5</a>
+                        </li>
+                        <li class="waves-effect">
+                            <a href="#!"><i class="material-icons">chevron_right</i></a>
+                        </li>
+                    </ul>
+                </div>
                 <table class="responsive-table highlight" id="tblUsers">
                     <thead>
-                        <tr>
-                            <th colspan="11">
-                                <div class="input-field">
-                                    <input type="text" id="txtSearch">
-                                    <label for="txtSearch">Buscar</label>
-                                </div>
-                            </th>
-                        </tr>
                         <tr>
                             <th>ID</th>
                             <th>Foto</th>
@@ -170,32 +192,58 @@
     function showUsers(users) {
         $('#tblUsers tbody').html('');
         users.forEach(user => {
-            // El tipo de peremiso debe verse en un marco
             $('#tblUsers tbody').append(`
                 <tr onclick='updateUser(${JSON.stringify(user)})'>
                     <td>${user.ux_id}</td>
                     <td>
-                        <img src="${user.ux_urlphoto}.jpg" alt="${user.ux_nick}" class="responsive-img">
+                        <img src="${user.ux_urlphoto}" alt="${user.ux_nick}" class="materialboxed responsive-img">
                     </td>
                     <td>${user.ux_dui}</td>
                     <td>${user.ux_name }</td>
                     <td>${user.ux_nick}</td>
                     <td>${user.ux_phone}</td>
                     <td>${user.ux_mail}</td>
-                    <td>${user.ux_pass}</td>
+                    <td id="ux_pass${user.ux_id}">
+                        <div class="hide-pass">${user.ux_pass.replace(/./g, '*')}</div>
+                        <div class="progress">
+                            <div class="determinate" style="width: 0%; transition: all 6s;"></div>
+                        </div>
+                    </td>
                     <td>${user.ux_DBirth}</td>
                     <td>
-                        <div class="chip">
+                        <div class="chip" style="height: fit-content;">
                             ${user.pms_type}
                         </div>
-                    <td>
-                        <a href="#tblUsers" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteUser(${JSON.stringify(user)})'>
-                            <i class="material-icons">delete</i>
-                        </a>
+                    <td style="display: flex;" class="">
+                        <div class="btn btn-floating btn-small waves-effect waves-light blue">
+                            <span onclick="showPass('${user.ux_pass}', ux_pass${user.ux_id})">
+                                <i class="material-icons">visibility</i>
+                            </span>
+                        </div>
+                        <div class="btn btn-floating btn-small waves-effect waves-light red" onclick='deleteUser(${JSON.stringify(user)})'>
+                            <span>
+                                <i class="material-icons">delete</i>
+                            </span>
+                        </div>
                     </td>
                 </tr>
             `);
         });
+    }
+
+    function showPass(pass, id) {
+        $(id).find('.hide-pass').text(pass);
+        $(id).find('.determinate').css('width', '100%').css('transition', 'all 6s'); 
+        setTimeout(() => {
+            $(id).find('.hide-pass').text($(id).find('.hide-pass').text().replace(/./g, '*'));
+            $(id).find('.determinate').css('width', '0%').css('transition', 'all .5s');
+        }, 6000);
+    }
+
+    function openImg(element) {
+        console.log(element);
+        let instnace = M.Materialbox.getInstance(element);
+        instnace.open();
     }
 
     function showSltFeatures(features) {
@@ -219,57 +267,46 @@
     }
 
     function updateUser(user) {
-        $('#txtIdUser').val(user.ux_id);
+        $('#txtDuiUser').val(user.ux_dui);
         $('#txtNameUser').val(user.ux_name);
         $('#txtNickUser').val(user.ux_nick);
         $('#txtPhoneUser').val(user.ux_phone);
         $('#txtEmailUser').val(user.ux_mail);
         $('#txtPassUser').val(user.ux_pass);
-        $('#txtRePassUser').val(user.ux_pass);
+        $('#txtRepassUser').val(user.ux_pass);
         let date = user.ux_DBirth.split('/');
         $('#txtBirthUser').val(`${date[2]}-${date[1]}-${date[0]}`);
-        $('#slcFeatures').val(user.ux_features);
+        $('#slcFeatures').val(user.pms_ux);
         $('#slcFeatures').formSelect();
+        $('#imgUserPreview').attr('src', user.ux_urlphoto);
+        $('#frmUsers')
+            .data('id', user.ux_id)
+            .data('action', 'update');
     }
 
     function takePhoto() {
-        canvas = document.getElementById('canvas');
-        let canvas2 = document.getElementById('canvas2');
-        canvas2.width = video.width;
-        canvas2.height = video.height;
-        let ctx2 = canvas2.getContext('2d');
-        ctx2.drawImage(video, 0, 0, video.width, video.height);
+        let canvasPrev = document.getElementById('canvas'),
+            ctxPrev = canvasPrev.getContext('2d');
+
+        canvasPrev.width = 400;
+        canvasPrev.height = 400;
+        ctxPrev.drawImage(video, 0, 0, 400, 400);
         video.pause();
         setTimeout(e => {
             video.play();
         }, 1000);
-        // Imagen de prueba
-        
-        canvas.width = 28;
-        canvas.height = 28;
-        ctx = canvas.getContext("2d");
-        //Negativo
-        ctx.globalCompositeOperation = 'difference';
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        //Escala de grises
-        ctx.filter = 'grayscale(100%)';
-        cxt.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        let data = canvas.toDataURL('image/png');
-        document.getElementById("imgUserPreview").src = data;
-        //Insertar en la imagen
-        let data2 = canvas2.toDataURL('image/png');
+        let dataPrev = canvasPrev.toDataURL('image/png');
         let img = document.getElementById("imgUserPreview");
-        img.src = data2;
+        img.src = dataPrev;
     }
 
     function turnOnCamera() {
         canvas = document.getElementById('canvas');
         cxt = canvas.getContext('2d');
         video = document.getElementById('vidUser');
-        video.width = 400;
-        video.height = 400;
+        video.width = 200;
+        video.height = 200;
 
         if (!navigator.getUserMedia) {
             navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -277,7 +314,7 @@
         if (!window.URL) {
             window.URL = window.URL;
         }
-
+        
         if (navigator.getUserMedia) {
             navigator.getUserMedia({video: true,audio: false
             }, function (stream) {
@@ -294,7 +331,6 @@
             });
         } else {
             console.error('¡Ha ocurrido un error!');
-            return
         }
     }
 
@@ -304,19 +340,56 @@
         localstream.getTracks()[0].stop();
     }
 
-    $(document).ready(async function(){
+    $(document).ready(function(){
+        let isUpdate = false;
         let localstream, canvas, video, cxt;
+        $('.tooltipped').tooltip();
         $('select').formSelect();
         $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
-        $('input#txtPrdName, input#txtCatName, #txtProvName, #txtProvPhone, #txtEmailUser').characterCounter();
         $('#vidStream').hide();
         $('#vidUserContainer').hide();
+        $('#txtBirthUser').datepicker({
+            format: 'yyyy-mm-dd',
+            i18n: {
+                months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                weekdays: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                weekdaysAbbrev: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                cancel: 'Cancelar',
+                clear: 'Limpiar',
+                done: 'Listo',
+            }
+        });
 
         adminPetition('http://localhost:3000/show_features', {}, 'GET', 'selectFeatures');
         adminPetition('http://localhost:3000/show_users', {}, 'GET', 'tableUsers');
 
-        
+        $('#imgFileUser').change(function(){
+            let file = this.files[0];
+            
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e){
+                $('#imgUserPreview').attr('src', e.target.result);
+                canvas = document.getElementById('canvas');
+                cxt = canvas.getContext("2d");
+                canvas.width = 400;
+                canvas.height = 400;
+                
+                let img = new Image();
+                img.src = e.target.result;
+                img.onload = function(){
+                    cxt.drawImage(img, 0, 0, 400, 400);
+                    let data = canvas.toDataURL('image/png');
+                    $('#imgUserPreview').attr('src', data);
+                    isUpdate = true;
+                }
+            }
+        });
+
         $('btnRetakePhotoUser').click((e) => {
+            console.log('click');
         });
 
         $('#btnTakePhotoUser').click((e) => {
@@ -327,17 +400,7 @@
             let ctxProduct = canvasProduct.getContext('2d');
             $('#imgVista').show();
             $('#vidStream').hide();
-
-            let pixeles = [];
-            for(i=0; i<28;i++){
-                for(j=0; j<28; j++){
-                    let imgData = ctxProduct.getImageData(i,j,1,1).data,
-                        valor = (imgData[2]/255*100/100).toFixed(2);
-                    pixeles.push(valor);
-                }
-            }
-            
-            pixeles = pixeles.join(",");
+            isUpdate = true;
         });
         
         $("#chkStatusUser").change(e => {
@@ -360,8 +423,19 @@
     
         $('#frmUsers').submit( (e) => {
             e.preventDefault();
-            canvas = $('#canvas')[0];
-            ctx = canvas.getContext('2d');
+            canvasPreview = $('#canvas')[0];
+            ctxPreview = canvasPreview.getContext('2d');
+            $('.materialboxed').materialbox();
+
+            let photo = [];
+            for(i=0; i<400;i++){
+                for(j=0; j<400; j++){
+                    let imgData = ctxPreview.getImageData(j,i,1,1).data,
+                        rgb = imgData[0] + ',' + imgData[1] + ',' + imgData[2];
+                    photo.push(rgb);
+                }
+            }
+            photo = photo.join(',');
 
             let action = $('#frmUsers').data('action'),
                 id = $('#frmUsers').data('id'),
@@ -373,14 +447,14 @@
                 pass = $('#txtPassUser').val(),
                 dbirth = $('#txtBirthUser').val(),
                 permiss = $('#slcFeatures').val(),
-                data = {action, id, dui, name, nick, phone, mail, pass, dbirth, foto:'foto', permiss};
+                data = {action, id, dui, name, nick, phone, mail, pass, dbirth, photo, permiss, imgUpdate: isUpdate};
             console.log(data);
 
-            console.log($('#imgUserPreview').attr('src'));
             adminPetition('http://localhost:3000/admin_users', data, 'POST', 'reloadUsers', $('#frmUsers'));
         })
         .on('reset', (e) => {
             clearForms($('#frmUsers'));
+            isUpdate = false;
         });
     
         $("#txtSearch").keyup(function(e){
@@ -391,6 +465,8 @@
                 return $(this).find("td:not(:last)").text().toLowerCase().indexOf(valor.toLowerCase())==-1;
             });
             $fila.hide();
+
+            lastId = $("#tblUsers tbody tr:visible td")[0].innerHTML;
         });
     });
 </script>
