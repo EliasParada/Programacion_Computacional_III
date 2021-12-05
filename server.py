@@ -1,5 +1,6 @@
 from urllib import parse
 import numpy as np
+import os
 import urllib.request
 import json
 
@@ -26,10 +27,10 @@ crudCarts = crudCarts.crud()
 crudFeatures = crudFeatures.crud()
 
 # CARGAR EL MODELO
-model = tf.keras.models.load_model('fsmodel.h5')
+model = tf.keras.models.load_model("fsmodel.h5")
 
 # CREAMOS LA LISTA DE LAS ETIQUETAS
-tags = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+tags = ['Manzanas', 'Galletas', '', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
 #LISTA DE EXTENCIONES DE ARCHIVOS PERMITIDOS
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'js', 'html'])
@@ -38,8 +39,8 @@ class localServer(SimpleHTTPRequestHandler):
     def do_GET(self):
         print(self.path.split('.')[-1])
         #######MANEJAR EL ACCESO PARA LOS PATH ACCESIBLES POR EL USUARIO#######
-        if self.path == '/':
-            self.path = '/index.html'
+        if self.path == '/' or self.path == '/index' or self.path == '/account':
+            self.path += '.html'
             return SimpleHTTPRequestHandler.do_GET(self)
         elif self.path == '/index.html':
             self.path = '/index.html'
@@ -105,7 +106,6 @@ class localServer(SimpleHTTPRequestHandler):
         body = self.rfile.read(content_length)
         data = body.decode()
         data = parse.unquote(data)
-        print(data)
 
         if self.path == '/admin_category':
             data = json.loads(data)
@@ -134,11 +134,50 @@ class localServer(SimpleHTTPRequestHandler):
         elif self.path == '/admin_users':
             data = json.loads(data)
             response = crudUsers.admin_users(data)
+            print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response[0], '\033[0;m')
+            if data['action'] == 'create' or data['action'] == 'update':
+                if response != False:
+                    rgb = data['photo']
+                    img = np.array([])
+                    img = np.fromstring(rgb, np.uint8, sep=',')
+                    img = img.reshape((400, 400, 3))
+
+                    if data['action'] == 'create':
+                        plt.imsave(f'img/users/profile{response[1]}.jpg', img)
+                        response = response[0]
+
+                    elif data['action'] == 'update' and data['imgUpdate'] == True:
+                        plt.imsave(f'img/users/profile{data["id"]}.jpg', img)
+
+            elif data['action'] == 'delete':
+                if response != False:
+                    os.remove(f'img/users/profile{data["id"]}.jpg')
+            
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
+
+        elif self.path == '/search_users':
+            data = json.loads(data)
+            response = crudUsers.search_users(data['search'], data['init'],data['limit'])
             print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
             self.send_response(200)
             self.end_headers()
             self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
 
+        elif self.path == '/testurl':
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(dict(response='Yes')).encode('utf-8'))
+
+        elif self.path == '/admin_features':
+            data = json.loads(data)
+            response = crudFeatures.admin_permissions(data)
+            print('\033[0;30;47m Se llamo a la ruta \033[0;34;47m', self.path, '\033[0;30;47m se respondio:\033[2;34;47m', response, '\033[0;m')
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(dict(response=response)).encode('utf-8'))
+            
         elif self.path == '/testai':
             print(data)
             matriz = np.fromstring(data, np.float32, sep=',')
@@ -162,21 +201,6 @@ class localServer(SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin","*")
             self.end_headers()
             self.wfile.write(prediccion.encode())
-
-        #conseguir la imagen
-        #Generar nombre
-        # url = body['url'].split('=')
-        # print(url)
-        # name = body['name']
-        # print(name)
-        #guardar la imagen
-        # urllib.request.urlretrieve(url, image_name)
-        #redireccionar
-        # self.send_response(301)
-        # # self.send_header('Location', '/')
-        # self.send_response(200)
-        # self.end_headers()
-        # self.wfile.write(b'Hello, world!')
 
 # Iniciar el servidor
 print("\033[1;37;42m Iniciando el servidor \033[0;m")

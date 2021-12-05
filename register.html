@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrate Ya!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="card-panel row">
+        <div class="col s12 m12 l12">
+            <div class="card text-darken-4 center-align">
+                <div class="card-title">
+                    <span>Registrate</span>
+                </div>
+                <div class="card-content">
+                    <form id="formSingup">
+                        <div class="row">
+                            <div class="col s12 m6 l4">
+                                <div class="col s12 center-align" id="vidStream">
+                                    <div>
+                                        <video id="vidUser" class="responsive-video" style="height: 200px; margin: 14px;"></video>
+                                    </div>
+                                </div>
+                                <div class="col s12 m12 center-align" id="imgVista">
+                                    <div class="input-field">
+                                        <p class="center-align" id="txtUserPreview"></p>
+                                        <img src="img/media/user-default.jpg" alt="" id="imgUserPreview" class="responsive materialbox" width="200" height="200">
+                                        <canvas id="canvas" class="none" hidden></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m4 l2">
+                                <div class="input-field col">
+                                    <div class="switch center-align">
+                                        <label id="lblStatus">
+                                            File
+                                            <input type="checkbox" name="chkStatusUser" id="chkStatusUser">
+                                            <span class="lever tooltipped" data-position="top" data-tooltip="Switch between the camera and a file"></span>
+                                            Cam
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m6 l3">
+                                <div class="file-field input-field" id="imgFileContainerUser">
+                                    <div class="btn tooltipped" data-position="top" data-tooltip="Upload a file">
+                                        <span>
+                                            <i class="material-icons">perm_media</i>
+                                        </span>
+                                        <input type="file" name="imgFileUser" id="imgFileUser" accept="image/*">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Seleccione una imagen">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m6 l4"  id="vidControlsContainer">
+                                <div class="input-field center-align">
+                                    <div class="btn tooltipped" data-position="top" data-tooltip="Take a photo" id="btnTakePhoto">
+                                        <span>
+                                            <i class="material-icons">add_a_photo</i>
+                                        </span>
+                                    </div>
+                                    <div class="btn tooltipped" data-position="top" data-tooltip="Take other photo" id="btnRetakePhoto">
+                                        <span>
+                                            <i class="material-icons">refresh</i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="txtDUI" type="text" required placeholder="DUI"
+                                    pattern="[0-9]{8}-[0-9]{1}" title="Ingrese su DUI" maxlength="10">
+                                <label for="txtDUI">DUI</label>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="txtName" type="text" class="validate" required placeholder="Nombre"
+                                    pattern="(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+(([\s][A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+)*$" title="Ingrese su nombre" maxlength="175">
+                                <label for="txtName">Nombre</label>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="txtNick" type="text" class="validate" required placeholder="Nombre de usuario"
+                                    pattern="^.{4,25}$" title="Ingrese su nick" maxlength="50">
+                                <label for="txtNick">Nombre de Usuario</label>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <i class="material-icons prefix">phone</i>
+                                <input id="txtTel" type="tel" required placeholder="Teléfono"
+                                    pattern="^[0-9]{4}-[0-9]{4}$" title="Ingrese su teléfono" maxlength="9">
+                                <label for="txtTel">Telefono</label>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <i class="material-icons prefix">email</i>
+                                <input id="txtMail" type="email" class="validate" required placeholder="Correo"
+                                    pattern="^[A-z0-9áéíóúäëïöü._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Ingrese su correo" maxlength="100">
+                                <label for="txtMail">Correo</label>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <i class="material-icons prefix">lock</i>
+                                <input id="txtPass" type="password" required placeholder="Contraseña"
+                                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\/-])[A-Za-z\d@$!%*?&]{8,12}$" title="La contraseña debe contener de 8 a 12 caracteres, números, letras mayúsculas y munúsculas y caracteres especiales" maxlength="50">
+                                <label for="txtPass">Contraseña</label>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <i class="material-icons prefix">lock</i>
+                                <input id="txtRepass" type="password" required placeholder="Repetir Contraseña"
+                                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])(?=.)[A-Za-z\d@$!%*?&]{8,12}$" title="La contraseña debe contener de 8 a 12 caracteres, números, letras mayúsculas y munúsculas y caracteres especiales" maxlength="50">
+                                <label for="txtRepass">Confirmar Contraseña</label>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <i class="material-icons prefix">date_range</i>
+                                <input id="txtDate" type="tel" class="validate datepicker" required>
+                                <label for="txtDate">Fecha de Nacimiento</label>
+                            </div>
+                            <div class="input-field col s12 m6 l4">
+                                <button class="btn waves-effect waves-light" type="submit" name="action">Registrar
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        const duiRegExp = /(^\d{8})-(\d$)/;
+        const mobilePhoneRegExP = /^[67]\d{3}-\d{4}$/;
+        const residentialPhoneRegExP = /^2\d{3}-\d{4}$/
+
+        function isDUI(dui) {
+            if (!duiRegExp.test(dui)) return false;
+
+            let sum = 0;
+            const [digits, verifier] = dui.split('-');
+            for (let i = 0; i < digits.length; i++) {
+                sum += Number(digits[i]) * (digits.length + 1 - i);
+            }
+
+            return Number(verifier) === (10 - (sum % 10)) % 10 && sum > 0;
+        }
+        
+        function isPhoneNumber(phone) {
+            return phone.match(mobilePhoneRegExP) || phone.match(residentialPhoneRegExP);
+        }
+
+        function takePhoto() {
+            let canvasPrev = document.getElementById('canvas'),
+                ctxPrev = canvasPrev.getContext('2d');
+
+            canvasPrev.width = 400;
+            canvasPrev.height = 400;
+            ctxPrev.arc(200, 200, 200, 0, 2 * Math.PI);
+            ctxPrev.clip();
+            ctxPrev.drawImage(video, 0, 0, 400, 400);
+            video.pause();
+            setTimeout(e => {
+                video.play();
+            }, 1000);
+
+            let dataPrev = canvasPrev.toDataURL('image/png');
+            let img = document.getElementById("imgUserPreview");
+            img.src = dataPrev;
+        }
+
+        function turnOnCamera() {
+            canvas = document.getElementById('canvas');
+            cxt = canvas.getContext('2d');
+            video = document.getElementById('vidUser');
+            video.width = 200;
+            video.height = 200;
+
+            if (!navigator.getUserMedia) {
+                navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+            }
+            if (!window.URL) {
+                window.URL = window.URL;
+            }
+            
+            if (navigator.getUserMedia) {
+                navigator.getUserMedia({video: true,audio: false
+                }, function (stream) {
+                    try {
+                        localstream = stream;
+                        video.srcObject = stream;
+                        video.play();
+                    } catch (err) {
+                        console.log(err);
+                        video.srcObject = null;
+                    }
+                }, function (error) {
+                    console.warn('¡Algo ha salido mal!', error); 
+                });
+            } else {
+                console.error('¡Ha ocurrido un error!');
+            }
+        }
+
+        function turnOffCamera() {
+            video.pause();
+            video.srcObject = null;
+            localstream.getTracks()[0].stop();
+        }
+        $(document).ready(function() {
+            $('.carousel').carousel();
+            $('.datepicker').datepicker();
+            $('#txtDate').datepicker({
+                format: 'yyyy-mm-dd',
+                i18n: {
+                    months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    weekdays: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                    weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    weekdaysAbbrev: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                    cancel: 'Cancelar',
+                    clear: 'Limpiar',
+                    done: 'Listo',
+                }
+            });
+            $('#vidStream').hide();
+            $('#vidControlsContainer').hide();
+            $('#btnRetakePhoto').hide();
+            $('.carousel.carousel-slider').carousel({
+                fullWidth: true,
+                indicators: true
+            });
+
+            $('#imgFileUser').change(function(){
+                let file = this.files[0];
+                
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function(e){
+                    $('#imgUserPreview').attr('src', e.target.result);
+                    canvas = document.getElementById('canvas');
+                    cxt = canvas.getContext("2d");
+                    canvas.width = 400;
+                    canvas.height = 400;
+                    
+                    let img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function(){
+                        cxt.drawImage(img, 0, 0, 400, 400);
+                        let data = canvas.toDataURL('image/png');
+                        $('#imgUserPreview').attr('src', data);
+                    }
+                }
+            });
+
+            $('#btnRetakePhoto').click(function() {
+                $('#btnRetakePhoto').hide();
+                $('#btnTakePhoto').show();
+                $('#imgVista').hide();
+                $('#vidStream').show();
+                turnOnCamera();
+            });
+            $('#btnTakePhoto').click(function() {
+                takePhoto();
+                let canvasProduct = $('#canvas')[0];
+                let ctxProduct = canvasProduct.getContext('2d');
+                $('#btnRetakePhoto').show();
+                $('#btnTakePhoto').hide();
+                $('#imgVista').show();
+                $('#vidStream').hide();
+                turnOffCamera();
+            });
+
+            $('#txtDUI').on('keyup', function(e) {
+                console.log(e.key);
+                let dui = $(this).val();
+                if (dui.length > 8 && dui.match(/^\d{9}$/)) {
+                    $('#txtDUI').val(dui.substring(0, 8) + '-' + dui.substring(8, 9));
+                    dui = dui.substring(0, 8) + '-' + dui.substring(8, 9);
+                }
+                if (isDUI(dui)) {
+                    $(this).removeClass('invalid');
+                    $(this).addClass('valid');
+                } else {
+                    $(this).removeClass('valid');
+                    $(this).addClass('invalid');
+                }
+            });
+
+            $('#txtTel').on('keyup', function(e) {
+                let tel = $(this).val();
+                if (tel.length > 4 && tel.match(/^\d{5}$/)) {
+                    $('#txtTel').val(tel.substring(0, 4) + '-' + tel.substring(4, tel.length));
+                    tel = tel.substring(0, 4) + '-' + tel.substring(4, tel.length);
+                }
+                if (isPhoneNumber(tel)) {
+                    $(this).removeClass('invalid');
+                    $(this).addClass('valid');
+                } else {
+                    $(this).removeClass('valid');
+                    $(this).addClass('invalid');
+                }
+            });
+
+            $('#txtPass').on('keyup', function(e) {
+                let pass = $(this).val();
+                let repass = $('#txtRepass').val();
+                if (pass.length >= 8 && pass.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/)) {
+                    $(this).removeClass('invalid');
+                    $(this).addClass('valid');
+                } else {
+                    $(this).removeClass('valid');
+                    $(this).addClass('invalid');
+                }
+
+                if (pass == repass) {
+                    $('#txtRepass').removeClass('invalid');
+                    $('#txtRepass').addClass('valid');
+                } else {
+                    $('#txtRepass').removeClass('valid');
+                    $('#txtRepass').addClass('invalid');
+                }
+            });
+
+            $('#txtRepass').on('keyup', function(e) {
+                let pass = $('#txtPass').val();
+                let repass = $(this).val();
+                if (pass === repass) {
+                    $(this).removeClass('invalid');
+                    $(this).addClass('valid');
+                } else {
+                    $(this).removeClass('valid');
+                    $(this).addClass('invalid');
+                }
+            });
+
+            $('#formSingup').submit(e => {
+                e.preventDefault();
+                let pass = $('#txtPass').val();
+                let repass = $('#txtRepass').val();
+
+                let photo = [];
+                for(i=0; i<400;i++){
+                    for(j=0; j<400; j++){
+                        let imgData = $('#canvas')[0].getContext('2d').getImageData(j, i, 1, 1).data;
+                            rgb = imgData[0] + ',' + imgData[1] + ',' + imgData[2];
+                        photo.push(rgb);
+                    }
+                }
+                photo = photo.join(',');
+                if (pass != repass) {
+                    alert('Las contraseñas no coinciden');
+                } else {
+                    let action = 'create',
+                        id = '0',
+                        dui = $('#txtDUI').val(),
+                        name = $('#txtName').val(),
+                        nick = $('#txtNick').val(),
+                        phone = $('#txtTel').val(),
+                        mail = $('#txtMail').val(),
+                        pass = $('#txtPass').val(),
+                        dbirth = $('#txtDate').val(),
+                        data = {action, id, dui, name, nick, phone, mail, pass, dbirth, photo, permiss: '1', imgUpdate: false};
+
+                    $.post('http://localhost:3000/admin_users', JSON.stringify(data), (res) => {
+                        res = res.response;
+                        if (res[0] != false) {
+                            window.location.href = 'http://localhost:3000/index';
+                        }
+                    }, 'json');
+                }
+            });
+
+            $("#chkStatusUser").change(e => {
+            if ($("#chkStatusUser").is(":checked")) {
+                turnOnCamera();
+                $('#vidControlsContainer').show();
+                $('#imgFileContainerUser').hide();
+                $("#imgFileUser").attr("disabled", true);
+                $('#imgVista').hide();
+                $('#vidStream').show();
+            } else {
+                turnOffCamera();
+                $('#imgFileContainerUser').show();
+                $('#vidControlsContainer').hide();
+                $("#imgFileUser").attr("disabled", false);
+                $('#imgVista').show();
+                $('#vidStream').hide();
+            }
+        });
+        });
+    </script>
+</body>
+</html>

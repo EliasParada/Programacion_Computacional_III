@@ -18,6 +18,7 @@ class conection:
             self.conn.commit()
             return True, {'status':'ok', 'msg':'Sentencia ejecutada correctamente'}
         except Exception as e:
+            print(e)
             code = e.args[0]
             msg = e.args[1]
             return False, {'status':'ok', 'msg':'Error al ejecutar la sentencia SQL', 'code': [code, msg]}
