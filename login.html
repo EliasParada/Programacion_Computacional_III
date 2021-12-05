@@ -4,9 +4,114 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    
+    <div class="card-panel row">
+        <div class="col s12 m6 l6">
+            <div class="">
+                <div class="row">
+                    <div class="col s12 m12 l12">
+                        <div class="card-panel blue-grey lighten-4 text-darken-2">
+                            <span class="center-align">
+                                <h4>Fast Store</h4>
+                                <p>Encuentra lo que necesitas</p>
+                            </span>
+                        </div>
+                        <div class="card-panel blue-grey lighten-5 text-darken-4">
+                            <div class="carousel carousel-slider center" data-indicators="true">
+                                <div class="carousel-item" href="#one!">
+                                    <h2>Frutas</h2>
+                                    <p>
+                                        <img src="img/media/fruits.jpeg" alt="Frutas" class="responsive-img">
+                                    </p>
+                                </div>
+                                <div class="carousel-item" href="#two!">
+                                    <h2>Helados</h2>
+                                    <p>
+                                        <img src="img/media/ice-creams.jpg" alt="Helados" class="responsive-img">
+                                    </p>
+                                </div>
+                                <div class="carousel-item" href="#three!">
+                                    <h2>Para El Hogar</h2>
+                                    <p>
+                                        <img src="img/media/home.jpg" alt="Para El Hogar" class="responsive-img">
+                                    </p>
+                                </div>
+                                <div class="carousel-item" href="#four!">
+                                    <h2>Cereales</h2>
+                                    <p>
+                                        <img src="img/media/cereals.jpg" alt="Cereales" class="responsive-img">
+                                    </p>
+                                </div>
+                                <div class="carousel-item" href="#five!">
+                                    <h2>Vegetales</h2>
+                                    <p>
+                                        <img src="img/media/vegetables.jpg" alt="Vegetales" class="responsive-img">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-image">
+                    <img src="img/media/login.png">
+                    <span class="card-title">Iniciar Sesión</span>
+                </div>
+                <div class="card-content">
+                    <form>
+                        <div class="input-field">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input type="text" name="username" id="username" class="validate">
+                            <label for="username">Usuario</label>
+                        </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix" id="showPass">visibility</i>
+                            <input type="password" name="password" id="password" class="validate">
+                            <label for="password">Contraseña</label>
+                        </div>
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Ingresar
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.carousel').carousel();
+
+            $('.carousel.carousel-slider').carousel({
+                fullWidth: true,
+                indicators: true
+            });
+
+            setInterval(function() {
+                if (!$('.carousel').on('mosueover', function() {console.log('hola')})) {
+                        $('.carousel').carousel('next');
+                }
+            }, 4000);
+
+            $('#showPass').on('click', function() {
+                if ($('#password').attr('type') == 'password') {
+                    $('#password').attr('type', 'text');
+                    $('#showPass i').removeClass('material-icons').addClass('material-icons').addClass('mdi-eye-off');
+                } else {
+                    $('#password').attr('type', 'password');
+                    $('#showPass i').removeClass('material-icons').addClass('material-icons').addClass('mdi-eye');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
