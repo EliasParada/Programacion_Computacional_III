@@ -21,13 +21,13 @@
                             <div class="col s12 m6 l4">
                                 <div class="col s12 center-align" id="vidStream">
                                     <div>
-                                        <video id="vidUser" class="responsive-video" style="height: 200px; margin: 14px;"></video>
+                                        <video id="vidUser" class="responsive-video" style="height: 400px; margin: 14px;"></video>
                                     </div>
                                 </div>
                                 <div class="col s12 m12 center-align" id="imgVista">
                                     <div class="input-field">
                                         <p class="center-align" id="txtUserPreview"></p>
-                                        <img src="img/media/user-default.jpg" alt="" id="imgUserPreview" class="responsive materialbox" width="200" height="200">
+                                        <img src="img/media/user-default.jpg" alt="" id="imgUserPreview" class="responsive materialbox" width="400" height="400" style="transform: scale(0.8);">
                                         <canvas id="canvas" class="none" hidden></canvas>
                                     </div>
                                 </div>
@@ -36,10 +36,9 @@
                                 <div class="input-field col">
                                     <div class="switch center-align">
                                         <label id="lblStatus">
-                                            File
                                             <input type="checkbox" name="chkStatusUser" id="chkStatusUser">
                                             <span class="lever tooltipped" data-position="top" data-tooltip="Switch between the camera and a file"></span>
-                                            Cam
+                                            <i class="material-icons prefix active" id="iconCheck">videocam</i>
                                         </label>
                                     </div>
                                 </div>
@@ -72,7 +71,7 @@
                                 </div>
                             </div>
                             <div class="input-field col s12 m6 l4">
-                                <i class="material-icons prefix">account_circle</i>
+                                <i class="material-icons prefix">credit_card</i>
                                 <input id="txtDUI" type="text" required placeholder="DUI"
                                     pattern="[0-9]{8}-[0-9]{1}" title="Ingrese su DUI" maxlength="10">
                                 <label for="txtDUI">DUI</label>
@@ -84,7 +83,7 @@
                                 <label for="txtName">Nombre</label>
                             </div>
                             <div class="input-field col s12 m6 l4">
-                                <i class="material-icons prefix">account_circle</i>
+                                <i class="material-icons prefix">person</i>
                                 <input id="txtNick" type="text" class="validate" required placeholder="Nombre de usuario"
                                     pattern="^.{4,25}$" title="Ingrese su nick" maxlength="50">
                                 <label for="txtNick">Nombre de Usuario</label>
@@ -118,6 +117,7 @@
                                 <input id="txtDate" type="tel" class="validate datepicker" required>
                                 <label for="txtDate">Fecha de Nacimiento</label>
                             </div>
+                            <a href="login.html" class="right">¿Ya tienes una cuenta?</a>
                             <div class="input-field col s12 m6 l4">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">Registrar
                                     <i class="material-icons right">send</i>
@@ -159,8 +159,6 @@
 
             canvasPrev.width = 400;
             canvasPrev.height = 400;
-            ctxPrev.arc(200, 200, 200, 0, 2 * Math.PI);
-            ctxPrev.clip();
             ctxPrev.drawImage(video, 0, 0, 400, 400);
             video.pause();
             setTimeout(e => {
@@ -176,8 +174,8 @@
             canvas = document.getElementById('canvas');
             cxt = canvas.getContext('2d');
             video = document.getElementById('vidUser');
-            video.width = 200;
-            video.height = 200;
+            video.width = 400;
+            video.height = 400;
 
             if (!navigator.getUserMedia) {
                 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -229,10 +227,6 @@
             $('#vidStream').hide();
             $('#vidControlsContainer').hide();
             $('#btnRetakePhoto').hide();
-            $('.carousel.carousel-slider').carousel({
-                fullWidth: true,
-                indicators: true
-            });
 
             $('#imgFileUser').change(function(){
                 let file = this.files[0];
@@ -363,7 +357,7 @@
                         mail = $('#txtMail').val(),
                         pass = $('#txtPass').val(),
                         dbirth = $('#txtDate').val(),
-                        data = {action, id, dui, name, nick, phone, mail, pass, dbirth, photo, permiss: '1', imgUpdate: false};
+                        data = {action, id, dui, name, nick, phone, mail, pass, dbirth, photo, permiss: '2', imgUpdate: false};
 
                     $.post('http://localhost:3000/admin_users', JSON.stringify(data), (res) => {
                         res = res.response;
@@ -382,6 +376,7 @@
                 $("#imgFileUser").attr("disabled", true);
                 $('#imgVista').hide();
                 $('#vidStream').show();
+                $('#iconCheck').text('image');
             } else {
                 turnOffCamera();
                 $('#imgFileContainerUser').show();
@@ -389,6 +384,7 @@
                 $("#imgFileUser").attr("disabled", false);
                 $('#imgVista').show();
                 $('#vidStream').hide();
+                $('#iconCheck').text('videocam');
             }
         });
         });

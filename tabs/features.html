@@ -95,6 +95,7 @@
 
     $(document).ready(function(){
         $('input#txtFeatName').characterCounter();
+        window.document.title = 'Fast Store::Permisos';
 
         adminPetition('http://localhost:3000/show_features', {}, 'GET', 'tableFeatures');
 

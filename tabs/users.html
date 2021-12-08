@@ -13,8 +13,8 @@
                             <div class="col s12 m12 center-align" id="imgVista">
                                 <div class="input-field">
                                     <p class="center-align" id="txtUserPreview"></p>
-                                    <img src="" alt="" id="imgUserPreview" class="responsive materialbox" width="200" height="200">
-                                    <canvas id="canvas" class="none" hidden></canvas>
+                                    <img src="../img/media/user-default.jpg" alt="" id="imgUserPreview" class="responsive materialbox" width="200" height="200">
+                                    <canvas id="canvas" class="none" hidden data-update="false"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -22,10 +22,8 @@
                             <div class="input-field col s6 m4 l2">
                                 <div class="switch">
                                     <label id="lblStatus">
-                                        File
                                         <input type="checkbox" name="chkStatusUser" id="chkStatusUser">
                                         <span class="lever tooltipped" data-position="top" data-tooltip="Switch between the camera and a file"></span>
-                                        Cam
                                     </label>
                                 </div>
                             </div>
@@ -341,7 +339,6 @@
     }
 
     $(document).ready(function(){
-        let isUpdate = false;
         let localstream, canvas, video, cxt;
         $('.tooltipped').tooltip();
         $('select').formSelect();
@@ -361,6 +358,8 @@
                 done: 'Listo',
             }
         });
+        window.document.title = 'Fast Store::Usuarios';
+
 
         adminPetition('http://localhost:3000/show_features', {}, 'GET', 'selectFeatures');
         adminPetition('http://localhost:3000/show_users', {}, 'GET', 'tableUsers');
@@ -383,7 +382,7 @@
                     cxt.drawImage(img, 0, 0, 400, 400);
                     let data = canvas.toDataURL('image/png');
                     $('#imgUserPreview').attr('src', data);
-                    isUpdate = true;
+                    $('#canvas').attr('data-update', 'true');
                 }
             }
         });
@@ -400,7 +399,7 @@
             let ctxProduct = canvasProduct.getContext('2d');
             $('#imgVista').show();
             $('#vidStream').hide();
-            isUpdate = true;
+            $('#canvas').attr('data-update', 'true');
         });
         
         $("#chkStatusUser").change(e => {
@@ -439,6 +438,7 @@
 
             let action = $('#frmUsers').data('action'),
                 id = $('#frmUsers').data('id'),
+                newPhoto = $('#canvas').data('update'),
                 dui = $('#txtDuiUser').val(),
                 name = $('#txtNameUser').val(),
                 nick = $('#txtNickUser').val(),
@@ -447,14 +447,17 @@
                 pass = $('#txtPassUser').val(),
                 dbirth = $('#txtBirthUser').val(),
                 permiss = $('#slcFeatures').val(),
-                data = {action, id, dui, name, nick, phone, mail, pass, dbirth, photo, permiss, imgUpdate: isUpdate};
+                data = {action, id, dui, name, nick, phone, mail, pass, dbirth, photo, permiss, newPhoto};
             console.log(data);
 
             adminPetition('http://localhost:3000/admin_users', data, 'POST', 'reloadUsers', $('#frmUsers'));
+            $('#canvas').attr('data-update', 'false');
+            $('#imgUserPreview')[0].src = '../img/media/user-default.jpg';
         })
         .on('reset', (e) => {
             clearForms($('#frmUsers'));
-            isUpdate = false;
+            $('#canvas').attr('data-update', 'false');
+            $('#imgUserPreview')[0].src = '../img/media/user-default.jpg';
         });
     
         $("#txtSearch").keyup(function(e){

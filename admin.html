@@ -21,20 +21,20 @@
             <a href="#" class="brand-logo hide-on-large-only">Fast Store</a>
             <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html"><i class="material-icons">home</i></a></li>
-                <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i></a></li>
-                <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i></a></li>
-                <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i></a></li>
+                <li><a href="index.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Inicio">home</i></a></li>
+                <li><a href="account.html" data-target="dropdown1" class="dropdown-trigger" title="Mi cuenta"><i class="material-icons tooltipped" data-position="left" data-tooltip="Mi cuenta">account_circle</i></a></li>
+                <li><a href="cart.html"><i class="material-icons tooltipped" title="Carrito de compras" data-position="left" data-tooltip="Carrito">shopping_cart</i></a></li>
+                <li onclick="exit()"><a href="#"><i class="material-icons tooltipped" title="Cerrar sesión" data-position="left" data-tooltip="Salir">exit_to_app</i></a></li>
+                
                 <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i></a></li>
             </ul>
         </div>
     </nav>
     <ul id="slide-out" class="sidenav">
         <li><a href="index.html"><i class="material-icons">home</i>Inicio</a></li>
-            
-        <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i> Carrito</a></li>
-        <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i> Iniciar sesión</a></li>
-        <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i> Registrarse</a></li>
+        <li><a href="account.html" data-target="dropdown1" class="dropdown-trigger" title="Mi cuenta"><i class="material-icons">account_circle</i>Mi cuenta</a></li>
+        <li><a href="cart.html"><i class="material-icons">shopping_cart</i> Carrito</a></li>
+        <li onclick="exit()"><a href="#"><i class="material-icons">exit_to_app</i> Salir</a></li>
         <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i> Administrar</a></li>
     </ul>
         <ul class="tabs" id="tabs">

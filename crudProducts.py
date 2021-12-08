@@ -7,12 +7,12 @@ class crud:
             # CREATE
             if data['action'] == 'create':
                 sql = "INSERT INTO prt_producto (prt_id, prt_name, prov_id, prt_createdate, prt_expirationdate, cat_id, prt_cost, prt_photo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-                current_id = conn.generate_id('products')
-                return conn.sql_run(sql, (current_id ,data['name'], data['prov'], data['createdate'], data['expirationdate'], data['cat'], data['cost'], data['photo'] + str(current_id) + '.jpg'))
+                id = conn.generate_id('products')
+                return conn.sql_run(sql, (id ,data['name'], data['prov'], data['createdate'], data['expirationdate'], data['cat'], data['cost'], 'img/products/product'+str(id)+'.jpg'))
             # UPDATE
             elif data['action'] == 'update':
                 sql = "UPDATE prt_producto SET prt_name = %s, prov_id = %s, prt_createdate = %s, prt_expirationdate = %s, cat_id = %s, prt_cost = %s, prt_photo = %s WHERE prt_id = %s"
-                return conn.sql_run(sql, (data['name'], data['cat'], data['createdate'], data['expirationdate'], data['prov'], data['cost'], data['photo']+str(data['id']), data['id']))
+                return conn.sql_run(sql, (data['name'], data['prov'], data['createdate'], data['expirationdate'], data['cat'], data['cost'], 'img/products/product'+str(data['id'])+'.jpg', data['id']))
             # DELETE
             elif data['action'] == 'delete':
                 sql = "DELETE FROM prt_producto WHERE prt_id = %s"
