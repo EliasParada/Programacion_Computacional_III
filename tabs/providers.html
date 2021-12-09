@@ -77,7 +77,6 @@
         </div>
     </div>
 </div>
-<a class="btn tooltipped" data-tooltip="I am a tooltip">Hover me!</a>
 <script>
     function showProviders(providers) {
         $('#tblProviders tbody').html('');
@@ -120,6 +119,7 @@
     $(document).ready(function(){
         $('.tooltipped').tooltip();
         $('#txtProvName, #txtProvPhone, #txtProvEmail').characterCounter();
+        window.document.title = 'Fast Store::Proveedores';
 
         adminPetition('http://localhost:3000/show_providers', {}, 'GET', 'tableProviders');
 

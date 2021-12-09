@@ -12,35 +12,30 @@
                                     <select name="cmbBillUser" id="cmbBillUser" required>
                                         <option value="" disabled selected>Seleccione al usuario</option>
                                     </select>
-                                    <label for="cmbBillUser">Proveedor</label>
+                                    <label for="cmbBillUser">Usuario</label>
                                 </div>
-                            </div>
-                            <div class="col s12 m6">
-                                <div class="input-field">
-                                    <select name="cmbBillProduct" id="cmbBillProduct" required multiple>
-                                        <!-- ... -->
-                                    </select>
-                                    <label for="cmbBillProduct">Producto</label>
-                                </div>
-                            </div>
-                            <div class="col s12 m6">
-                                <div class="input-field">
-                                    <input type="tel" name="txtDateBill" id="txtDateBill" required>
+                                <div class="col s12">
                                     <label for="txtDateBill">Fecha</label>
+                                    <input type="tel" name="txtDateBill" id="txtDateBill" required>
                                 </div>
                             </div>
+                            <div class="col s12 m6" id="containerPrd" style="height: 40vh; overflow-y: auto;">
+                                <!--  -->
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col s12 m6">
-                                <div class="input-field">
-                                    <input type="number" name="txtPriceBill" id="txtPriceBill" step="0.01" required>
-                                    <label for="txtTotalPriceBill">Precio</label>
+                                <span class="waves-effect waves-light btn" id="btnCalcPrice">Calcular precio</span>
+                                <div class="chip" id="chipTotal">
+                                    <span>Total: $<b id="lblTotalPriceBill">...</b></span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col">
                                 <button class="btn waves-effect waves-light" type="submit" name="btnAction">
                                     <i class="material-icons">send</i>
                                 </button>
-                            </div>
-                            <div class="col">
                                 <button class="btn waves-effect waves-light" type="reset" name="btnCatReset" id="btnCatReset">
                                     <i class="material-icons">clear</i>
                                 </button>
@@ -76,15 +71,6 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>Juan Perez</td>
-                            <td>01/01/2020</td>
-                            <td>
-                                <li class="chip" style="display: block; width: max-content; padding-right: 0;">Producto 1 <span class="chip" style="background-color: rgb(240, 240, 240);">25</span><span class="chip" style="background-color: rgb(240, 240, 240); margin-right: 0;">$50</span></li>
-                                <li class="chip" style="display: block; width: max-content; padding-right: 0;">Producto 2 <span class="chip" style="background-color: rgb(240, 240, 240);">25</span><span class="chip" style="background-color: rgb(240, 240, 240); margin-right: 0;">$25</span></li>
-                                <li class="chip" style="display: block; width: max-content; padding-right: 0;">Producto 3 <span class="chip" style="background-color: rgb(240, 240, 240);">25</span><span class="chip" style="background-color: rgb(240, 240, 240); margin-right: 0;">$25</span></li>
-                            </td>
-                            <td>$100</td>
                         <!-- ... -->
                     </tbody>
                 </table>
@@ -96,16 +82,24 @@
     function showBills(bills) {
         $('#tblBills tbody').html('');
         bills.forEach(bill => {
+            let products = bill.prd_name.split(',');
+            let cant = bill.prd_cant.split(',');
+            let price = bill.subprice.split(',');
+            let productsHTML = '';
+            for (let i = 0; i < products.length; i++) {
+                productsHTML += `<li class="chip" style="display: block; width: max-content; padding-right: 0;">${products[i]} <span class="chip" style="background-color: rgb(240, 240, 240);">${cant[i]}</span><span class="chip" style="background-color: rgb(240, 240, 240); margin-right: 0;">$${price[i]}</span></li>`;
+            }
             $('#tblBills tbody').append(`
-                <tr onclick='updateBill(${JSON.stringify(bill)})'>
-                    <td>${bill.prov_id}</td>
-                    <td>${bill.prov_name}</td>
-                    <td>${bill.prov_phone}</td>
-                    <td>${bill.prov_mail}</td>
+                <tr>
+                    <td>${bill.fac_id}</td>
+                    <td>${bill.ux_name}</td>
+                    <td>${bill.fac_date}</td>
                     <td>
-                        <a href="#tblBills" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteBill(${JSON.stringify(bill)})'>
-                            <i class="material-icons">delete</i>
-                        </a>
+                        ${productsHTML}
+                    </td>
+                    <td>${bill.fac_price}</td>
+                    <td>
+                        <span class="btn-floating btn-small waves-effect waves-light red" onclick='deleteBill(${JSON.stringify(bill)})'><i class="material-icons">delete</i></span>
                     </td>
                 </tr>
             `);
@@ -121,36 +115,16 @@
     }
 
     function deleteBill(bill) {
-        if (confirm(`¿Esta seguro de eliminar al proveedor ${bill.prov_id}?`)) {
+        if (confirm(`¿Esta seguro de eliminar la factura ${bill.fac_id}?`)) {
             let data = {
                 action: 'delete',
-                id: bill.prov_id
+                id: bill.fac_id,
+                user: 'None'
             };
             console.log(data);
-            adminPetition('http://localhost:3000/admin_bill', data, 'POST', 'reloadBill');
+            adminPetition('http://localhost:3000/bill', data, 'POST', 'reloadBills');
         }
     }
-
-    function addProductBill(product) {
-        let cmbProduct = '<select name="cmbBillProduct" id="cmbBillProduct" required >',
-            txtPrice = '';
-        
-        product.forEach(product => {
-            cmbProduct += `
-                <option value="${product.prt_id}">${product.prt_nombre}</option>
-            `;
-        });
-        cmbProduct += '</select>';
-        txtPrice = `
-            <div class="input-field">
-                <input type="text" name="txtPriceProductBill" data-length="100" required>
-                <label for="txtPriceProductBill">Precio</label>
-            </div>
-        `;
-        $('#txtProductPriceBill').append(cmbProduct);
-        $('select').formSelect();
-        $('#txtProductPriceBill').append(txtPrice);
-    };
 
     function showSltUsers(users) {
         console.log(users);
@@ -163,21 +137,48 @@
         $('#cmbBillUser').formSelect();
     }
 
+    function updatePrice(cant) {
+        console.log(cant);
+        let currentCant = cant.value;
+        let lastCant = cant.dataset.lastCant;
+        if (currentCant > lastCant) {
+            let price = cant.dataset.price;
+            let totalPrice = (currentCant - lastCant) * price;
+            $('#lblTotalPriceBill').html(parseFloat($('#lblTotalPriceBill').html()) + totalPrice);
+        } else if (currentCant < lastCant) {
+            let price = cant.dataset.price;
+            let totalPrice = (lastCant - currentCant) * price;
+            $('#lblTotalPriceBill').html(parseFloat($('#lblTotalPriceBill').html()) - totalPrice);
+        }
+        cant.dataset.lastCant = currentCant;
+    }
+
     function showSltProducts(products) {
-        $('#cmbBillProduct').html('');
-        products.forEach(product => {
-            $('#cmbBillProduct').append(`
-                <option value="${product.prt_id}">${product.prt_name} $${product.prt_cost}</option>
-            `);
+        let productshtml = '';
+        console.log(products);
+        products.forEach(prod => {
+            productshtml += `
+            <div class="row">
+                <div class="col s12 m6">
+                    <label for="chkPrd${prod.prt_id}">
+                        <input type="checkbox" id="chkPrd${prod.prt_id}" name="chkPrd" value="${prod.prt_id}" class="left" />
+                        <span>${prod.prt_name} $${prod.prt_cost}</span>
+                    </label>
+                </div>
+                <div class="col s12 m6">
+                    <input type="number" id="txtCantPrd${prod.prt_id}" name="txtCantPrd${prod.prt_id}" data-price="${prod.prt_cost}" style="height: 1.5rem;" placeholder="Cantidad" hidden />
+                </div>
+            </div>
+            `;
         });
-        $('select').formSelect();
+        $('#containerPrd').append(productshtml);
     }
 
     $(document).ready(function(){
         $('select').formSelect();
         $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
         $('#txtDateBill').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy-mm-dd',
             i18n: {
                 months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
@@ -189,21 +190,60 @@
                 done: 'Listo'
             }
         });
+        window.document.title = 'Fast Store::Facturas';
 
         adminPetition('http://localhost:3000/show_products', {}, 'GET', 'selectProducts');
         adminPetition('http://localhost:3000/show_users', {}, 'GET', 'selectUsers');
         adminPetition('http://localhost:3000/show_bills', {}, 'GET', 'tableBills');
 
+        $('#btnCalcPrice').click(function(){
+            let totalPrice = 0;
+            $('input[name="chkPrd"]:checked').each(function(){
+                let cant = $('#txtCantPrd' + $(this).val());
+                totalPrice += cant.val() * cant.data('price');
+            });
+            $('#lblTotalPriceBill').html(totalPrice);
+        });
+
         $('#frmBill').submit( (e) => {
             e.preventDefault();
+            let products = [];
+            $('input[name="chkPrd"]:checked').each(function() {
+                let id = $(this).val();
+                let cant = $('#txtCantPrd' + id).val();
+                products.push({
+                    id: id,
+                    cant: cant,
+                    subprice: cant * $(`#txtCantPrd${id}`).data('price')
+                });
+            });
+            let total = 0;
+            products.forEach(product => {
+                total += parseFloat(product.cant) * $(`#txtCantPrd${product.id}`).data('price');
+            });
+            $('#lblTotalPriceBill').html(total);
+            console.log(products);
             let action = $('#frmBill').data('action'),
                 id = $('#frmBill').data('id'),
-                name = $('#txtBillName').val(),
-                phone = $('#txtBillPhone').val(),
-                mail = $('#txtBillEmail').val(),
-                data = {action, id, name, phone, mail};
+                date = $('#txtDateBill').val(),
+                user = $('#cmbBillUser').val(),
+                data = {action, id, user, products, date, total};
             console.log(data);
-            adminPetition('http://localhost:3000/admin_bill', data, 'POST', 'reloadBills', $('#frmBill'));
+            adminPetition('http://localhost:3000/bill', data, 'POST', 'reloadBills', $('#frmBill'));
+        })
+        .on('change', 'input[name="chkPrd"]', function() {
+            let id = $(this).val();
+            let total = 0;
+            if ($(this).is(':checked')) {
+                $('#txtCantPrd' + id).show();
+                $(`#txtCantPrd${id}`).attr('required', true);
+                total += parseFloat($(`#txtCantPrd${id}`).val()) * $(`#txtCantPrd${id}`).data('price');
+            } else {
+                $('#txtCantPrd' + id).hide();
+                $(`#txtCantPrd${id}`).attr('required', false);
+                $(`#txtCantPrd${id}`).val('');
+            }
+            $('#lblTotalPriceBill').html(total);
         })
         .on('reset', (e) => {
             clearForms($('#frmBill'));

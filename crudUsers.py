@@ -43,3 +43,21 @@ class crud:
             code = e.args[0]
             msg = e.args[1]
             return False, {'status':'error', 'msg':'Error al ejecutar la acción', 'code': [code, msg]}
+
+    def loggin(self, data):
+        try:
+            sql = "SELECT ux_users.ux_id, ux_users.ux_dui, ux_users.ux_name, ux_users.ux_nick, ux_users.ux_phone, ux_users.ux_mail, ux_users.ux_pass, ux_users.ux_DBirth, ux_users.ux_urlphoto, ux_users.pms_ux, pms_permissions.pms_type FROM ux_users INNER JOIN pms_permissions ON ux_users.pms_ux = pms_permissions.pms_id WHERE ux_users.ux_nick = %s AND ux_users.ux_pass = %s"
+            return conn.sql_get(sql, (data['nick'], data['pass']))
+        except Exception as e:
+            code = e.args[0]
+            msg = e.args[1]
+            return False, {'status':'error', 'msg':'Error al ejecutar la acción', 'code': [code, msg]}
+
+    def show_user(self, id):
+        try:
+            sql = "SELECT ux_users.ux_id, ux_users.ux_dui, ux_users.ux_name, ux_users.ux_nick, ux_users.ux_phone, ux_users.ux_mail, ux_users.ux_pass, ux_users.ux_DBirth, ux_users.ux_urlphoto, ux_users.pms_ux, pms_permissions.pms_type FROM ux_users INNER JOIN pms_permissions ON ux_users.pms_ux = pms_permissions.pms_id WHERE ux_users.ux_id = %s"
+            return conn.sql_get(sql, (id,))
+        except Exception as e:
+            code = e.args[0]
+            msg = e.args[1]
+            return False, {'status':'error', 'msg':'Error al ejecutar la acción', 'code': [code, msg]}

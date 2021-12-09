@@ -1,7 +1,7 @@
 function clearForms(form) {
-    $(`form`).find('input:text, input:password, input:file, input[type=date], input[type=email], input[type=tel], input[type=number], select, textarea').val('');
-    $(`form`).data('action', 'create');
-    $(`form`).data('id', 0);
+    form.find('input:text, input:password, input:file, input[type=date], input[type=email], input[type=tel], input[type=number], select, textarea').val('');
+    form.data('action', 'create');
+    form.data('id', 0);
 }
 
 function adminPetition(url, data, method, next, form = null) {
@@ -14,7 +14,6 @@ function adminPetition(url, data, method, next, form = null) {
                 if (form != null) {
                     clearForms(form);
                 }
-                showToast(res[1], 'green rounded toast-mobile');
                 nextStep(next, res[0]);
             } else {
                 showToast(res[1], 'red rounded toast-mobile');
@@ -84,6 +83,16 @@ function nextStep(step, data) {
             break;
         case 'reloadUsers':
             adminPetition('http://localhost:3000/show_users', {}, 'GET', 'tableUsers');
+            break;
+        case 'showPredict':
+            showPredict(data);
+            break;
+        case 'tableBills':
+            showBills(data);
+            break;
+        case 'reloadBills':
+            adminPetition('http://localhost:3000/show_bills', {}, 'GET', 'tableBills');
+            break;
         default:
             break;
     }
