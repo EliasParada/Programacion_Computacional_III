@@ -6,7 +6,6 @@
                 <div class="card-content">
                     <span class="card-title" id="tblTitle">Agregar un nuevo usuario</span>
                     <form id="frmUsers" data-action="create" data-id="0">
-                        <!-- Previsualizar -->
                         <div class="col s12 m4">
                             <div class="col s12 center-align" id="vidStream">
                                 <video id="vidUser" class="responsive-video"></video>
@@ -14,8 +13,8 @@
                             <div class="col s12 m12 center-align" id="imgVista">
                                 <div class="input-field">
                                     <p class="center-align" id="txtUserPreview"></p>
-                                    <img src="" alt="" id="imgUserPreview" class="responsive materialbox" width="200" height="200">
-                                    <canvas id="canvas" class="none" hidden></canvas>
+                                    <img src="../img/media/profile.png" alt="" id="imgUserPreview" class="responsive materialboxed" width="200" height="200">
+                                    <canvas id="canvas" class="none" hidden data-update="false"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -23,10 +22,8 @@
                             <div class="input-field col s6 m4 l2">
                                 <div class="switch">
                                     <label id="lblStatus">
-                                        File
                                         <input type="checkbox" name="chkStatusUser" id="chkStatusUser">
                                         <span class="lever tooltipped" data-position="top" data-tooltip="Switch between the camera and a file"></span>
-                                        Cam
                                     </label>
                                 </div>
                             </div>
@@ -134,39 +131,12 @@
         <div class="card">
             <div class="card-content w-11/12"  style="overflow: hidden; overflow-x: scroll;">
                 <span class="card-title">Usuarios</span>
-                <!-- Search -->
                 <div class="col s12 m8 l9">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">search</i>
                         <input type="text" name="txtSearch" id="txtSearch">
                         <label for="txtSearch">Buscar</label>
                     </div>
-                </div>
-                <!-- Pagination centrado -->
-                <div class="col s12 m4 l3 center-align">
-                    <ul class="pagination">
-                        <li class="disabled">
-                            <a href="#!"><i class="material-icons">chevron_left</i></a>
-                        </li>
-                        <li class="active">
-                            <a href="#!">1</a>
-                        </li>
-                        <li class="waves-effect">
-                            <a href="#!">2</a>
-                        </li>
-                        <li class="waves-effect">
-                            <a href="#!">3</a>
-                        </li>
-                        <li class="waves-effect">
-                            <a href="#!">4</a>
-                        </li>
-                        <li class="waves-effect">
-                            <a href="#!">5</a>
-                        </li>
-                        <li class="waves-effect">
-                            <a href="#!"><i class="material-icons">chevron_right</i></a>
-                        </li>
-                    </ul>
                 </div>
                 <table class="responsive-table highlight" id="tblUsers">
                     <thead>
@@ -199,7 +169,7 @@
                 <tr onclick='updateUser(${JSON.stringify(user)})'>
                     <td>${user.ux_id}</td>
                     <td>
-                        <img src="${user.ux_urlphoto}" alt="${user.ux_nick}" class="materialboxed responsive-img">
+                        <img src="${user.ux_urlphoto}" alt="${user.ux_nick}" class="materialboxed" width="100">
                     </td>
                     <td>${user.ux_dui}</td>
                     <td>${user.ux_name }</td>
@@ -231,6 +201,7 @@
                     </td>
                 </tr>
             `);
+            $('.materialboxed').materialbox();
         });
     }
 
@@ -281,6 +252,8 @@
         $('#txtBirthUser').val(`${date[2]}-${date[1]}-${date[0]}`);
         $('#slcFeatures').val(user.pms_ux);
         $('#slcFeatures').formSelect();
+        $('#imgUserPreview').attr('src', user.ux_urlphoto);
+        $('#canvas').data('update', false);
         $('#frmUsers')
             .data('id', user.ux_id)
             .data('action', 'update');
@@ -290,11 +263,9 @@
         let canvasPrev = document.getElementById('canvas'),
             ctxPrev = canvasPrev.getContext('2d');
 
-        canvasPrev.width = 400;
-        canvasPrev.height = 400;
-        ctxPrev.arc(200, 200, 200, 0, 2 * Math.PI);
-        ctxPrev.clip();
-        ctxPrev.drawImage(video, 0, 0, 400, 400);
+        canvasPrev.width = 600;
+        canvasPrev.height = 600;
+        ctxPrev.drawImage(video, 0, 0, 600, 600);
         video.pause();
         setTimeout(e => {
             video.play();
@@ -303,6 +274,7 @@
         let dataPrev = canvasPrev.toDataURL('image/png');
         let img = document.getElementById("imgUserPreview");
         img.src = dataPrev;
+        $('#canvas').data('update', true);
     }
 
     function turnOnCamera() {
@@ -350,6 +322,7 @@
         $('select').formSelect();
         $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
         $('#vidStream').hide();
+        $('.materialboxed').materialbox();
         $('#vidUserContainer').hide();
         $('#txtBirthUser').datepicker({
             format: 'yyyy-mm-dd',
@@ -364,6 +337,8 @@
                 done: 'Listo',
             }
         });
+        window.document.title = 'Fast Store::Usuarios';
+
 
         adminPetition('http://localhost:3000/show_features', {}, 'GET', 'selectFeatures');
         adminPetition('http://localhost:3000/show_users', {}, 'GET', 'tableUsers');
@@ -377,22 +352,18 @@
                 $('#imgUserPreview').attr('src', e.target.result);
                 canvas = document.getElementById('canvas');
                 cxt = canvas.getContext("2d");
-                canvas.width = 400;
-                canvas.height = 400;
+                canvas.width = 600;
+                canvas.height = 600;
                 
                 let img = new Image();
                 img.src = e.target.result;
                 img.onload = function(){
-                    cxt.drawImage(img, 0, 0, 400, 400);
+                    cxt.drawImage(img, 0, 0, 600, 600);
                     let data = canvas.toDataURL('image/png');
                     $('#imgUserPreview').attr('src', data);
+                    $('#canvas').data('update', true);
                 }
             }
-        });
-
-        $('#hola').click(e => {
-            e.preventDefault();
-            console.log('hola');
         });
 
         $('btnRetakePhotoUser').click((e) => {
@@ -407,6 +378,7 @@
             let ctxProduct = canvasProduct.getContext('2d');
             $('#imgVista').show();
             $('#vidStream').hide();
+            $('#canvas').data('update', true);
         });
         
         $("#chkStatusUser").change(e => {
@@ -431,21 +403,20 @@
             e.preventDefault();
             canvasPreview = $('#canvas')[0];
             ctxPreview = canvasPreview.getContext('2d');
-            $('.materialboxed').materialbox();
 
-            let pixeles = [];
-            for(i=0; i<400;i++){
-                for(j=0; j<400; j++){
+            let photo = [];
+            for(i=0; i<600;i++){
+                for(j=0; j<600; j++){
                     let imgData = ctxPreview.getImageData(j,i,1,1).data,
                         rgb = imgData[0] + ',' + imgData[1] + ',' + imgData[2];
-                    pixeles.push(rgb);
+                    photo.push(rgb);
                 }
             }
-            pixeles = pixeles.join(',');
-            console.log(pixeles);
+            photo = photo.join(',');
 
             let action = $('#frmUsers').data('action'),
                 id = $('#frmUsers').data('id'),
+                newPhoto = $('#canvas').data('update'),
                 dui = $('#txtDuiUser').val(),
                 name = $('#txtNameUser').val(),
                 nick = $('#txtNickUser').val(),
@@ -454,13 +425,17 @@
                 pass = $('#txtPassUser').val(),
                 dbirth = $('#txtBirthUser').val(),
                 permiss = $('#slcFeatures').val(),
-                data = {action, id, dui, name, nick, phone, mail, pass, dbirth, foto:'foto', permiss, pixeles};
+                data = {action, id, dui, name, nick, phone, mail, pass, dbirth, photo, permiss, newPhoto};
             console.log(data);
 
             adminPetition('http://localhost:3000/admin_users', data, 'POST', 'reloadUsers', $('#frmUsers'));
+            $('#canvas').data('update', false);
+            $('#imgUserPreview')[0].src = '../img/media/profile.png';
         })
         .on('reset', (e) => {
             clearForms($('#frmUsers'));
+            $('#canvas').data('update', false);
+            $('#imgUserPreview')[0].src = '../img/media/profile.png';
         });
     
         $("#txtSearch").keyup(function(e){

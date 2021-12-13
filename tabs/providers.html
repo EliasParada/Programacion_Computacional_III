@@ -11,13 +11,15 @@
                         <div class="row">
                             <div class="col s6">
                                 <div class="input-field">
-                                    <input type="text" name="txtProvName" id="txtProvName" class="tooltipped" data-position="top" data-tooltip="Type the provider's name"  data-length="50" required>
+                                    <input type="text" name="txtProvName" id="txtProvName" class="tooltipped" data-position="top" data-tooltip="Type the provider's name"  data-length="50" required
+                                        pattern="[A-Za-z0-9 ]+" title="Only letters and numbers are allowed">
                                     <label for="txtProvName">Nombre</label>
                                 </div>
                             </div>
                             <div class="col s6">
                                 <div class="input-field">
-                                    <input type="tel" name="txtProvPhone" id="txtProvPhone" class="tooltipped" data-position="top" data-tooltip="Type the provider's phone" data-length="10" required>
+                                    <input type="tel" name="txtProvPhone" id="txtProvPhone" class="tooltipped" data-position="top" data-tooltip="Type the provider's phone" data-length="10" required
+                                        pattern="[0-9]{4}[- ][0-9]{4}">
                                     <label for="txtProvPhone">Telefono</label>
                                 </div>
                             </div>
@@ -25,7 +27,8 @@
                         <div class="row">
                             <div class="col s6">
                                 <div class="input-field">
-                                    <input type="email" name="txtProvEmail" id="txtProvEmail" data-length="100" required>
+                                    <input type="email" name="txtProvEmail" id="txtProvEmail" data-length="100" required
+                                        pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}">
                                     <label for="txtProvEmail">Correo</label>
                                 </div>
                             </div>
@@ -77,7 +80,6 @@
         </div>
     </div>
 </div>
-<a class="btn tooltipped" data-tooltip="I am a tooltip">Hover me!</a>
 <script>
     function showProviders(providers) {
         $('#tblProviders tbody').html('');
@@ -113,13 +115,14 @@
                 id: provider.prov_id
             };
             console.log(data);
-            adminPetition('http://localhost:3000/admin_provider', data, 'POST', 'reloadProvider');
+            adminPetition('http://localhost:3000/admin_provider', data, 'POST', 'reloadProviders');
         }
     }
 
     $(document).ready(function(){
         $('.tooltipped').tooltip();
         $('#txtProvName, #txtProvPhone, #txtProvEmail').characterCounter();
+        window.document.title = 'Fast Store::Proveedores';
 
         adminPetition('http://localhost:3000/show_providers', {}, 'GET', 'tableProviders');
 

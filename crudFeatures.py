@@ -28,9 +28,6 @@ class crud:
         return conn.sql_get(sql, (match, match, id, max_id))
 
     def search_limit(self, id):
-        sql = "SELECT pms_permissions.pms_id, pms_permissions.pms_type FROM pms_permissions LIMIT %s, %s"
-        max_id = 20 - id
-        if max_id < 0:
-            max_id = 0
-        return conn.sql_get(sql, (id, max_id))
+        sql = "SELECT pms_permissions.pms_id, pms_permissions.pms_type FROM pms_permissions"
+        return conn.sql_get(sql, (None))
         

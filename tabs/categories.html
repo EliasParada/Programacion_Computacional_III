@@ -76,9 +76,9 @@
                     <td>${category.cat_name}</td>
                     <td>${category.cat_description}</td>
                     <td>
-                        <a href="#tblCategories" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteCategory(${JSON.stringify(category)})'>
+                        <span class="btn-floating btn-small waves-effect waves-light red" onclick='deleteCategory(${JSON.stringify(category)})'>
                             <i class="material-icons">delete</i>
-                        </a>
+                        </span>
                     </td>
                 </tr>
             `);
@@ -105,6 +105,7 @@
 
     $(document).ready(function(){
         $('textarea#txtCatDescription, input#txtCatName').characterCounter();
+        window.document.title = 'Fast Store::Categorías';
 
         adminPetition('http://localhost:3000/show_categories', {}, 'GET', 'tableCategories');
 

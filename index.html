@@ -9,30 +9,18 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <nav class="blue accent-2">
+    <nav>
         <div class="nav-wrapper">
             <a href="#" class="brand-logo hide-on-med-and-down">Fast Store</a>
             <a href="#" class="brand-logo hide-on-large-only">Fast Store</a>
-            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="index.html"><i class="material-icons">home</i></a></li>
-                
-                <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i></a></li>
-                <li><a href="#" data-target="dropdown1" class="dropdown-trigger"><i class="material-icons">account_circle</i></a></li>
-                <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i></a></li>
-                <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i></a></li>
-                <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i></a></li>
+            <a href="#" data-target="sidevar" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down" id="navbar">
+                <li><a href="index.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Inicio">home</i></a></li>
             </ul>
         </div>
     </nav>
-    <ul id="slide-out" class="sidenav">
+    <ul id="sidevar" class="sidenav">
         <li><a href="index.html"><i class="material-icons">home</i>Inicio</a></li>
-            
-        <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i> Carrito</a></li>
-        <li><a href="#" data-target="dropdown1" class="dropdown-trigger"><i class="material-icons">account_circle</i>Mi cuenta</a></li>
-        <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i> Iniciar sesión</a></li>
-        <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i> Registrarse</a></li>
-        <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i> Administrar</a></li>
     </ul>
     
     <div class="">
@@ -46,7 +34,20 @@
                 <div class="card-panel">
                     <div class="row">
                         <div class="col s12">
-                            <div class="row" id="fresh">
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <div class="input-field">
+                                                <i class="material-icons prefix">search</i>
+                                                <input type="text" id="txtSearch" placeholder="Buscar producto">
+                                                <label for="search">Buscar producto</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="products">
                                 
                             </div>
                         </div>
@@ -59,6 +60,58 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
+        let enabledbtn = false;
+        function access(){
+            $.get('/access', (data) => {
+                data = data.response;
+                console.log(data);
+                if(data[0] == true){
+                    enabledbtn = true;
+                    $('#navbar').append(`
+                        <li><a href="account.html" data-target="dropdown1" class="dropdown-trigger" title="Mi cuenta"><i class="material-icons tooltipped" data-position="left" data-tooltip="Mi cuenta">account_circle</i></a></li>
+                        <li><a href="cart.html"><i class="material-icons tooltipped" title="Carrito de compras" data-position="left" data-tooltip="Carrito">shopping_cart</i></a></li>
+                        <li onclick="exit()"><a href="#"><i class="material-icons tooltipped" title="Cerrar sesión" data-position="left" data-tooltip="Salir">exit_to_app</i></a></li>
+                    `);
+                    $('#sidevar').append(`
+                        <li><a href="account.html" data-target="dropdown1" class="dropdown-trigger" title="Mi cuenta"><i class="material-icons">account_circle</i>Mi cuenta</a></li>
+                        <li><a href="cart.html"><i class="material-icons">shopping_cart</i> Carrito</a></li>
+                        <li onclick="exit()"><a href="#"><i class="material-icons">exit_to_app</i> Salir</a></li>
+                    `);
+                } else {
+                    $('#navbar').append(`
+                        <li><a href="login.html"><i class="material-icons tooltipped" title="Iniciar sesión" data-position="left" data-tooltip="Iniciar sesión">lock_open</i></a></li>
+                        <li><a href="register.html"><i class="material-icons tooltipped" title="Registrarse" data-position="left" data-tooltip="Registrarse">person_add</i></a></li>
+                    `);
+                    $('#sidevar').append(`
+                        <li><a href="login.html"><i class="material-icons">lock_open</i> Iniciar sesión</a></li>
+                        <li><a href="register.html"><i class="material-icons">person_add</i> Registrarse</a></li>
+                    `);
+                }
+
+                if (data[1] == true) {
+                    $('#navbar').append(`
+                        <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Administrar" title="Administrar">settings</i></a></li>
+                    `);
+                    $('#sidevar').append(`
+                        <li><a href="admin.html"><i class="material-icons" title="Administrar">settings</i> Administrar</a></li>
+                    `);
+                }
+
+                
+                $('.tooltipped').tooltip();
+            }, 'json');
+        }
+
+        function exit() {
+            $.post('/logout', (data) => {
+                data = data.response;
+                if (data[0] == false) {
+                    window.location.href = 'login.html';
+                } else {
+                    console.error('Algo salio mal');
+                }
+            }, 'json');
+        }
         function filter(data, key) {
             return data.filter(function(item) {
                 console.log(item.cat_name === key);
@@ -71,7 +124,7 @@
                 if (data[1].status == 'ok') {
                     if (data[0].length > 0) {
                         console.log('Todo bien', data);
-                        let fresh = filter(data[0], 'Alimentos Frescos');
+                        let products = filter(data[0], 'Frescos');
                         filter(data[0], 'Aseo')
                     } else {
                         console.warn('No hay productos');
@@ -83,38 +136,95 @@
                 let products = '';
                 data[0].forEach(product => {
                     products = products + `
-                        <div class="col s12 m6 l3">
-                            <div class="card" style="min-height: 260px; max-height: 260px; overflow: hidden; overflow-y: scroll;">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="activator materialboxed" src="${product.prt_photo}.jpg" heigth="200">
-                                </div>
-                                <div class="card-content">
-                                    <span class="card-title activator grey-text text-darken-4">${product.prt_name}<i class="material-icons right">more_vert</i></span>
-                                    <p><a href="#">This is a link</a></p>
-                                </div>
-                                <div class="card-reveal">
+                        <div class="col s6 m4 l2">
+                            <div class="card">
+                                <img class="card-image waves-effect waves-block waves-light materialboxed" src="${product.prt_photo}" heigth="200" style="width: 100%;">
+                                <div class="activator card-content" style="min-height: 120px; max-height: 120px;">
+                                    <span class="card-title activator grey-text text-darken-4">${product.prt_name} <b>$${product.prt_cost}</b><i class="material-icons right">more_vert</i></span>
+                                </div>`;
+                    if (enabledbtn) {
+                        products += `
+                                <div class="card-reveal" style="display: none; transform: translateY(0px);">
                                     <span class="card-title grey-text text-darken-4">${product.prt_name}<i class="material-icons right">close</i></span>
-                                    <p>${product.cat_name}</p>
+                                    <p>${product.prov_name}</p>
 
-                                    <input type="number" name="quantity" id="quantity" value="1" min="1" max="30">
-                                    <button class="btn waves-effect waves-light" type="submit" name="action" title="Comprar">
+                                    <input type="number" name="quantity" id="quantity${product.prt_id}" value="1" min="1" max="30">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action" title="Comprar" onclick='shoppPrd(${JSON.stringify(product)})''>
                                         <i class="material-icons right">shopp</i>
                                     </button>
-                                    <button class="btn waves-effect waves-light" type="submit" name="action" title="Enviar al Carrito">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action" title="Enviar al Carrito" onclick='addToCart(${JSON.stringify(product)})''>
                                         <i class="material-icons right">shopping_cart</i>
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
+                    } else {
+                        products += `
+                                <div class="card-reveal" style="display: none; transform: translateY(0px);">
+                                    <span class="card-title grey-text text-darken-4">${product.prt_name}<i class="material-icons right">close</i></span>
+                                    <p>${product.prov_name}</p>
+                                    <p>$${product.prt_cost}</p>
+                                </div>
+                            </div>
+                        </div>`;
+                    }
                 });
-                $('#fresh').html(products);
+                $('#products').html(products);
+                $('.materialboxed').materialbox();
             }, 'json');
         }
+        function shoppPrd(product) {
+            console.log(product, $(`#quantity${product.prt_id}`));
+            let quantity = $(`#quantity${product.prt_id}`).val(),
+                total = product.prt_cost * quantity,
+                date = new Date();
+            date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+            let data = {action: 'create', user: 'None', products: [{id: product.prt_id, cant: quantity, subprice: total}], date: date, total: total};
+            console.log(data);
+            $.post('/bill', JSON.stringify(data), (data) => {
+                data = data.response;
+                if (data[0] == true) {
+                    M.toast({html: 'Se realizo la compra'});
+                } else {
+                    M.toast({html: 'Algo salio mal', classes: 'red'});
+                }
+            }, 'json');
+        }
+        function addToCart(product) {
+            let quantity = $(`#quantity${product.prt_id}`).val(),
+                total = product.prt_cost * quantity,
+                idPrd = product.prt_id,
+                data = {action: 'update', products: [{idPrd: product.prt_id, quantity: quantity}]};
+            console.log(data);
+            $.post('/cart', JSON.stringify(data), (data) => {
+                console.log(data);
+                data = data.response;
+                if (data == true) {
+                    M.toast({html: 'Se agrego al carrito'});
+                } else {
+                    M.toast({html: 'Algo salio mal', classes: 'red'});
+                }
+            }, 'json');
+        }
+        
         $(document).ready(function(){
-            showProducts();
+            access();
             $('.tooltipped').tooltip();
             $('.sidenav').sidenav();
+            $('.materialboxed').materialbox();
+            showProducts();
+
+            $("#txtSearch").keyup(function(e){
+                let valor = $(this).val(),
+                    $sectionPrd = $("#products");
+                $sectionPrd.show();
+                if(valor.length > 0){
+                    $sectionPrd.find(".col").hide();
+                    $sectionPrd.find(".col:contains('"+valor+"')").show();
+                }else{
+                    $sectionPrd.find(".col").show();
+                }
+            });
         });
     </script>
 </body>

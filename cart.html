@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo hide-on-med-and-down">Fast Store</a>
+            <a href="#" class="brand-logo hide-on-large-only">Fast Store</a>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="index.html"><i class="material-icons">home</i></a></li>
+                
+                <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i></a></li>
+                <li><a href="account.html" data-target="dropdown1" class="dropdown-trigger"><i class="material-icons">account_circle</i></a></li>
+                <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i></a></li>
+                <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i></a></li>
+                <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i></a></li>
+            </ul>
+        </div>
+    </nav>
+    <ul id="slide-out" class="sidenav">
+        <li><a href="index.html"><i class="material-icons">home</i>Inicio</a></li>
+            
+        <li><a href="cart.html"><i class="material-icons" title="Carrito de compras">shopping_cart</i> Carrito</a></li>
+        <li><a href="account.html" data-target="dropdown1" class="dropdown-trigger"><i class="material-icons">account_circle</i>Mi cuenta</a></li>
+        <li><a href="login.html"><i class="material-icons" title="Iniciar sesión">lock_open</i> Iniciar sesión</a></li>
+        <li><a href="register.html"><i class="material-icons" title="Registrarse">person_add</i> Registrarse</a></li>
+        <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Go admin" title="Administrar">settings</i> Administrar</a></li>
+    </ul>
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h1>Mi Carrito</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table class="striped" id="tblCart">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--  -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <h3>Total: <b id="txtTotal"></b></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <a href="index.html" class="btn">Volver</a>
+                <a href="#" class="btn">Comprar Todo</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        function showCart(productos) {
+            $.get('/show_carts', (resp) => {
+                resp = resp.response;
+                console.log(resp);
+                let cartProducts = '';
+                resp[0].forEach(product => {
+                    cartProducts += `
+                    <tr>
+                        <td>
+                            <img src="${product.prt_photo}" alt="${product.prt_name}" class="responsive-img">
+                        </td>
+                        <td>${product.prt_cost}</td>
+                        <td>${product.detcar_cantidad}</td>
+                        <td>$${product.prt_cost * product.detcar_cantidad}</td>
+                    </tr>`;
+                });
+                $('#tblCart tbody').html(cartProducts);
+            }, 'json');
+            
+        }
+
+        $(document).ready(function(){
+            $('.sidenav').sidenav();
+            showCart();
+            
+        });
+    </script>
+</body>
+</html>

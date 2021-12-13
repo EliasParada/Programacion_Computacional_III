@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo hide-on-med-and-down">Fast Store</a>
+            <a href="#" class="brand-logo hide-on-large-only">Fast Store</a>
+            <a href="#" data-target="sidevar" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down" id="navbar">
+                <li><a href="index.html"><i class="material-icons">home</i></a></li>
+                <li><a href="account.html" data-target="dropdown1" class="dropdown-trigger" title="Mi cuenta"><i class="material-icons tooltipped" data-position="left" data-tooltip="Mi cuenta">account_circle</i></a></li>
+                <li><a href="cart.html"><i class="material-icons tooltipped" title="Carrito de compras" data-position="left" data-tooltip="Carrito">shopping_cart</i></a></li>
+                <li onclick="exit()"><a href="#"><i class="material-icons tooltipped" title="Cerrar sesión" data-position="left" data-tooltip="Salir">exit_to_app</i></a></li>
+            </ul>
+        </div>
+    </nav>
+    <ul id="sidevar" class="sidenav">
+        <li><a href="index.html"><i class="material-icons">home</i>Inicio</a></li>
+        <li><a href="account.html" data-target="dropdown1" class="dropdown-trigger" title="Mi cuenta" data-position="bottom" data-tooltip="Mi cuneta"><i class="material-icons tooltipped">account_circle</i>Mi cuenta</a></li>
+        <li><a href="cart.html"><i class="material-icons tooltipped" title="Carrito de compras" data-position="bottom" data-tooltip="Carrito">shopping_cart</i> Carrito</a></li>
+        <li onclick="exit()"><a href="#"><i class="material-icons tooltipped" title="Cerrar sesión" data-position="bottom" data-tooltip="Salir">exit_to_app</i> Salir</a></li>
+    </ul>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m7">
+                <div class="card" style="padding-top: 10px;">
+                    <div class="card-image" style="width: max-content; margin: auto;">
+                        <img src="img/media/profile.png" data-caption="Default" style="height: 200px; width: auto;" id="imgProfile" class="materialboxed">
+                        <!-- <span class="card-title">
+                            <a href="#" class="btn-floating halfway-fab waves-effect waves-light red" style="left: 170px;"><i class="material-icons">camera_alt</i></a>
+                            <a href="#" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></a>
+                        </span> -->
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">
+                            <h5 id="lblNick"></h5>
+                        </span>
+                        <p>
+                            <b>Nombre:</b>
+                            <br>
+                            <span id="lnlName"></span>
+                        </p>
+                        <p>
+                            <b>DUI:</b>
+                            <br>
+                            <span id="lblDUI"></span>
+                        </p>
+                        <p>
+                            <b>Telefono:</b>
+                            <br>
+                            <span id="lblTel"></span>
+                        </p>
+                        <p>
+                            <b>Correo:</b>
+                            <br>
+                            <span id="lblMail"></span>
+                        </p>
+                        <p>
+                            <b>Fecha de nacimiento:</b>
+                            <br>
+                            <span id="lblDate"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m5">
+                <div class="card">
+                    <div class="card-content">
+                        <form style="padding-bottom: 5px;">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="telefono" type="text" class="validate" required disabled>
+                                    <label for="telefono">Telefono</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="correo" type="text" class="validate" required disabled>
+                                    <label for="correo">Correo</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="contrasena" type="password" class="validate" required disabled>
+                                    <label for="contrasena">Contraseña</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="contrasena_nueva" type="password" class="validate" required disabled>
+                                    <label for="contrasena_nueva">Nueva Contraseña</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="contrasena_nueva_repetida" type="password" class="validate" required disabled>
+                                    <label for="contrasena_nueva_repetida">Repetir Nueva Contraseña</label>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 0;">
+                                <div class="input-field col s12">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action" disabled>Actualizar
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        function access(){
+            $.get('/access', (data) => {
+                data = data.response;
+                console.log(data);
+                if (data[1] == true) {
+                    $('#navbar').append(`
+                        <li><a href="admin.html"><i class="material-icons tooltipped" data-position="left" data-tooltip="Administrar" title="Administrar">settings</i></a></li>
+                    `);
+                    $('#sidevar').append(`
+                        <li><a href="admin.html"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Administrar" title="Administrar">settings</i> Administrar</a></li>
+                    `);
+                }                
+                $('.tooltipped').tooltip();
+            }, 'json');
+        }
+        function exit() {
+            $.post('/logout', (data) => {
+                data = data.response;
+                if (data[0] == false) {
+                    window.location.href = 'login.html';
+                } else {
+                    console.error('Algo salio mal');
+                }
+            }, 'json');
+        }
+        function showUser() {
+            $.get('/show_user', (user) => {
+                console.log(user);
+                user = user.response;
+                $('#imgProfile').attr('src', user[0][0].ux_urlphoto);
+                $('#imgProfile').attr('data-caption', user[0][0].ux_nick);
+                $('#lblNick').text(user[0][0].ux_nick);
+                $('#lnlName').text(user[0][0].ux_name);
+                $('#lblDUI').text(user[0][0].ux_dui);
+                $('#lblTel').text(user[0][0].ux_phone);
+                $('#lblMail').text(user[0][0].ux_mail);
+                $('#lblDate').text(user[0][0].ux_DBirth);
+
+                // $('#imgProfile').src = user[0][0].ux_urlphoto;
+                // $('#telefono').val(user[0].telefono);
+                // $('#correo').val(user[0].correo);
+                // $('#contrasena').val(user[0].contrasena);
+                // $('#contrasena_nueva').val(user[0].contrasena);
+                // $('#contrasena_nueva_repetida').val(user[0].contrasena);
+            }, 'json');
+        }
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+            $('.sidenav').sidenav();
+            $('.materialboxed').materialbox();
+            access();
+            showUser();
+        });
+    </script>
+</body>
+</html>

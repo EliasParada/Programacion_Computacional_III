@@ -6,75 +6,95 @@
                 <div class="card-content">
                     <span class="card-title" id="tblTitle">Agregar un nuevo producto</span>
                     <form id="frmProduct" data-action="create" data-id="0">
-                        <div class="row">
-                            <div class="col s6">
+                        <div class="col s12 m4">
+                            <div class="col s12 center-align" id="vidStream">
+                                <video id="vidPrd" class="responsive-video"></video>
+                            </div>
+                            <div class="col s12 m12 center-align" id="imgVista">
                                 <div class="input-field">
-                                    <input type="text" name="txtPrdName" id="txtPrdName" data-length="50" required>
-                                    <label for="txtPrdName">Nombre</label>
+                                    <p class="center-align" id="txtPrdPreview"></p>
+                                    <img src="../img/media/profile.png" alt="" id="imgPrdPreview" class="" height="200" width="200">
+                                    <canvas id="canvas" class="none" hidden data-update="false"></canvas>
+                                    <canvas id="canvas2" class="none" hidden></canvas>
                                 </div>
-                            <div class="row">
-                                <div class="input-field">
-                                    <div class="switch">
-                                        <label id="lblStatus">
-                                            <input type="checkbox" name="chkStatus" id="chkStatus">
-                                            <span class="lever"></span>
-                                            Archivo/Camara
-                                        </label>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col s12 m8">
+                            <div class="input-field col s6 m2 l2">
+                                <div class="switch">
+                                    <label id="lblStatus">
+                                        <input type="checkbox" name="chkStatus" id="chkStatus">
+                                        <span class="lever tooltipped" data-position="top" data-tooltip="Switch between the camera and a file"></span>
+                                    </label>
                                 </div>
-                                <div class="input-field" id="vidContainer">
-                                    <div class="btn" id="btnTakePhoto">
+                            </div>
+                            <div class="file-field input-field col s12 m4" id="imgFileContainerPrd" style="margin-bottom: 0;">
+                                <div class="btn tooltipped" data-position="top" data-tooltip="Upload a file">
+                                    <span>
+                                        <i class="material-icons">perm_media</i>
+                                    </span>
+                                    <input type="file" name="imgFilePrd" id="imgFilePrd">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Seleccione una imagen">
+                                </div>
+                            </div>
+                            <div class="col s7 m4"  id="vidControlsContainer">
+                                <div class="input-field center-align">
+                                    <div class="btn tooltipped" data-position="top" data-tooltip="Take a photo" id="btnTakePhoto">
                                         <span>
                                             <i class="material-icons">add_a_photo</i>
                                         </span>
                                     </div>
-                                    <br>
-                                    <video id="vidProduct" class="responsive-video col s12" style="margin-top: 0.5rem;"></video>
-                                </div>
-                                <div class="file-field input-field" id="imgContainer">
-                                    <div class="btn">
+                                    <div class="btn tooltipped" data-position="top" data-tooltip="Take other photo" id="btnRetakePhoto">
                                         <span>
-                                            <i class="material-icons">perm_media</i>
+                                            <i class="material-icons">refresh</i>
                                         </span>
-                                        <input type="file" name="imgProduct" id="imgProduct">
-                                    </div>
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" placeholder="Seleccione una imagen">
                                     </div>
                                 </div>
                             </div>
-                                <div class="input-field">
-                                    <select name="slcPrdProvider" id="slcPrdProvider" required>
-                                        <option value="" disabled selected>Seleccione una marca</option>
-                                    </select>
-                                    <label for="slcPrdProvider">Proveedores</label>
+                            <div class="col s12 m6">
+                                <div class="">
+                                    <label for="txtPrdName">Nombre</label>
+                                    <input type="text" name="txtPrdName" id="txtPrdName" required placeholder="Manzana"
+                                        pattern="(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+(([\s][A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]{1,20})+)*$">
                                 </div>
-                                <div class="input-field">
-                                    <input type="tel" name="txtPrdCreateDate" id="txtPrdCreateDate" required>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="">
+                                    <label for="txtPrdPrice">Precio</label>
+                                    <input type="number" name="txtPrdPrice" id="txtPrdPrice" step="0.01" required placeholder="2.50"
+                                        pattern="^[0-9]+(\.[0-9]{1,2})?$">
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="">
                                     <label for="txtPrdCreateDate">Fecha de fabricacion</label>
+                                    <input type="tel" name="txtPrdCreateDate" id="txtPrdCreateDate" required placeholder="yyyy-mm-dd" 
+                                    pattern="(^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$)">
                                 </div>
-                                <div class="input-field">
-                                    <input type="tel" name="txtPrdExpiration" id="txtPrdExpiration" required>
+                            </div>
+                            <div class="col s12 m6">
+                                <div class="">
                                     <label for="txtPrdExpiration">Fecha de vencimiento</label>
+                                    <input type="tel" name="txtPrdExpiration" id="txtPrdExpiration" required placeholder="yyyy-mm-dd" 
+                                    pattern="(^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$)">
                                 </div>
+                            </div>
+                            <div class="col s12 m6" style="margin-bottom: 8px;">
                                 <div class="input-field">
                                     <select name="slcPrdCategory" id="slcPrdCategory" required>
                                         <option value="" disabled selected>Seleccione una categoría</option>
                                     </select>
                                     <label for="slcPrdCategory">Categorias</label>
                                 </div>
-                                <div class="input-field">
-                                    <input type="number" name="txtPrdPrice" id="txtPrdPrice" step="0.01" required>
-                                    <label for="txtPrdPrice">Precio</label>
-                                </div>
-                                
                             </div>
-                            <div class="col s6">
+                            <div class="col s12 m6" style="margin-bottom: 8px;">
                                 <div class="input-field">
-                                    <p class="center-align" id="txtPrdPreview"></p>
-                                    <img src="" alt="" id="imgPrdPreview" class="responsive">
-                                    <canvas id="canvas" class="none"></canvas>
-                                    <canvas id="canvas2" class="none" hidden></canvas>
+                                    <select name="slcPrdProvider" id="slcPrdProvider" required>
+                                        <option value="" disabled selected>Seleccione una marca</option>
+                                    </select>
+                                    <label for="slcPrdProvider">Proveedores</label>
                                 </div>
                             </div>
                         </div>
@@ -85,7 +105,7 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <button class="btn waves-effect waves-light" type="reset" name="btnCatReset" id="btnCatReset">
+                                <button class="btn waves-effect waves-light" type="reset" name="btnReset" id="btnCatReset">
                                     <i class="material-icons">clear</i>
                                 </button>
                             </div>
@@ -144,7 +164,7 @@
                     <td>${product.cat_name}</td>
                     <td>${product.prt_cost}</td>
                     <td>
-                        <img src="${product.prt_photo}.jpg" alt="${product.prt_name}" class="responsive-img" width="200" height="200">
+                        <img src="${product.prt_photo}" alt="${product.prt_name}" class="responsive-img" width="200" height="200">
                     </td>
                     <td>
                         <a href="#tblProducts" class="btn-floating btn-small waves-effect waves-light red" onclick='deleteProduct(${JSON.stringify(product)})'>
@@ -196,8 +216,10 @@
         jsDate = date[2] + '-' + date[1] + '-' + date[0];
         $('#txtPrdExpiration').val(jsDate);
         $('#txtPrdPrice').val(data.prt_cost);
-        $('#frmProduct').attr('data-action', 'update');
-        $('#frmProduct').attr('data-id', data.prt_id);
+        $('#imgPrdPreview')[0].src = data.prt_photo;
+        $('#frmProduct').data('action', 'update');
+        $('#frmProduct').data('id', data.prt_id);
+        console.log($('#frmProduct').data('action'), $('#frmProduct').data('id'));
         $('select').formSelect();
     }
 
@@ -207,27 +229,24 @@
         canvas2.width = video.width;
         canvas2.height = video.height;
         let ctx2 = canvas2.getContext('2d');
-        ctx2.drawImage(video, 0, 0, video.width, video.height);
+        ctx2.drawImage(video, 0, 0, 200, 200);
         video.pause();
         setTimeout(e => {
             video.play();
         }, 1000);
-        // Imagen de prueba
         
-        canvas.width = 28;
-        canvas.height = 28;
+        canvas.width = 48;
+        canvas.height = 48;
         ctx = canvas.getContext("2d");
-        //Negativo
-        ctx.globalCompositeOperation = 'difference';
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        //Escala de grises
-        ctx.filter = 'grayscale(100%)';
-        cxt.drawImage(video, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas2.width = 200;
+        canvas2.height = 200;
+        ctx2 = canvas2.getContext('2d');
+        ctx2.drawImage(video, 0, 0, canvas2.width, canvas2.height);
 
         let data = canvas.toDataURL('image/png');
         document.getElementById("imgPrdPreview").src = data;
-        //Insertar en la imagen
+
         let data2 = canvas2.toDataURL('image/png');
         let img = document.getElementById("imgPrdPreview");
         img.src = data2;
@@ -236,9 +255,9 @@
     function turnOnCamera() {
         canvas = document.getElementById('canvas');
         cxt = canvas.getContext('2d');
-        video = document.getElementById('vidProduct');
-        video.width = 400;
-        video.height = 400;
+        video = document.getElementById('vidPrd');
+        video.width = 200;
+        video.height = 200;
 
         if (!navigator.getUserMedia) {
             navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -273,14 +292,23 @@
         localstream.getTracks()[0].stop();
     }
 
+    function showPredict(predict) {
+        console.log(predict);
+        $('#txtPrdPreview').text(predict.label);
+        $('#txtPrdName').val(predict.label);
+        $('#slcPrdCategory').val(predict.category);
+        // $('#slcPrdProvider').val(predict.provider);
+        $('select').formSelect();
+    }
+
     $(document).ready(async function(){
         let localstream, canvas, video, cxt;
         $('select').formSelect();
         $("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});
-        $('input#txtPrdName, input#txtCatName, #txtProvName, #txtProvPhone, #txtProvEmail').characterCounter();
-        $('#vidContainer').hide();
+        $('#vidStream').hide();
+        $('#vidControlsContainer').hide();
         $('#txtPrdCreateDate').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy-mm-dd',
             i18n: {
                 months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
@@ -293,7 +321,7 @@
             }
         });
         $('#txtPrdExpiration').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy-mm-dd',
             i18n: {
                 months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
@@ -305,72 +333,147 @@
                 done: 'Listo'
             }
         });
+        window.document.title = 'Fast Store::Productos';
 
         adminPetition('http://localhost:3000/show_categories', {}, 'GET', 'selectCategories');
         adminPetition('http://localhost:3000/show_providers', {}, 'GET', 'selectProviders');
         adminPetition('http://localhost:3000/show_products', {}, 'GET', 'tableProducts');
 
+        $('#imgFilePrd').change(function(){
+            let file = this.files[0],
+                canvas = $('#canvas')[0],
+                ctx = canvas.getContext("2d"),
+                canvas2 = $('#canvas2')[0],
+                ctx2 = canvas2.getContext('2d');
+            
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e){
+                $('#imgPrdPreview').attr('src', e.target.result);
+                canvas.width = 48;
+                canvas.height = 48;
+                
+                let img = new Image();
+                img.src = e.target.result;
+                img.onload = function(){
+                    ctx.drawImage(img, 0, 0, 48, 48);
+                    
+                    canvas2.width = 200;
+                    canvas2.height = 200;
+                    ctx2.drawImage(img, 0, 0, 200, 200);
+                    $('#canvas').attr('data-update', 'true');
+                    let data2 = canvas2.toDataURL('image/png');
+                    let imgPrd = document.getElementById("imgPrdPreview");
+                    imgPrd.src = data2;
+
+                    let pixeles = [];
+                    for(i=0; i<48;i++){
+                        for(j=0; j<48; j++){
+                            let imgData = ctx.getImageData(j,i,1,1).data,
+                                valor= (imgData[0] + imgData[1] + imgData[2])/3;
+                            pixeles.push(valor);
+                        }
+                    }
+                    let data = {
+                        photo: pixeles = pixeles.join(",")
+                    }
+
+                    adminPetition('http://localhost:3000/predict', data, 'POST', 'showPredict');
+                }
+            }
+        });
+
         $('#btnTakePhoto').click((e) => {
             e.preventDefault();
             takePhoto();
+            turnOffCamera();
 
             let canvasProduct = $('#canvas')[0];
             let ctxProduct = canvasProduct.getContext('2d');
+            $('#imgVista').show();
+            $('#vidStream').hide();
 
             let pixeles = [];
-            for(i=0; i<28;i++){
-                for(j=0; j<28; j++){
+            for(i=0; i<48;i++){
+                for(j=0; j<48; j++){
                     let imgData = ctxProduct.getImageData(j,i,1,1).data,
-                        valor = (imgData[2]/255*100/100).toFixed(2);
+                        valor= (imgData[0] + imgData[1] + imgData[2])/3;
                     pixeles.push(valor);
                 }
             }
-            
-            pixeles = pixeles.join(",");
-            $.post('http://localhost:3000/testai', pixeles, (data) => {
-                console.log(data);
-                $('#txtPrdPreview').text(data);
-            });
+            let data = {
+                photo: pixeles = pixeles.join(",")
+            }
+
+            adminPetition('http://localhost:3000/predict', data, 'POST', 'showPredict');
+            console.log('Update');
+            $('#canvas').attr('data-update', 'true');
+        });
+
+        $('#btnRetakePhoto').click((e) => {
+            e.preventDefault();
+            turnOnCamera();
+            $('#vidStream').show();
+            $('#imgVista').hide();
         });
         
         $("#chkStatus").change(e => {
-            $("#imgProduct").toggleClass("none");
-            $("#vidProduct").toggleClass("none");
             if ($("#chkStatus").is(":checked")) {
                 turnOnCamera();
-                $('#vidContainer').show();
-                $('#imgContainer').hide();
-                $("#imgProduct").attr("disabled", true);
+                $('#vidControlsContainer').show();
+                $('#imgFileContainerPrd').hide();
+                $("#imgFilePrd").attr("disabled", true);
+                $('#imgVista').hide();
+                $('#vidStream').show();
             } else {
                 turnOffCamera();
-                $('#imgContainer').show();
-                $('#vidContainer').hide();
-                $("#imgProduct").attr("disabled", false);
+                $('#imgFileContainerPrd').show();
+                $('#vidControlsContainer').hide();
+                $("#imgFilePrd").attr("disabled", false);
+                $('#imgVista').show();
+                $('#vidStream').hide();
             }
         });
     
         $('#frmProduct').submit( (e) => {
             e.preventDefault();
-            canvas = $('#canvas')[0];
+            canvas = $('#canvas2')[0];
             ctx = canvas.getContext('2d');
 
+            canvasPreview = $('#canvas')[0];
+            ctxPreview = canvasPreview.getContext('2d');
+            $('.materialboxed').materialbox();
+
+            let photo = [];
+            for(i=0; i<200;i++){
+                for(j=0; j<200; j++){
+                    let imgData = ctx.getImageData(j,i,1,1).data,
+                        rgb = imgData[0] + ',' + imgData[1] + ',' + imgData[2];
+                    photo.push(rgb);
+                }
+            }
+            photo = photo.join(',');
             let action = $('#frmProduct').data('action'),
                 id = $('#frmProduct').data('id'),
+                newPhoto = $('#canvas').data('update'),
                 name = $('#txtPrdName').val(),
                 prov = $('#slcPrdProvider').val(),
                 cat = $('#slcPrdCategory').val(),
                 createdate = $('#txtPrdCreateDate').val(),
                 expirationdate = $('#txtPrdExpiration').val(),
                 cost = $('#txtPrdPrice').val(),
-                photo = $('#imgPrdPreview').attr('src'),
-                data = {action, id, name, prov, cat, createdate, expirationdate, cost, photo:'/img/products/product'};
+                data = {action, id, name, prov, cat, createdate, expirationdate, cost, photo, newPhoto};
             console.log(data);
 
             console.log($('#imgPrdPreview').attr('src'));
             adminPetition('http://localhost:3000/admin_products', data, 'POST', 'reloadProducts', $('#frmProduct'));
+            $('#canvas').attr('data-update', 'false');
+            $('#imgPrdPreview')[0].src = '../img/media/profile.png';
         })
         .on('reset', (e) => {
             clearForms($('#frmProduct'));
+            $('#canvas').attr('data-update', 'false');
+            $('#imgPrdPreview')[0].src = '../img/media/profile.png';
         });
     
         $("#txtSearch").keyup(function(e){
